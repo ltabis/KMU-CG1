@@ -96,13 +96,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\GRAPHICS\TOOLS\GLFW\include;C:\GRAPHICS\TOOLS\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src/Core;C:\GRAPHICS\TOOLS\GLEW\include;C:\GRAPHICS\TOOLS\GLFW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32;C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;Opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -113,15 +113,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\GRAPHICS\TOOLS\GLFW\include;C:\GRAPHICS\TOOLS\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src/Core;C:\GRAPHICS\TOOLS\GLEW\include;C:\GRAPHICS\TOOLS\GLFW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32;C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;Opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,10 +130,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src/Core;C:\GRAPHICS\TOOLS\GLEW\include;C:\GRAPHICS\TOOLS\GLFW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;Opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,16 +147,23 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src/Core;C:\GRAPHICS\TOOLS\GLEW\include;C:\GRAPHICS\TOOLS\GLFW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;Opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Core.cpp" />
     <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Core\Core.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
