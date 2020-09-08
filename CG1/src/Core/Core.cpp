@@ -2,6 +2,9 @@
 
 CG::Core::Core()
 {
+    /* setting error callback */
+    glfwSetErrorCallback(error_callback);
+
     /* Initialize glfw */
     if (!glfwInit())
         throw "Couldn't initialize glfw.";
@@ -17,6 +20,9 @@ CG::Core::Core()
 
     /* Make the window's context current */
     glfwMakeContextCurrent(_window);
+
+    /* Vsync, to be investigated  */
+    glfwSwapInterval(1);
 
     /* Initialize glew */
     if (glewInit() != GLEW_OK)
@@ -36,13 +42,7 @@ void CG::Core::run()
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glBegin(GL_TRIANGLES);
-
-        glVertex2d(.5f, .5f);
-        glVertex2d(-.5f, .5f);
-        glVertex2d(-.5f, -.5f);
-
-        glEnd();
+        test();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(_window);
@@ -50,4 +50,14 @@ void CG::Core::run()
         /* Poll for and process events */
         glfwPollEvents();
     }
+}
+
+void CG::Core::test()
+{
+
+}
+
+void CG::Core::error_callback(int error, const char* description)
+{
+    std::cerr << "[" << error << "] Error: " << description << std::endl;
 }
