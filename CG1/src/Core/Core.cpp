@@ -42,7 +42,7 @@ void CG::Core::run()
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        test();
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(_window);
@@ -50,11 +50,6 @@ void CG::Core::run()
         /* Poll for and process events */
         glfwPollEvents();
     }
-}
-
-void CG::Core::test()
-{
-
 }
 
 void CG::Core::error_callback(int error, const char* description)
