@@ -45,6 +45,22 @@ void CG::ShaderLoader::createShader(std::ifstream& stream, std::string& line)
 
 bool CG::ShaderLoader::load(const std::string& name, const std::string& file)
 {
+	std::ifstream stream(file);
+
+	if (!stream.is_open())
+		return false;
+
+	std::string line;
+	std::istream& output = std::getline(stream, line);
+
+	while (output)
+		if (line.find("#shader") != std::string::npos
+			&& line.find(name) != std::string::npos) {
+			createShader(stream, line);
+			return true;
+		}
+		else
+			std::getline(stream, line);
 	return false;
 }
 

@@ -67,7 +67,8 @@ int main(void)
 
     CG::ShaderLoader sloader;
 
-    sloader.load("./res/shaders/basic.shader");
+    sloader.load("triangle_vertex", "./res/shaders/basic.shader");
+    sloader.load("blue", "./res/shaders/basic.shader");
 
     //try {
     //    CG::Core core;
