@@ -16,14 +16,14 @@ namespace CG {
 	struct Shader
 	{
 		Shader(const ShaderType& type = ShaderType::NONE, const std::string& name = "")
-			: type   { type }
-			, name   { name }
-			, source { ""   } {}
+			: type{ type }
+			, name{ name }
+			, source{ "" } {}
 
 		Shader(const ShaderType& type, const std::string& name, const std::string& source)
-			: type   { type   }
-			, name   { name   }
-			, source { source } {}
+			: type{ type }
+			, name{ name }
+			, source{ source } {}
 
 		ShaderType type;
 		std::string name;
@@ -32,28 +32,28 @@ namespace CG {
 
 	class ShaderLoader
 	{
-		private:
-			std::vector<Shader> _shaders
-			{
-				Shader(),
-			};
-			std::unordered_map<std::string, ShaderType> _shaderTypes
-			{
-				{ "VERTEX",   ShaderType::VERTEX },
-				{ "FRAGMENT", ShaderType::FRAGMENT }
-			};
+	private:
+		std::vector<Shader> _shaders
+		{
+			Shader(),
+		};
+		std::unordered_map<std::string, ShaderType> _shaderTypes
+		{
+			{ "VERTEX",   ShaderType::VERTEX },
+			{ "FRAGMENT", ShaderType::FRAGMENT }
+		};
 
-			Shader findShader(std::string& line);
-			void createShader(std::ifstream& stream, std::string& line);
-			std::string getShaderSourceCode(std::ifstream& stream, std::string& line);
+		Shader findShader(std::string& line);
+		void createShader(std::ifstream& stream, std::string& line);
+		std::string getShaderSourceCode(std::ifstream& stream, std::string& line);
 
-		public:
-			ShaderLoader();
+	public:
+		ShaderLoader();
 
-			bool load(const std::string& name, const std::string& file);
-			bool load(const std::string& file);
-			// void unload(const std::string& name);
-			Shader& get(const std::string& name);
+		bool load(const std::string& name, const std::string& file);
+		bool load(const std::string& file);
+		// void unload(const std::string& name);
+		Shader& get(const std::string& name);
 	};
 }
 

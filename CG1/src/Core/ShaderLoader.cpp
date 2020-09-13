@@ -7,7 +7,7 @@ CG::ShaderLoader::ShaderLoader() {}
 
 CG::Shader CG::ShaderLoader::findShader(std::string& line)
 {
-	for (auto &it : _shaderTypes) {
+	for (auto& it : _shaderTypes) {
 		std::size_t typeIndex = line.find(it.first);
 		if (typeIndex != std::string::npos) {
 			line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
@@ -45,13 +45,7 @@ void CG::ShaderLoader::createShader(std::ifstream& stream, std::string& line)
 
 bool CG::ShaderLoader::load(const std::string& name, const std::string& file)
 {
-	std::ifstream stream(file);
-	std::string line;
-
-	if (!stream.is_open())
-		return false;
-
-	return true;
+	return false;
 }
 
 bool CG::ShaderLoader::load(const std::string& file)
