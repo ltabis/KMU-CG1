@@ -2,6 +2,7 @@
 // Application entry point.
 
 #include "Core.h"
+#include "ShaderLoader.hpp"
 
 // Error handling could be made.
 static unsigned int compileShader(const std::string& sourceCode, unsigned int type)
@@ -63,6 +64,11 @@ static unsigned int createShaders(const std::string& vertexShader, const std::st
 
 int main(void)
 {
+
+    CG::ShaderLoader loader("res/shaders");
+
+    loader.load("basic.shader");
+
     //try {
     //    CG::Core core;
     //    core.run();
@@ -105,27 +111,10 @@ int main(void)
     // enabling the attribute.
     glEnableVertexAttribArray(0);
 
-    // location = 0 : glVertexAttribPointer(0
-    // opengl will translate the attribute (vec2) to a vec4.
-    const std::string vertexShader =
-        "#version 330 core\n"
-        "\n"
-        "layout(location = 0) in vec4 position;\n"
-        "\n"
-        "void main()\n"
-        "{\n"
-        "   gl_Position = position;\n"
-        "}\n";
+    const std::string vertexShader = loader.get("triangle_vertex").source;
+    const std::string fragmentShader = loader.get("green").source;
 
-    const std::string fragmentShader =
-        "#version 330 core\n"
-        "\n"
-        "layout(location = 0) out vec4 color;\n"
-        "\n"
-        "void main()\n"
-        "{\n"
-        "   color = vec4(1.0, 0.0, 0.0, 1.0);\n"
-        "}\n";
+    std::cout << fragmentShader << "$" << std::endl;
 
     unsigned int program = createShaders(vertexShader, fragmentShader);
     glUseProgram(program);
