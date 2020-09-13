@@ -1,7 +1,7 @@
 // main.cpp
 // Application entry point.
 
-#include "Core.h"
+#include "Core.hpp"
 #include "ShaderLoader.hpp"
 
 // Error handling could be made.
@@ -65,9 +65,9 @@ static unsigned int createShaders(const std::string& vertexShader, const std::st
 int main(void)
 {
 
-    CG::ShaderLoader loader("res/shaders");
+    CG::ShaderLoader sloader;
 
-    loader.load("basic.shader");
+    sloader.load("./res/shaders/basic.shader");
 
     //try {
     //    CG::Core core;
@@ -111,10 +111,8 @@ int main(void)
     // enabling the attribute.
     glEnableVertexAttribArray(0);
 
-    const std::string vertexShader = loader.get("triangle_vertex").source;
-    const std::string fragmentShader = loader.get("green").source;
-
-    std::cout << fragmentShader << "$" << std::endl;
+    const std::string vertexShader = sloader.get("triangle_vertex").source;
+    const std::string fragmentShader = sloader.get("blue").source;
 
     unsigned int program = createShaders(vertexShader, fragmentShader);
     glUseProgram(program);

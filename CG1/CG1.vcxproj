@@ -169,10 +169,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\ShaderLoader.hpp" />
-    <ClInclude Include="src\Core\Core.h" />
+    <ClInclude Include="src\Core\Core.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
+    <None Include="res\shaders\empty.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

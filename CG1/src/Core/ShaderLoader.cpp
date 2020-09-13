@@ -3,13 +3,7 @@
 
 #include "ShaderLoader.hpp"
 
-CG::ShaderLoader::ShaderLoader()
-	: _folder  { "./" }
-{}
-
-CG::ShaderLoader::ShaderLoader(const std::string& path)
-	: _folder { !std::filesystem::exists(path) ? "./" : path }
-{}
+CG::ShaderLoader::ShaderLoader() {}
 
 CG::Shader CG::ShaderLoader::findShader(std::string& line)
 {
@@ -24,54 +18,64 @@ CG::Shader CG::ShaderLoader::findShader(std::string& line)
 	return Shader();
 }
 
-void CG::ShaderLoader::pushShader(std::string &line, std::string &currentDirective, std::ostringstream &currentSrc, Shader &currentShader)
+std::string CG::ShaderLoader::getShaderSourceCode(std::ifstream& stream, std::string& line)
 {
-	// adding the current shader to the map.
-	if (currentShader.type != ShaderType::NONE) {
-		currentShader.source = currentSrc.str();
-		_shaders.push_back(currentShader);
-	}
+	std::ostringstream sourceCode;
 
-	// clearing data and changing directive.
-	currentSrc.str("");
-	currentDirective = line;
-	currentShader = findShader(line);
+	while (std::getline(stream, line)
+		&& line.find("#shader") == std::string::npos)
+		sourceCode << line << "\n";
+	return sourceCode.str();
 }
 
-bool CG::ShaderLoader::load(const std::string &file)
+void CG::ShaderLoader::createShader(std::ifstream& stream, std::string& line)
 {
-	std::ifstream stream(_folder + "/" +  file);
+	// creating the shader.
+	Shader shader = findShader(line);
+
+	if (shader.type == ShaderType::NONE)
+		return;
+
+	// adding the source code.
+	shader.source = getShaderSourceCode(stream, line);
+
+	// adding the current shader to the map.
+	_shaders.push_back(shader);
+}
+
+bool CG::ShaderLoader::load(const std::string& name, const std::string& file)
+{
+	std::ifstream stream(file);
+	std::string line;
 
 	if (!stream.is_open())
 		return false;
 
-	std::ostringstream currentSrc;
-	std::string currentDirective;
-	Shader currentShader;
-	std::string line;
-
-	while (std::getline(stream, line)) {
-
-		// finding the #shader directive.
-		std::size_t index = line.find("#shader");
-
-		if (index != std::string::npos)
-			pushShader(line, currentDirective, currentSrc, currentShader);
-		else
-			currentSrc << line << "\n";
-	}
-	pushShader(line, currentDirective, currentSrc, currentShader);
 	return true;
 }
 
-#include <iostream>
-
-CG::Shader &CG::ShaderLoader::get(const std::string &name)
+bool CG::ShaderLoader::load(const std::string& file)
 {
-	for (auto& it : _shaders) {
-		std::cout << it.name << std::endl;
+	std::ifstream stream(file);
+
+	if (!stream.is_open())
+		return false;
+
+	std::string line;
+	std::istream& output = std::getline(stream, line);
+
+	while (output)
+		if (line.find("#shader") == std::string::npos)
+			std::getline(stream, line);
+		else
+			createShader(stream, line);
+	return true;
+}
+
+CG::Shader& CG::ShaderLoader::get(const std::string& name)
+{
+	for (auto& it : _shaders)
 		if (it.name == name)
 			return it;
-	}
 	return _shaders[0];
 }

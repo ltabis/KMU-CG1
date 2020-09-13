@@ -1,4 +1,4 @@
-#include "Core.h"
+#include "Core.hpp"
 
 CG::Core::Core()
 {
