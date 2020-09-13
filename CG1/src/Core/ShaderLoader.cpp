@@ -82,6 +82,15 @@ bool CG::ShaderLoader::load(const std::string& file)
 	return true;
 }
 
+void CG::ShaderLoader::unload(const std::string& name)
+{
+	for (auto it = _shaders.begin(); it != _shaders.end(); ++it)
+		if ((*it).name == name) {
+			_shaders.erase(it);
+			return;
+		}
+}
+
 CG::Shader& CG::ShaderLoader::get(const std::string& name)
 {
 	for (auto& it : _shaders)

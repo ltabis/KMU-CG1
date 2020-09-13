@@ -52,7 +52,7 @@ namespace CG {
 
 		bool load(const std::string& name, const std::string& file);
 		bool load(const std::string& file);
-		// void unload(const std::string& name);
+		void unload(const std::string& name);
 		Shader& get(const std::string& name);
 	};
 }
