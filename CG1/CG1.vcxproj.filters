@@ -32,6 +32,9 @@
     <ClInclude Include="src\Core\Core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Profiling\Breakpoint.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />

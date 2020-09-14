@@ -168,6 +168,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Profiling\Breakpoint.hpp" />
     <ClInclude Include="src\Core\ShaderLoader.hpp" />
     <ClInclude Include="src\Core\Core.hpp" />
   </ItemGroup>

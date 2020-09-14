@@ -3,6 +3,7 @@
 
 #include "Core.hpp"
 #include "ShaderLoader.hpp"
+#include "Profiling/Breakpoint.hpp"
 
 // Error handling could be made.
 static unsigned int compileShader(const std::string& sourceCode, unsigned int type)
@@ -24,7 +25,7 @@ static unsigned int compileShader(const std::string& sourceCode, unsigned int ty
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &messageLength);
 
         // stack allocated string.
-        char *message = (char *)alloca(sizeof(char) * messageLength);
+        char *message = (char *)_malloca(sizeof(char) * messageLength);
 
         glGetShaderInfoLog(id, messageLength, &messageLength, message);
 
@@ -64,12 +65,18 @@ static unsigned int createShaders(const std::string& vertexShader, const std::st
 
 int main(void)
 {
-
     CG::ShaderLoader sloader;
 
-    sloader.load("triangle_vertex", "./res/shaders/basic.shader");
-    sloader.load("blue", "./res/shaders/basic.shader");
+    // profiling shader loading.
+    {
+#if _DEBUG
+        CG::Breakpoint<std::chrono::microseconds> b("Shader loading");
+#endif
+        sloader.load("./res/shaders/basic.shader");
+    }
 
+    // Core code, will be used when opengl
+    // will be encapsulated.
     //try {
     //    CG::Core core;
     //    core.run();
