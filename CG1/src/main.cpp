@@ -78,7 +78,7 @@ int main(void)
     // profiling shader loading.
     {
 #if _DEBUG
-        CG::Breakpoint<std::chrono::microseconds> b("Shader loading");
+        CG::Breakpoint<std::chrono::microseconds> b("Shader loading", "μs");
 #endif
         sloader.load("./res/shaders/basic.shader");
     }
@@ -135,6 +135,8 @@ int main(void)
     core->run();
 
     glDeleteProgram(program);
+
+    CG_LOG_WARN("Ending session...");
 
     return 0;
 }
