@@ -78,7 +78,8 @@ int main(void)
     // profiling shader loading.
     {
 #if _DEBUG
-        CG::Breakpoint<std::chrono::microseconds> b("Shader loading", "μs");
+        //CG::Breakpoint<std::chrono::microseconds> b("Shader loading");
+        CG::BreakpointMs b("Shader loading");
 #endif
         sloader.load("./res/shaders/basic.shader");
     }

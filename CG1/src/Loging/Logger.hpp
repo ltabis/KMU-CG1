@@ -18,15 +18,17 @@ namespace CG {
 };
 
 #ifdef _DEBUG
-	#define CG_LOG_TRACE(...)          CG::Logger::logger()->trace(__VA_ARGS__);
-	#define CG_LOG_INFO(...)           CG::Logger::logger()->info(__VA_ARGS__);
-	#define CG_LOG_WARN(...)           CG::Logger::logger()->warn(__VA_ARGS__);
-	#define CG_LOG_ERROR(...)          CG::Logger::logger()->error(__VA_ARGS__);
-	#define CG_LOG_CRITICAL(...)       CG::Logger::logger()->critical(__VA_ARGS__);
+	// secure the fmt var.
+	// ## __VA_ARGS__ deletes the ',' if there is no args.
+	#define CG_LOG_TRACE(fmt, ...)          CG::Logger::logger()->trace(fmt, ## __VA_ARGS__);
+	#define CG_LOG_INFO(fmt, ...)           CG::Logger::logger()->info(fmt, ##__VA_ARGS__);
+	#define CG_LOG_WARN(fmt, ...)           CG::Logger::logger()->warn(fmt, ##__VA_ARGS__);
+	#define CG_LOG_ERROR(fmt, ...)          CG::Logger::logger()->error(fmt, ##__VA_ARGS__);
+	#define CG_LOG_CRITICAL(fmt, ...)       CG::Logger::logger()->critical(fmt, ##__VA_ARGS__);
 
-	#define CG_PROFILER_TRACE(...)     CG::Logger::profiler()->trace(__VA_ARGS__);
-	#define CG_PROFILER_INFO(...)      CG::Logger::profiler()->info(__VA_ARGS__);
-	#define CG_PROFILER_WARN(...)      CG::Logger::profiler()->warn(__VA_ARGS__);
-	#define CG_PROFILER_ERROR(...)     CG::Logger::profiler()->error(__VA_ARGS__);
-	#define CG_PROFILER_CRITICAL(...)  CG::Logger::profiler()->critical(__VA_ARGS__);
+	#define CG_PROFILER_TRACE(fmt, ...)     CG::Logger::profiler()->trace(fmt, ##__VA_ARGS__);
+	#define CG_PROFILER_INFO(fmt, ...)      CG::Logger::profiler()->info(fmt, ##__VA_ARGS__);
+	#define CG_PROFILER_WARN(fmt, ...)      CG::Logger::profiler()->warn(fmt, ##__VA_ARGS__);
+	#define CG_PROFILER_ERROR(fmt, ...)     CG::Logger::profiler()->error(fmt, ##__VA_ARGS__);
+	#define CG_PROFILER_CRITICAL(fmt, ...)  CG::Logger::profiler()->critical(fmt, ##__VA_ARGS__);
 #endif /* !DEBUG */
