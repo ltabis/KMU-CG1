@@ -1,6 +1,6 @@
 #include "Core.hpp"
 
-CG::Core::Core()
+CG::Core::Core(CG::GUI::Style style)
 {
     /* setting error callback */
     glfwSetErrorCallback(error_callback);
@@ -21,12 +21,15 @@ CG::Core::Core()
     /* Make the window's context current */
     glfwMakeContextCurrent(_window);
 
-    /* Vsync, to be investigated  */
+    /* Vsync, to be investigated */
     glfwSwapInterval(1);
 
     /* Initialize glew */
     if (glewInit() != GLEW_OK)
         throw "Couldn't initialize glew.";
+
+    /* Create a GUI instance to display debug */
+    _gui = std::make_unique<GUI>(_window, style);
 }
 
 CG::Core::~Core()
@@ -44,11 +47,15 @@ void CG::Core::run()
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        /* Swap front and back buffers */
-        glfwSwapBuffers(_window);
-
         /* Poll for and process events */
         glfwPollEvents();
+
+        _gui->newFrame();
+        _gui->drawUI();
+        _gui->renderGUI();
+
+        /* Swap front and back buffers */
+        glfwSwapBuffers(_window);
     }
 }
 

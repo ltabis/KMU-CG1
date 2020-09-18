@@ -10,6 +10,8 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
+#include "GUI.hpp"
+
 namespace glm
 {
 	// recreate your propre classes
@@ -25,9 +27,10 @@ namespace CG
 	{
 	private:
 		GLFWwindow *_window;
+		std::unique_ptr<GUI> _gui;
 
 	public:
-		Core();
+		Core(GUI::Style style);
 		~Core();
 
 		void run();

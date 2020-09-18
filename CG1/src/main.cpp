@@ -84,7 +84,7 @@ int main(void)
     //    std::cerr << "Exception: " << err << std::endl;
     //}
 
-    CG::Core core;
+    CG::Core core(CG::GUI::Style::CLASSIC);
 
     /* trying to render a triangle. */
 
