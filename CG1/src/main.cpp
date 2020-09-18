@@ -1,4 +1,4 @@
-// main.cpp
+﻿// main.cpp
 // Application entry point.
 
 #include "Core.hpp"
@@ -29,8 +29,7 @@ static unsigned int compileShader(const std::string& sourceCode, unsigned int ty
 
         glGetShaderInfoLog(id, messageLength, &messageLength, message);
 
-        std::cerr << "Shader compilation failed. Error:" << std::endl;
-        std::cerr << message << std::endl;
+        CG_LOG_ERROR("Shader compilation failed. Error: {}", message);
 
         glDeleteShader(id);
         return 0;
@@ -65,6 +64,15 @@ static unsigned int createShaders(const std::string& vertexShader, const std::st
 
 int main(void)
 {
+    std::unique_ptr<CG::Core> core = nullptr;
+
+    try {
+        core = std::make_unique<CG::Core>(CG::GUI::Style::CLASSIC);
+    } catch (std::string& e) {
+        CG_LOG_CRITICAL(e);
+        return 1;
+    }
+
     CG::ShaderLoader sloader;
 
     // profiling shader loading.
@@ -83,8 +91,6 @@ int main(void)
     //} catch (std::string err) {
     //    std::cerr << "Exception: " << err << std::endl;
     //}
-
-    CG::Core core(CG::GUI::Style::CLASSIC);
 
     /* trying to render a triangle. */
 
@@ -126,7 +132,7 @@ int main(void)
     glUseProgram(program);
 
     // running window loop.
-    core.run();
+    core->run();
 
     glDeleteProgram(program);
 

@@ -2,12 +2,17 @@
 
 CG::Core::Core(CG::GUI::Style style)
 {
+    CG::Logger::Init();
+    CG_LOG_INFO("Initializing OpenGL Core.");
+
     /* setting error callback */
     glfwSetErrorCallback(error_callback);
 
     /* Initialize glfw */
     if (!glfwInit())
         throw "Couldn't initialize glfw.";
+
+    CG_LOG_INFO("Glfw initialized.");
 
     /* Create a windowed mode window and its OpenGL context */
     _window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
@@ -28,8 +33,12 @@ CG::Core::Core(CG::GUI::Style style)
     if (glewInit() != GLEW_OK)
         throw "Couldn't initialize glew.";
 
+    CG_LOG_INFO("Glew initialized.");
+
     /* Create a GUI instance to display debug */
     _gui = std::make_unique<GUI>(_window, style);
+
+    CG_LOG_INFO("Core ready.");
 }
 
 CG::Core::~Core()
@@ -61,5 +70,5 @@ void CG::Core::run()
 
 void CG::Core::error_callback(int error, const char* description)
 {
-    std::cerr << "[" << error << "] Error: " << description << std::endl;
+    CG_LOG_ERROR("Error '{}': {}", error, description);
 }

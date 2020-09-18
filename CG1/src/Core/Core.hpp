@@ -11,6 +11,7 @@
 #include <glm/vec3.hpp>
 
 #include "GUI.hpp"
+#include "Logger.hpp"
 
 namespace glm
 {
