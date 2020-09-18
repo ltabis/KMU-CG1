@@ -1,4 +1,0 @@
-[submodule "CG1/src/Dependencies/spdlog"]
-	path = CG1/src/Dependencies/spdlog
-	url = https://github.com/gabime/spdlog.git
-	branch = master
