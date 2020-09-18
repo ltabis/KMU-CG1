@@ -74,21 +74,25 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -96,7 +100,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Graphics\Tools\glm;$(ProjectDir)/src/Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src/Dependencies;C:\Graphics\Tools\glm;$(ProjectDir)/src/Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -114,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Graphics\Tools\glm;$(ProjectDir)/src/Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src/Dependencies;C:\Graphics\Tools\glm;$(ProjectDir)/src/Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -132,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Graphics\Tools\glm;$(ProjectDir)/src/Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src/Dependencies;C:\Graphics\Tools\glm;$(ProjectDir)/src/Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -150,7 +154,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Graphics\Tools\glm;$(ProjectDir)/src/Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src/Dependencies;C:\Graphics\Tools\glm;$(ProjectDir)/src/Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -163,11 +167,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\GUI.cpp" />
     <ClCompile Include="src\Core\ShaderLoader.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
+    <ClCompile Include="src\dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="src\dependencies\imgui\imgui_demo.cpp" />
+    <ClCompile Include="src\dependencies\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\dependencies\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\GUI.hpp" />
+    <ClInclude Include="src\dependencies\imgui\imconfig.h" />
+    <ClInclude Include="src\dependencies\imgui\imgui.h" />
+    <ClInclude Include="src\dependencies\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="src\dependencies\imgui\imgui_internal.h" />
+    <ClInclude Include="src\dependencies\imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\dependencies\imgui\imstb_textedit.h" />
+    <ClInclude Include="src\dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="src\Profiling\Breakpoint.hpp" />
     <ClInclude Include="src\Core\ShaderLoader.hpp" />
     <ClInclude Include="src\Core\Core.hpp" />
