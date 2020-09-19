@@ -78,36 +78,35 @@ int main(void)
     // profiling shader loading.
     {
 #if _DEBUG
-        //CG::Breakpoint<std::chrono::microseconds> b("Shader loading");
         CG::BreakpointMs b("Shader loading");
 #endif
         sloader.load("./res/shaders/basic.shader");
     }
 
-    // Core code, will be used when opengl
-    // will be encapsulated.
-    //try {
-    //    CG::Core core;
-    //    core.run();
-    //} catch (std::string err) {
-    //    std::cerr << "Exception: " << err << std::endl;
-    //}
-
     /* trying to render a triangle. */
 
     // data to render a triangle.
     unsigned int id;
-    float vertices[6] = {
-       -0.5f, -0.5f,
-        0.0f,  0.5f,
-        0.5f, -0.5f
+    float vertices[] = {
+        -0.5f, -0.5f,
+         0.5f, -0.5f,
+         0.5f,  0.5f,
+        -0.5f,  0.5f
     };
- 
+
+    unsigned int ibo;
+    unsigned int indices[] = {
+        0, 1, 2,
+        2, 3, 0
+    };
+
     // creating a new vertex buffer.
     glGenBuffers(1, &id);
     glBindBuffer(GL_ARRAY_BUFFER, id);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6, vertices, GL_STATIC_READ);
-    
+    glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), vertices, GL_STATIC_DRAW);
+
+    // enabling the attribute.
+    glEnableVertexAttribArray(0);
     // Parameters:
     // 1. index of the start of the attribute in memory.
     //    Here, it is our first attribute, so the index is 0.
@@ -123,8 +122,10 @@ int main(void)
     //                                          so (const void *)8.
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
-    // enabling the attribute.
-    glEnableVertexAttribArray(0);
+    // creating a new index buffer.
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
     const std::string vertexShader = sloader.get("triangle_vertex").source;
     const std::string fragmentShader = sloader.get("blue").source;
