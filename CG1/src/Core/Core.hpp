@@ -35,6 +35,5 @@ namespace CG
 		~Core();
 
 		void run();
-		static void error_callback(int error, const char *description);
 	};
 }

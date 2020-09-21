@@ -1,12 +1,33 @@
 #include "Core.hpp"
 
+static void GLAPIENTRY glewErrorCallback(GLenum source,
+    GLenum type,
+    GLuint id,
+    GLenum severity,
+    GLsizei length,
+    const GLchar* message,
+    const void* userParam)
+{
+    CG_LOG_ERROR("OpenGL internal error: {}, type: 0x{}, severity: 0x{}, message: {}",
+        (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+        type,
+        severity,
+        message
+    );
+}
+
+static void glfwErrorCallback(int error, const char* description)
+{
+    CG_LOG_ERROR("Error '{}': {}", error, description);
+}
+
 CG::Core::Core(CG::GUI::Style style)
 {
     CG::Logger::Init();
     CG_LOG_INFO("Initializing OpenGL Core.");
 
     /* setting error callback */
-    glfwSetErrorCallback(error_callback);
+    glfwSetErrorCallback(glfwErrorCallback);
 
     /* Initialize glfw */
     if (!glfwInit())
@@ -38,6 +59,11 @@ CG::Core::Core(CG::GUI::Style style)
     /* Create a GUI instance to display debug */
     _gui = std::make_unique<GUI>(_window, style);
 
+
+    /* Initializing error debug callback */
+     glEnable(GL_DEBUG_OUTPUT);
+     glDebugMessageCallback(glewErrorCallback, 0);
+
     CG_LOG_INFO("Core ready.");
 }
 
@@ -66,9 +92,4 @@ void CG::Core::run()
         /* Swap front and back buffers */
         glfwSwapBuffers(_window);
     }
-}
-
-void CG::Core::error_callback(int error, const char* description)
-{
-    CG_LOG_ERROR("Error '{}': {}", error, description);
 }
