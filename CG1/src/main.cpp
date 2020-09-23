@@ -7,63 +7,6 @@
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
 
-// Error handling could be made.
-static unsigned int compileShader(const std::string& sourceCode, unsigned int type)
-{
-    unsigned int id = glCreateShader(type);
-    const char *rawSource = sourceCode.c_str();
-
-    glShaderSource(id, 1, &rawSource, nullptr);
-    glCompileShader(id);
-
-    // error handling.
-    // wrapp this code into an error object with a logger.
-    int status = 0;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &status);
-
-    if (!status) {
-
-        int messageLength = 0;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &messageLength);
-
-        // stack allocated string.
-        char *message = (char *)_malloca(sizeof(char) * messageLength);
-
-        glGetShaderInfoLog(id, messageLength, &messageLength, message);
-
-        CG_LOG_ERROR("Shader compilation failed. Error: {}", message);
-
-        glDeleteShader(id);
-        return 0;
-    }
-    return id;
-}
-
-// For the example sake.
-static unsigned int createShaders(const std::string& vertexShader, const std::string& fragmentShader)
-{
-    // try to use base types as much as possible when using opengl
-    // in case you use other graphical apis.
-    unsigned int program = glCreateProgram();
-    unsigned int vs = compileShader(vertexShader, GL_VERTEX_SHADER);
-    unsigned int fs = compileShader(fragmentShader,  GL_FRAGMENT_SHADER);
-
-    if (!vs || !fs)
-        return 0;
-
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    glValidateProgram(program);
-
-    // deleting the intermidiate shaders since
-    // they've been correctly loaded into the program.
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-
-    return program;
-}
-
 int main(void)
 {
     std::unique_ptr<CG::Core> core = nullptr;
@@ -124,16 +67,16 @@ int main(void)
     // creating a new index buffer.
     CG::IndexBuffer ib(indices, 6);
 
-    const std::string vertexShader = sloader.get("triangle_vertex").source;
-    const std::string fragmentShader = sloader.get("blue").source;
+    // attaching a vertex and fragment shader to the program.
+    sloader.attach("triangle_vertex");
+    sloader.attach("red");
 
-    unsigned int program = createShaders(vertexShader, fragmentShader);
-    glUseProgram(program);
+    // creating an executable with both shaders and using the program.
+    sloader.createExecutable();
+    sloader.use();
 
     // running window loop.
     core->run();
-
-    glDeleteProgram(program);
 
     CG_LOG_WARN("Ending session...");
 

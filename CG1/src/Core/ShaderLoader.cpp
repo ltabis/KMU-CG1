@@ -3,7 +3,14 @@
 
 #include "ShaderLoader.hpp"
 
-CG::ShaderLoader::ShaderLoader() {}
+CG::ShaderLoader::ShaderLoader()
+	: _program(glCreateProgram())
+{}
+
+CG::ShaderLoader::~ShaderLoader()
+{
+	glDeleteProgram(_program);
+}
 
 /* parses the header line of a shader and create a shader. */
 CG::Shader CG::ShaderLoader::findShader(std::string& line)
@@ -42,8 +49,10 @@ void CG::ShaderLoader::createShader(std::ifstream& stream, std::string& line)
 	// adding the source code.
 	shader.source = getShaderSourceCode(stream, line);
 
-	// adding the current shader to the map.
-	_shaders.push_back(shader);
+	if (shader.compileShader())
+		// adding the current shader to the map
+		// if compilation is successful.
+		_shaders.push_back(shader);
 }
 
 /* public api, load a shader by its name and file. */
@@ -97,6 +106,36 @@ void CG::ShaderLoader::unload(const std::string& name)
 		}
 }
 
+void CG::ShaderLoader::attach(const std::string& name)
+{
+	for (auto& shader : _shaders)
+		if (shader.name == name && shader.id)
+			glAttachShader(_program, shader.id);
+}
+
+void CG::ShaderLoader::attach()
+{
+	for (auto& shader : _shaders)
+		if (shader.id)
+			glAttachShader(_program, shader.id);
+}
+
+void CG::ShaderLoader::createExecutable()
+{
+	glLinkProgram(_program);
+	glValidateProgram(_program);
+
+	// deleting the intermidiate shaders since
+	// they've been correctly loaded into the program.
+	for (auto& shader : _shaders)
+		glDeleteShader(shader.id);
+}
+
+void CG::ShaderLoader::use() const
+{
+	glUseProgram(_program);
+}
+
 /* get a shader object from its name. */
 CG::Shader& CG::ShaderLoader::get(const std::string& name)
 {
@@ -104,4 +143,35 @@ CG::Shader& CG::ShaderLoader::get(const std::string& name)
 		if (it.name == name)
 			return it;
 	return _shaders[0];
+}
+
+/* creates and compiles the  */
+bool CG::Shader::compileShader()
+{
+	const char* rawSource = source.c_str();
+
+	glShaderSource(id, 1, &rawSource, nullptr);
+	glCompileShader(id);
+
+	// error handling.
+	// wrapp this code into an error object with a logger.
+	int status = 0;
+	glGetShaderiv(id, GL_COMPILE_STATUS, &status);
+
+	if (!status) {
+		int messageLength = 0;
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &messageLength);
+
+		// stack allocated string.
+		char* message = (char*)_malloca(sizeof(char) * messageLength);
+
+		glGetShaderInfoLog(id, messageLength, &messageLength, message);
+
+		CG_LOG_ERROR("Shader compilation failed. Error: {}", message);
+
+		glDeleteShader(id);
+		id = 0;
+		return false;
+	}
+	return true;
 }

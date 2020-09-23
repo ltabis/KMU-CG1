@@ -9,23 +9,33 @@
 #include <sstream>
 #include <string>
 
-namespace CG {
+#include <gl/glew.h>
+#include <Logger.hpp>
 
-	enum class ShaderType { NONE = -1, VERTEX = 0, FRAGMENT = 1 };
+namespace CG
+{
+	enum class ShaderType { NONE = -1, VERTEX = GL_VERTEX_SHADER, FRAGMENT = GL_FRAGMENT_SHADER };
 
 	struct Shader
 	{
 		Shader(const ShaderType& type = ShaderType::NONE, const std::string& name = "")
-			: type{ type }
-			, name{ name }
-			, source{ "" } {}
+			: type   { type                                                        }
+			, name   { name                                                        }
+			, id     { type == ShaderType::NONE ? 0 : glCreateShader((GLenum)type) }
+			, source { ""                                                          }
+		{}
 
 		Shader(const ShaderType& type, const std::string& name, const std::string& source)
-			: type{ type }
-			, name{ name }
-			, source{ source } {}
+			: type   { type                                                        }
+			, name   { name                                                        }
+			, id     { type == ShaderType::NONE ? 0 : glCreateShader((GLenum)type) }
+			, source { source                                                      }
+		{}
+
+		bool compileShader();
 
 		ShaderType type;
+		unsigned int id;
 		std::string name;
 		std::string source;
 	};
@@ -33,6 +43,7 @@ namespace CG {
 	class ShaderLoader
 	{
 	private:
+		unsigned int _program;
 		std::vector<Shader> _shaders
 		{
 			Shader(),
@@ -49,10 +60,17 @@ namespace CG {
 
 	public:
 		ShaderLoader();
+		~ShaderLoader();
 
 		bool load(const std::string& name, const std::string& file);
 		bool load(const std::string& file);
 		void unload(const std::string& name);
+		void attach(const std::string& name);
+		void attach();
+		void createExecutable();
+
+		void use() const;
+
 		Shader& get(const std::string& name);
 	};
 }
