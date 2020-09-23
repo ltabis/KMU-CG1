@@ -4,6 +4,8 @@
 #include "Core.hpp"
 #include "ShaderLoader.hpp"
 #include "Profiling/Breakpoint.hpp"
+#include "VertexBuffer.hpp"
+#include "IndexBuffer.hpp"
 
 // Error handling could be made.
 static unsigned int compileShader(const std::string& sourceCode, unsigned int type)
@@ -78,7 +80,7 @@ int main(void)
     // profiling shader loading.
     {
 #if _DEBUG
-        CG::BreakpointMs b("Shader loading");
+        CG::BreakpointUs b("Shader loading");
 #endif
         sloader.load("./res/shaders/basic.shader");
     }
@@ -86,7 +88,6 @@ int main(void)
     /* trying to render a triangle. */
 
     // data to render a triangle.
-    unsigned int id;
     float vertices[] = {
         -0.5f, -0.5f,
          0.5f, -0.5f,
@@ -94,16 +95,14 @@ int main(void)
         -0.5f,  0.5f
     };
 
-    unsigned int ibo;
+    // order of vertex rendering.
     unsigned int indices[] = {
         0, 1, 2,
         2, 3, 0
     };
 
     // creating a new vertex buffer.
-    glGenBuffers(1, &id);
-    glBindBuffer(GL_ARRAY_BUFFER, id);
-    glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), vertices, GL_STATIC_DRAW);
+    CG::VertexBuffer vb(vertices, 8 * sizeof(float));
 
     // enabling the attribute.
     glEnableVertexAttribArray(0);
@@ -123,9 +122,7 @@ int main(void)
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
     // creating a new index buffer.
-    glGenBuffers(1, &ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+    CG::IndexBuffer ib(indices, 6);
 
     const std::string vertexShader = sloader.get("triangle_vertex").source;
     const std::string fragmentShader = sloader.get("blue").source;

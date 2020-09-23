@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\IndexBuffer.cpp" />
     <ClCompile Include="src\Loging\Logger.cpp" />
     <ClCompile Include="src\Core\GUI.cpp" />
     <ClCompile Include="src\Core\ShaderLoader.cpp" />
@@ -178,8 +179,10 @@
     <ClCompile Include="src\dependencies\imgui\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\dependencies\imgui\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Core\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\IndexBuffer.hpp" />
     <ClInclude Include="src\Loging\Logger.hpp" />
     <ClInclude Include="src\Core\GUI.hpp" />
     <ClInclude Include="src\dependencies\imgui\imgui\imconfig.h" />
@@ -193,6 +196,7 @@
     <ClInclude Include="src\Profiling\Breakpoint.hpp" />
     <ClInclude Include="src\Core\ShaderLoader.hpp" />
     <ClInclude Include="src\Core\Core.hpp" />
+    <ClInclude Include="src\Core\VertexBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
