@@ -1,5 +1,6 @@
 #include "Core.hpp"
 
+/* openGL error callback. will be called if any error is thrown by glew. */
 static void GLAPIENTRY glewErrorCallback(GLenum source,
     GLenum type,
     GLuint id,
@@ -16,11 +17,13 @@ static void GLAPIENTRY glewErrorCallback(GLenum source,
     );
 }
 
+/* glfw error callback. will be called if any error is thrown by glfw */
 static void glfwErrorCallback(int error, const char* description)
 {
     CG_LOG_ERROR("Error '{}': {}", error, description);
 }
 
+/* initializing the core object. glfw / glew / spdlog */
 CG::Core::Core(CG::GUI::Style style)
 {
     CG::Logger::Init();
@@ -72,6 +75,7 @@ CG::Core::~Core()
     glfwTerminate();
 }
 
+/* runs every frames. drawing elements and Imgui stuff. */
 void CG::Core::run()
 {
     /* Loop until the user closes the window */

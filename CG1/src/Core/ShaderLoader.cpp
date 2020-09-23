@@ -5,6 +5,7 @@
 
 CG::ShaderLoader::ShaderLoader() {}
 
+/* parses the header line of a shader and create a shader. */
 CG::Shader CG::ShaderLoader::findShader(std::string& line)
 {
 	for (auto& it : _shaderTypes) {
@@ -18,6 +19,7 @@ CG::Shader CG::ShaderLoader::findShader(std::string& line)
 	return Shader();
 }
 
+/* fetch the shader source code and returns it. */
 std::string CG::ShaderLoader::getShaderSourceCode(std::ifstream& stream, std::string& line)
 {
 	std::ostringstream sourceCode;
@@ -28,6 +30,7 @@ std::string CG::ShaderLoader::getShaderSourceCode(std::ifstream& stream, std::st
 	return sourceCode.str();
 }
 
+/* create a shader and adds it to the shader pool. */
 void CG::ShaderLoader::createShader(std::ifstream& stream, std::string& line)
 {
 	// creating the shader.
@@ -43,6 +46,7 @@ void CG::ShaderLoader::createShader(std::ifstream& stream, std::string& line)
 	_shaders.push_back(shader);
 }
 
+/* public api, load a shader by its name and file. */
 bool CG::ShaderLoader::load(const std::string& name, const std::string& file)
 {
 	std::ifstream stream(file);
@@ -64,6 +68,7 @@ bool CG::ShaderLoader::load(const std::string& name, const std::string& file)
 	return false;
 }
 
+/* public api, load all shaders from a file. */
 bool CG::ShaderLoader::load(const std::string& file)
 {
 	std::ifstream stream(file);
@@ -82,6 +87,7 @@ bool CG::ShaderLoader::load(const std::string& file)
 	return true;
 }
 
+/* unload a shader from the shader pool. */
 void CG::ShaderLoader::unload(const std::string& name)
 {
 	for (auto it = _shaders.begin(); it != _shaders.end(); ++it)
@@ -91,6 +97,7 @@ void CG::ShaderLoader::unload(const std::string& name)
 		}
 }
 
+/* get a shader object from its name. */
 CG::Shader& CG::ShaderLoader::get(const std::string& name)
 {
 	for (auto& it : _shaders)

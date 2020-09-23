@@ -3,6 +3,7 @@
 std::shared_ptr<spdlog::logger> CG::Logger::_profiler;
 std::shared_ptr<spdlog::logger> CG::Logger::_logger;
 
+/* initialize both logger and profiler. */
 void CG::Logger::Init()
 {
 	_profiler = spdlog::stdout_color_mt("profiler");

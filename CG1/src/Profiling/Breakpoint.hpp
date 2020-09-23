@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Logger.hpp"
 
+/* define classes for breakpoints with different time units. */
 #define DEFINE_BREAKPOINT(name, type, unit) 		                 \
 		static constexpr const char unit ## _str[] = #unit ## "\0";  \
 		using name = CG::Breakpoint<type, unit ## _str>

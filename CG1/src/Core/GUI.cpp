@@ -3,6 +3,7 @@
 
 #include "GUI.hpp"
 
+/* initilializing Imgui and setting a theme. */
 CG::GUI::GUI(GLFWwindow* window, CG::GUI::Style style)
 {
 	IMGUI_CHECKVERSION();
@@ -22,6 +23,7 @@ CG::GUI::~GUI()
 	ImGui::DestroyContext();
 }
 
+/* creating a new frame for the gui. */
 void CG::GUI::newFrame()
 {
 	ImGui_ImplOpenGL3_NewFrame();
@@ -29,6 +31,8 @@ void CG::GUI::newFrame()
 	ImGui::NewFrame();
 }
 
+/* draw elements on screen. */
+/* each window / widgets should be sepparated into functions. */
 void CG::GUI::drawUI()
 {
 	ImGui::Begin("Tools");
@@ -37,6 +41,7 @@ void CG::GUI::drawUI()
 	ImGui::End();
 }
 
+/* renders the ui. */
 void CG::GUI::renderGUI()
 {
 	ImGui::Render();
