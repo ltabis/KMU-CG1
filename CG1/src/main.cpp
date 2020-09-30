@@ -75,6 +75,8 @@ int main(void)
     sloader.createExecutable();
     sloader.use();
 
+    CG_CONSOLE_INFO("Loggin to the main console.");
+
     // running window loop.
     core->run();
 

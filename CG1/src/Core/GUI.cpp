@@ -35,15 +35,35 @@ void CG::GUI::newFrame()
 /* each window / widgets should be sepparated into functions. */
 void CG::GUI::drawUI()
 {
+#ifdef _DEBUG
+	drawDebugUI();
+#endif
+}
+
+#ifdef _DEBUG
+void CG::GUI::drawDebugUI()
+{
 	ImGui::Begin("Tools");
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
+	ImGui::Separator();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "Logs");
+	ImGui::SameLine();
+	if (ImGui::Button("Clear")) CG::Logger::clearConsoleLogs();
+	ImGui::BeginChild("scrolling");
+	ImGui::TextUnformatted(CG::Logger::buffer().c_str());
+	ImGui::EndChild();
 	ImGui::End();
 }
+#endif
 
 /* renders the ui. */
 void CG::GUI::renderGUI()
 {
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void CG::GUI::clearLogs()
+{
+	CG::Logger::clearConsoleLogs();
 }
