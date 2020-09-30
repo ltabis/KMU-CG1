@@ -106,7 +106,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Graphics\Tools\glfw\lib-vc2019;C:\Graphics\Tools\glew\lib\Release\Win32;C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Graphics\Tools\glfw\lib;C:\Graphics\Tools\glew\lib;C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;Opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -126,7 +126,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Graphics\Tools\glfw\lib-vc2019;C:\Graphics\Tools\glew\lib\Release\Win32;C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Graphics\Tools\glfw\lib;C:\Graphics\Tools\glew\lib;C:\GRAPHICS\TOOLS\GLFW\lib-vc2019;C:\GRAPHICS\TOOLS\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;Opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -142,7 +142,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Graphics\Tools\glfw\lib-vc2019;C:\Graphics\Tools\glew\lib\Release\Win32;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Graphics\Tools\glfw\lib;C:\Graphics\Tools\glew\lib;</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;Opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -162,7 +162,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Graphics\Tools\glfw\lib-vc2019;C:\Graphics\Tools\glew\lib\Release\Win32;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Graphics\Tools\glfw\lib;C:\Graphics\Tools\glew\lib;</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;Opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
