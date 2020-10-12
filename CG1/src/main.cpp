@@ -38,6 +38,16 @@ int main(void)
         -0.5f,  0.5f
     };
 
+    float colors[] = {
+         1.0f,  0.0f, 0.0f,
+         0.0f,  1.0f, 0.0f,
+         0.0f,  0.0f, 1.0f,
+
+         0.0f,  0.0f, 1.0f,
+         0.0f,  1.0f, 0.0f,
+         1.0f,  0.0f, 0.0f,
+    };
+
     // order of vertex rendering.
     unsigned int indices[] = {
         0, 1, 2,
@@ -45,7 +55,7 @@ int main(void)
     };
 
     // creating a new vertex buffer.
-    CG::VertexBuffer vb(vertices, 8 * sizeof(float));
+    CG::VertexBuffer vbVerticies(vertices, sizeof(vertices));
 
     // enabling the attribute.
     glEnableVertexAttribArray(0);
@@ -64,14 +74,18 @@ int main(void)
     //                                          so (const void *)8.
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
+    CG::VertexBuffer vbColors(colors, sizeof(colors));
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+
     // creating a new index buffer.
     CG::IndexBuffer ib(indices, 6);
 
     // attaching a vertex and fragment shader to the program.
     sloader.attach("triangle_vertex");
-    sloader.attach("red");
+    sloader.attach("vertices_colors");
 
-    // creating an executable with both shaders and using the program.
+    // creating an executable with both shaders and using the program on the GPU.
     sloader.createExecutable();
     sloader.use();
 

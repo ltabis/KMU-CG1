@@ -3,9 +3,21 @@
 // location = 0 : glVertexAttribPointer(0
 // opengl will translate the attribute (vec2) to a vec4.
 layout(location = 0) in vec4 position;
+layout(location = 1) in vec3 colors;
+out vec3 outColor;
 void main()
 {
    gl_Position = position;
+   outColor = colors;
+};
+
+#shader FRAGMENT     vertices_colors
+#version 330 core
+layout(location = 0) out vec4 color;
+in vec3 outColor;
+void main()
+{
+	color = vec4(outColor, 1.0);
 };
 
 #shader FRAGMENT     red

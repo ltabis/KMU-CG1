@@ -1,5 +1,12 @@
 #include "Core.hpp"
 
+// -- Callbacks -- //
+static void escape_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
 /* openGL error callback. will be called if any error is thrown by glew. */
 static void GLAPIENTRY glewErrorCallback(GLenum source,
     GLenum type,
@@ -29,6 +36,9 @@ CG::Core::Core(CG::GUI::Style style)
     CG::Logger::Init();
     CG_LOG_INFO("Initializing OpenGL Core.");
 
+    /* using modern opengl */
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     /* setting error callback */
     glfwSetErrorCallback(glfwErrorCallback);
 
@@ -53,6 +63,9 @@ CG::Core::Core(CG::GUI::Style style)
     /* Vsync, to be investigated */
     glfwSwapInterval(1);
 
+    /* Setting all callbacks */
+    glfwSetKeyCallback(_window, escape_callback);
+
     /* Initialize glew */
     if (glewInit() != GLEW_OK)
         throw "Couldn't initialize glew.";
@@ -64,8 +77,8 @@ CG::Core::Core(CG::GUI::Style style)
 
 
     /* Initializing error debug callback */
-     glEnable(GL_DEBUG_OUTPUT);
-     glDebugMessageCallback(glewErrorCallback, 0);
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(glewErrorCallback, 0);
 
     CG_LOG_INFO("Core ready.");
 }
