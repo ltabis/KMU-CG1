@@ -14,6 +14,12 @@ static void escape_callback(GLFWwindow* window, int key, int scancode, int actio
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
+static void spacebar_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (action == GLFW_PRESS)
+        CG_CONSOLE_INFO("spacebar pressed");
+}
+
 int main(void)
 {
     std::unique_ptr<CG::Core> core = nullptr;
@@ -27,7 +33,8 @@ int main(void)
 
     // registering callbacks.
     core->registerKeyBindingCallback(GLFW_KEY_ESCAPE, escape_callback);
-
+    core->registerKeyBindingCallback(GLFW_KEY_SPACE, spacebar_callback);
+    
     CG::ShaderLoader sloader;
 
     // profiling shader loading.
