@@ -1,4 +1,12 @@
-#shader VERTEX triangle_vertex
+#shader VERTEX regular_triangle_vertex
+#version 330 core
+layout(location = 0) in vec4 position;
+void main()
+{
+	gl_Position = position;
+};
+
+#shader VERTEX colored_triangle_vertex
 #version 330 core
 // location = 0 : glVertexAttribPointer(0
 // opengl will translate the attribute (vec2) to a vec4.

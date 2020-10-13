@@ -1,12 +1,5 @@
 #include "Core.hpp"
 
-// -- Callbacks -- //
-static void escape_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
-
 /* openGL error callback. will be called if any error is thrown by glew. */
 static void GLAPIENTRY glewErrorCallback(GLenum source,
     GLenum type,
@@ -63,9 +56,6 @@ CG::Core::Core(CG::GUI::Style style)
     /* Vsync, to be investigated */
     glfwSwapInterval(1);
 
-    /* Setting all callbacks */
-    glfwSetKeyCallback(_window, escape_callback);
-
     /* Initialize glew */
     if (glewInit() != GLEW_OK)
         throw "Couldn't initialize glew.";
@@ -74,7 +64,8 @@ CG::Core::Core(CG::GUI::Style style)
 
     /* Create a GUI instance to display debug */
     _gui = std::make_unique<GUI>(_window, style);
-
+    /* Create an event handler instance to register key callbacks */
+    _eventHandler = std::make_unique<EventHandler>(_window);
 
     /* Initializing error debug callback */
     glEnable(GL_DEBUG_OUTPUT);
@@ -109,4 +100,12 @@ void CG::Core::run()
         /* Swap front and back buffers */
         glfwSwapBuffers(_window);
     }
+}
+
+void CG::Core::registerKeyBindingCallback(
+    unsigned int key,
+    void(*callback)(GLFWwindow* window, int key, int scancode, int action, int mods
+))
+{
+    _eventHandler->registerCallback(key, callback);
 }

@@ -12,6 +12,7 @@
 
 #include "GUI.hpp"
 #include "Logger.hpp"
+#include "EventHandler.hpp"
 
 namespace glm
 {
@@ -28,6 +29,7 @@ namespace CG
 	{
 	private:
 		GLFWwindow *_window;
+		std::unique_ptr<EventHandler> _eventHandler;
 		std::unique_ptr<GUI> _gui;
 
 	public:
@@ -35,5 +37,6 @@ namespace CG
 		~Core();
 
 		void run();
+		void registerKeyBindingCallback(unsigned int key, void (*callback)(GLFWwindow* window, int key, int scancode, int action, int mods));
 	};
 }

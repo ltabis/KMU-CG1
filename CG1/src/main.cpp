@@ -7,6 +7,13 @@
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
 
+// -- Callbacks -- //
+static void escape_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
 int main(void)
 {
     std::unique_ptr<CG::Core> core = nullptr;
@@ -17,6 +24,9 @@ int main(void)
         CG_LOG_CRITICAL(e);
         return 1;
     }
+
+    // registering callbacks.
+    core->registerKeyBindingCallback(GLFW_KEY_ESCAPE, escape_callback);
 
     CG::ShaderLoader sloader;
 
@@ -82,7 +92,7 @@ int main(void)
     CG::IndexBuffer ib(indices, 6);
 
     // attaching a vertex and fragment shader to the program.
-    sloader.attach("triangle_vertex");
+    sloader.attach("colored_triangle_vertex");
     sloader.attach("vertices_colors");
 
     // creating an executable with both shaders and using the program on the GPU.

@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\EventHandler.cpp" />
     <ClCompile Include="src\Core\IndexBuffer.cpp" />
     <ClCompile Include="src\Loging\Logger.cpp" />
     <ClCompile Include="src\Core\GUI.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="src\Core\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\EventHandler.hpp" />
     <ClInclude Include="src\Core\IndexBuffer.hpp" />
     <ClInclude Include="src\Loging\Logger.hpp" />
     <ClInclude Include="src\Core\GUI.hpp" />
