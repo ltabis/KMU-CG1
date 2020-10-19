@@ -76,19 +76,6 @@ int main(void)
 
     // enabling the attribute.
     glEnableVertexAttribArray(0);
-    // Parameters:
-    // 1. index of the start of the attribute in memory.
-    //    Here, it is our first attribute, so the index is 0.
-    // 2. Component count of the attribute.
-    //    Here, each vertex has 2 floats for the position. so 2.
-    // 3. The type of each element.
-    // 4. Werever your data needs to be normalized.
-    // 5. Amount of bytes between each component.
-    // 6. Starting point of the attribute.
-    //    ex:         [ 1.f, 1.f ]           -> vertex component, so zero.
-    //                [ 1.f, 1.f, 1.f, 1.f ] -> vertex component + texture coord
-    //                                          to define textcoord: sizeof(float) * 2
-    //                                          so (const void *)8.
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
     CG::VertexBuffer vbColors(colors, sizeof(colors));
@@ -113,5 +100,8 @@ int main(void)
 
     CG_LOG_WARN("Ending session...");
 
+#ifdef _DEBUG
+    _CrtDumpMemoryLeaks();
+#endif /* ! _DEBUG */
     return 0;
 }

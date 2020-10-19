@@ -3,6 +3,16 @@
 
 #pragma once
 
+// using the crt library in debug mode
+// to find memory leaks.
+#ifdef _DEBUG
+	#define _CRTDBG_MAP_ALLOC
+	#include <stdlib.h>
+	#include <crtdbg.h>
+	#define DEBUG_CLIENTBLOCK new( _CLIENT_BLOCK, __FILE__, __LINE__)
+	#define new DEBUG_CLIENTBLOCK
+#endif /* ! _DEBUG */
+
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
