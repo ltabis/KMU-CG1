@@ -32,14 +32,16 @@ int main(void)
     renderer->registerKeyBindingCallback(GLFW_KEY_ESCAPE, escape_callback);
     renderer->registerKeyBindingCallback(GLFW_KEY_SPACE, spacebar_callback);
     
-    CG::ShaderLoader sloader;
+    CG::ShaderLoader sloader1;
+    CG::ShaderLoader sloader2;
 
     // profiling shader loading.
     {
 #if _DEBUG
         CG::BreakpointUs b("Shader loading");
 #endif
-        sloader.load("./res/shaders/basic.shader");
+        sloader1.load("./res/shaders/basic.shader");
+        sloader2.load("./res/shaders/basic.shader");
     }
 
     float verticesDataT1[] = {
@@ -50,10 +52,11 @@ int main(void)
     };
 
     float verticesDataT2[] = {
-        -0.2f, -0.7f,
+        -0.2f, -0.2f,
          0.2f, -0.2f,
          0.2f,  0.2f,
         -0.2f,  0.2f,
+        -0.2f,  0.5f,
     };
 
     float colorData[] = {
@@ -64,9 +67,15 @@ int main(void)
     };
 
     // order of vertex rendering.
-    unsigned int indices[] = {
+    unsigned int indices1[] = {
         0, 1, 2,
         2, 3, 0
+    };
+
+    unsigned int indices2[] = {
+        0, 1, 2,
+        2, 3, 0,
+        2, 3, 4
     };
 
     // creating a new vertex buffer.
@@ -79,7 +88,6 @@ int main(void)
     layout1.push<float>(vboV1, 2);
     layout1.push<float>(vboC, 3);
     layout2.push<float>(vboV2, 2);
-    layout2.push<float>(vboC, 3);
 
     CG::VertexArray vao1;
     vao1.addBuffer(vboV1, layout1);
@@ -87,10 +95,10 @@ int main(void)
 
     CG::VertexArray vao2;
     vao2.addBuffer(vboV2, layout2);
-    vao2.addBuffer(vboC, layout2);
 
     // creating a new index buffer.
-    CG::IndexBuffer ibo(indices, 6);
+    CG::IndexBuffer ibo1(indices1, 6);
+    CG::IndexBuffer ibo2(indices2, 9);
 
     // enabling the attribute.
     //glEnableVertexAttribArray(0);
@@ -101,20 +109,23 @@ int main(void)
     //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
     // attaching a vertex and fragment shader to the program.
-    sloader.attach("colored_triangle_vertex");
-    sloader.attach("vertices_colors");
+    sloader1.attach("colored_triangle_vertex");
+    sloader1.attach("vertices_colors");
+
+    sloader2.attach("regular_triangle_vertex");
+    sloader2.attach("green");
 
     // creating an executable with both shaders and using the program on the GPU.
-    sloader.createExecutable();
-    sloader.use();
+    sloader1.createExecutable();
+    sloader2.createExecutable();
 
     CG_CONSOLE_INFO("Loggin to the main console.");
 
     /* Loop until the user closes the window */
     while (!renderer->windowShouldClose()) {
         renderer->clear();
-        renderer->draw(vao1, ibo, sloader);
-        renderer->draw(vao2, ibo, sloader);
+        renderer->draw(vao1, ibo1, sloader1);
+        renderer->draw(vao2, ibo2, sloader2);
         renderer->drawUI();
         renderer->pollEvents();
         renderer->swapBuffers();

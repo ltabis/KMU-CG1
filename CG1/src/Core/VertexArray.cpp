@@ -14,7 +14,6 @@ CG::VertexArray::~VertexArray()
 void CG::VertexArray::addBuffer(const VertexBuffer& vb, const VertexArrayLayout& layout)
 {
 	const auto& elements = layout.layout();
-	unsigned int offset = 0;
 
 	// binding the current vertex array.
 	bind();
@@ -32,7 +31,5 @@ void CG::VertexArray::addBuffer(const VertexBuffer& vb, const VertexArrayLayout&
 			elements[i].normalized,
 			0,
 			NULL);
-
-		offset += elements[i].count * elements[i].type;
 	}
 }
