@@ -131,6 +131,24 @@ void CG::ShaderLoader::createExecutable()
 		glDeleteShader(shader.id);
 }
 
+#include <iostream>
+
+void CG::ShaderLoader::setUniform(const std::string& uniformName, const glm::mat4& matrix)
+{
+	int location = 0;
+
+	// The uniform location hasn't been retreived yet.
+	if (_uniforms.find(uniformName) == _uniforms.end()) {
+		location = glGetUniformLocation(_program, uniformName.c_str());
+		if (location == -1)
+			return;
+		_uniforms.emplace(uniformName, location);
+	}
+
+	location = !location ? _uniforms[uniformName] : location;
+	glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
+}
+
 void CG::ShaderLoader::use() const
 {
 	glUseProgram(_program);

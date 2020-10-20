@@ -185,6 +185,8 @@
     <ClCompile Include="src\dependencies\imgui\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Core\VertexBuffer.cpp" />
+    <ClCompile Include="src\Core\VertexArrayLayout.cpp" />
+    <ClCompile Include="src\Core\VertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\EventHandler.hpp" />
@@ -203,6 +205,8 @@
     <ClInclude Include="src\Core\ShaderLoader.hpp" />
     <ClInclude Include="src\Core\Core.hpp" />
     <ClInclude Include="src\Core\VertexBuffer.hpp" />
+    <ClInclude Include="src\Core\VertexArrayLayout.hpp" />
+    <ClInclude Include="src\Core\VertexArray.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />

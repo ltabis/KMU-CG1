@@ -10,6 +10,7 @@
 #include <string>
 
 #include <gl/glew.h>
+#include <glm/mat4x4.hpp>
 #include <Logger.hpp>
 
 namespace CG
@@ -44,6 +45,7 @@ namespace CG
 	{
 	private:
 		unsigned int _program;
+		std::unordered_map<std::string, unsigned int> _uniforms;
 		std::vector<Shader> _shaders
 		{
 			Shader(),
@@ -68,6 +70,7 @@ namespace CG
 		void attach(const std::string& name);
 		void attach();
 		void createExecutable();
+		void setUniform(const std::string& uniformName, const glm::mat4 &matrix);
 
 		void use() const;
 

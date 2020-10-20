@@ -53,7 +53,7 @@ CG::Core::Core(CG::GUI::Style style)
     /* Make the window's context current */
     glfwMakeContextCurrent(_window);
 
-    /* Vsync, to be investigated */
+    /* disable Vsync, synchronises with monitor refresh rate */
     glfwSwapInterval(1);
 
     /* Initialize glew */
