@@ -59,6 +59,7 @@ namespace CG
 		Shader findShader(std::string& line);
 		void createShader(std::ifstream& stream, std::string& line);
 		std::string getShaderSourceCode(std::ifstream& stream, std::string& line);
+		int findUniform(const std::string& uniformName);
 
 	public:
 		ShaderLoader();
