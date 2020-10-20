@@ -80,13 +80,15 @@ CG::Core::~Core()
 }
 
 /* runs every frames. drawing elements and Imgui stuff. */
-void CG::Core::run()
+void CG::Core::run(const CG::VertexArray& vbo)
 {
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(_window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
+
+        vbo.bind();
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 

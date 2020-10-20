@@ -17,16 +17,18 @@ void CG::VertexArray::addBuffer(const VertexBuffer& vb, const VertexArrayLayout&
 	vb.bind();
 
 	const auto& elements = layout.layout();
+	unsigned int offset = 0;
 	for (size_t i = 0; i < elements.size(); ++i) {
-		unsigned int offset = elements[i].count * elements[i].type;
+
 		// specifying that we're adding a new layout element to the array.
 		glEnableVertexAttribArray(i);
-
 		glVertexAttribPointer(i,
 			elements[i].count,
 			elements[i].type,
 			elements[i].normalized,
 			layout.stride(),
 			(const void*)offset);
+
+		offset += elements[i].count * elements[i].type;
 	}
 }

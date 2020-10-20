@@ -81,11 +81,10 @@ int main(void)
 
     CG::VertexArray vbo;
     vbo.addBuffer(vbVerticies, layout);
-    vbo.bind();
 
     // enabling the attribute.
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+    //glEnableVertexAttribArray(0);
+    //glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
     //CG::VertexBuffer vbColors(colors, sizeof(colors));
     //glEnableVertexAttribArray(1);
@@ -105,7 +104,7 @@ int main(void)
     CG_CONSOLE_INFO("Loggin to the main console.");
 
     // running window loop.
-    core->run();
+    core->run(vbo);
 
     CG_LOG_WARN("Ending session...");
 

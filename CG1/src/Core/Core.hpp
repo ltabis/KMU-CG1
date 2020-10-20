@@ -22,6 +22,7 @@
 
 #include "GUI.hpp"
 #include "Logger.hpp"
+#include "VertexArray.hpp"
 #include "EventHandler.hpp"
 
 namespace glm
@@ -46,7 +47,7 @@ namespace CG
 		Core(GUI::Style style);
 		~Core();
 
-		void run();
+		void run(const VertexArray& vbo);
 		void registerKeyBindingCallback(unsigned int key, void (*callback)(GLFWwindow* window, int key, int scancode, int action, int mods));
 	};
 }

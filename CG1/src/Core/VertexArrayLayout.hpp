@@ -15,6 +15,11 @@ namespace CG
 	class VertexArrayLayout
 	{
 	public:
+
+		VertexArrayLayout()
+			: _stride(0)
+		{}
+
 		template<typename T>
 		void push(unsigned int count)
 		{
