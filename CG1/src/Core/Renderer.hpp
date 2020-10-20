@@ -1,5 +1,5 @@
-// Core.hpp
-// core class declaration.
+// Renderer.hpp
+// Renderer class declaration.
 
 #pragma once
 
@@ -36,7 +36,7 @@ namespace glm
 
 namespace CG
 {
-	class Core
+	class Renderer
 	{
 	private:
 		GLFWwindow *_window;
@@ -44,8 +44,8 @@ namespace CG
 		std::unique_ptr<GUI> _gui;
 
 	public:
-		Core(GUI::Style style);
-		~Core();
+		Renderer(GUI::Style style);
+		~Renderer();
 
 		void run(const VertexArray& vbo);
 		void registerKeyBindingCallback(unsigned int key, void (*callback)(GLFWwindow* window, int key, int scancode, int action, int mods));

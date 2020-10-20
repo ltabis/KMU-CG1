@@ -176,7 +176,7 @@
     <ClCompile Include="src\Loging\Logger.cpp" />
     <ClCompile Include="src\Core\GUI.cpp" />
     <ClCompile Include="src\Core\ShaderLoader.cpp" />
-    <ClCompile Include="src\Core\Core.cpp" />
+    <ClCompile Include="src\Core\Renderer.cpp" />
     <ClCompile Include="src\dependencies\imgui\imgui\imgui.cpp" />
     <ClCompile Include="src\dependencies\imgui\imgui\imgui_demo.cpp" />
     <ClCompile Include="src\dependencies\imgui\imgui\imgui_draw.cpp" />
@@ -203,7 +203,7 @@
     <ClInclude Include="src\dependencies\imgui\imgui\imstb_truetype.h" />
     <ClInclude Include="src\Profiling\Breakpoint.hpp" />
     <ClInclude Include="src\Core\ShaderLoader.hpp" />
-    <ClInclude Include="src\Core\Core.hpp" />
+    <ClInclude Include="src\Core\Renderer.hpp" />
     <ClInclude Include="src\Core\VertexBuffer.hpp" />
     <ClInclude Include="src\Core\VertexArrayLayout.hpp" />
     <ClInclude Include="src\Core\VertexArray.hpp" />

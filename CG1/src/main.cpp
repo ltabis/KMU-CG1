@@ -1,7 +1,7 @@
 ﻿// main.cpp
 // Application entry point.
 
-#include "Core.hpp"
+#include "Renderer.hpp"
 #include "ShaderLoader.hpp"
 #include "Profiling/Breakpoint.hpp"
 #include "VertexArrayLayout.hpp"
@@ -24,18 +24,18 @@ static void spacebar_callback(GLFWwindow* window, int key, int scancode, int act
 
 int main(void)
 {
-    std::unique_ptr<CG::Core> core = nullptr;
+    std::unique_ptr<CG::Renderer> Renderer = nullptr;
 
     try {
-        core = std::make_unique<CG::Core>(CG::GUI::Style::CLASSIC);
+        Renderer = std::make_unique<CG::Renderer>(CG::GUI::Style::CLASSIC);
     } catch (std::string& e) {
         CG_LOG_CRITICAL(e);
         return 1;
     }
 
     // registering callbacks.
-    core->registerKeyBindingCallback(GLFW_KEY_ESCAPE, escape_callback);
-    core->registerKeyBindingCallback(GLFW_KEY_SPACE, spacebar_callback);
+    Renderer->registerKeyBindingCallback(GLFW_KEY_ESCAPE, escape_callback);
+    Renderer->registerKeyBindingCallback(GLFW_KEY_SPACE, spacebar_callback);
     
     CG::ShaderLoader sloader;
 
@@ -104,7 +104,7 @@ int main(void)
     CG_CONSOLE_INFO("Loggin to the main console.");
 
     // running window loop.
-    core->run(vbo);
+    Renderer->run(vbo);
 
     CG_LOG_WARN("Ending session...");
 

@@ -1,4 +1,4 @@
-#include "Core.hpp"
+#include "Renderer.hpp"
 
 /* openGL error callback. will be called if any error is thrown by glew. */
 static void GLAPIENTRY glewErrorCallback(GLenum source,
@@ -23,11 +23,11 @@ static void glfwErrorCallback(int error, const char* description)
     CG_LOG_ERROR("Error '{}': {}", error, description);
 }
 
-/* initializing the core object. glfw / glew / spdlog */
-CG::Core::Core(CG::GUI::Style style)
+/* initializing the Renderer object. glfw / glew / spdlog */
+CG::Renderer::Renderer(CG::GUI::Style style)
 {
     CG::Logger::Init();
-    CG_LOG_INFO("Initializing OpenGL Core.");
+    CG_LOG_INFO("Initializing OpenGL Renderer.");
 
     /* using modern opengl */
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -71,16 +71,16 @@ CG::Core::Core(CG::GUI::Style style)
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(glewErrorCallback, 0);
 
-    CG_LOG_INFO("Core ready.");
+    CG_LOG_INFO("Renderer ready.");
 }
 
-CG::Core::~Core()
+CG::Renderer::~Renderer()
 {
     glfwTerminate();
 }
 
 /* runs every frames. drawing elements and Imgui stuff. */
-void CG::Core::run(const CG::VertexArray& vbo)
+void CG::Renderer::run(const CG::VertexArray& vbo)
 {
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(_window))
@@ -104,7 +104,7 @@ void CG::Core::run(const CG::VertexArray& vbo)
     }
 }
 
-void CG::Core::registerKeyBindingCallback(
+void CG::Renderer::registerKeyBindingCallback(
     unsigned int key,
     void(*callback)(GLFWwindow* window, int key, int scancode, int action, int mods
 ))
