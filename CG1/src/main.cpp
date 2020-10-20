@@ -4,6 +4,8 @@
 #include "Core.hpp"
 #include "ShaderLoader.hpp"
 #include "Profiling/Breakpoint.hpp"
+#include "VertexArrayLayout.hpp"
+#include "VertexArray.hpp"
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
 
@@ -73,21 +75,28 @@ int main(void)
 
     // creating a new vertex buffer.
     CG::VertexBuffer vbVerticies(vertices, sizeof(vertices));
+    CG::VertexArrayLayout layout;
+
+    layout.push<float>(2);
+
+    CG::VertexArray vbo;
+    vbo.addBuffer(vbVerticies, layout);
+    vbo.bind();
 
     // enabling the attribute.
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
-    CG::VertexBuffer vbColors(colors, sizeof(colors));
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+    //CG::VertexBuffer vbColors(colors, sizeof(colors));
+    //glEnableVertexAttribArray(1);
+    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
     // creating a new index buffer.
     CG::IndexBuffer ib(indices, 6);
 
     // attaching a vertex and fragment shader to the program.
-    sloader.attach("colored_triangle_vertex");
-    sloader.attach("vertices_colors");
+    sloader.attach("regular_triangle_vertex");
+    sloader.attach("red");
 
     // creating an executable with both shaders and using the program on the GPU.
     sloader.createExecutable();
