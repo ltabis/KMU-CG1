@@ -2,12 +2,7 @@
 // Application entry point.
 
 #include "Renderer.hpp"
-#include "ShaderLoader.hpp"
 #include "Profiling/Breakpoint.hpp"
-#include "VertexArrayLayout.hpp"
-#include "VertexArray.hpp"
-#include "VertexBuffer.hpp"
-#include "IndexBuffer.hpp"
 
 // -- Callbacks -- //
 static void escape_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -24,18 +19,18 @@ static void spacebar_callback(GLFWwindow* window, int key, int scancode, int act
 
 int main(void)
 {
-    std::unique_ptr<CG::Renderer> Renderer = nullptr;
+    std::unique_ptr<CG::Renderer> renderer = nullptr;
 
     try {
-        Renderer = std::make_unique<CG::Renderer>(CG::GUI::Style::CLASSIC);
+        renderer = std::make_unique<CG::Renderer>(CG::GUI::Style::CLASSIC);
     } catch (std::string& e) {
         CG_LOG_CRITICAL(e);
         return 1;
     }
 
     // registering callbacks.
-    Renderer->registerKeyBindingCallback(GLFW_KEY_ESCAPE, escape_callback);
-    Renderer->registerKeyBindingCallback(GLFW_KEY_SPACE, spacebar_callback);
+    renderer->registerKeyBindingCallback(GLFW_KEY_ESCAPE, escape_callback);
+    renderer->registerKeyBindingCallback(GLFW_KEY_SPACE, spacebar_callback);
     
     CG::ShaderLoader sloader;
 
@@ -47,24 +42,25 @@ int main(void)
         sloader.load("./res/shaders/basic.shader");
     }
 
-    /* trying to render a triangle. */
-
-    // data to render a triangle.
-    float vertices[] = {
+    float verticesDataT1[] = {
         -0.5f, -0.5f,
          0.5f, -0.5f,
          0.5f,  0.5f,
-        -0.5f,  0.5f
+        -0.5f,  0.5f,
     };
 
-    float colors[] = {
-         1.0f,  0.0f, 0.0f,
-         0.0f,  1.0f, 0.0f,
-         0.0f,  0.0f, 1.0f,
+    float verticesDataT2[] = {
+        -0.2f, -0.7f,
+         0.2f, -0.2f,
+         0.2f,  0.2f,
+        -0.2f,  0.2f,
+    };
 
-         0.0f,  0.0f, 1.0f,
-         0.0f,  1.0f, 0.0f,
-         1.0f,  0.0f, 0.0f,
+    float colorData[] = {
+        1.0f,  0.0f, 0.0f,
+        0.0f,  1.0f, 0.0f,
+        0.0f,  0.0f, 1.0f,
+        1.0f,  1.0f, 1.0f
     };
 
     // order of vertex rendering.
@@ -74,13 +70,27 @@ int main(void)
     };
 
     // creating a new vertex buffer.
-    CG::VertexBuffer vbVerticies(vertices, sizeof(vertices));
-    CG::VertexArrayLayout layout;
+    CG::VertexBuffer vboV1(verticesDataT1, sizeof(verticesDataT1));
+    CG::VertexBuffer vboV2(verticesDataT2, sizeof(verticesDataT2));
+    CG::VertexBuffer vboC(colorData, sizeof(colorData));
+    CG::VertexArrayLayout layout1;
+    CG::VertexArrayLayout layout2;
 
-    layout.push<float>(2);
+    layout1.push<float>(vboV1, 2);
+    layout1.push<float>(vboC, 3);
+    layout2.push<float>(vboV2, 2);
+    layout2.push<float>(vboC, 3);
 
-    CG::VertexArray vbo;
-    vbo.addBuffer(vbVerticies, layout);
+    CG::VertexArray vao1;
+    vao1.addBuffer(vboV1, layout1);
+    vao1.addBuffer(vboC, layout1);
+
+    CG::VertexArray vao2;
+    vao2.addBuffer(vboV2, layout2);
+    vao2.addBuffer(vboC, layout2);
+
+    // creating a new index buffer.
+    CG::IndexBuffer ibo(indices, 6);
 
     // enabling the attribute.
     //glEnableVertexAttribArray(0);
@@ -90,12 +100,9 @@ int main(void)
     //glEnableVertexAttribArray(1);
     //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
-    // creating a new index buffer.
-    CG::IndexBuffer ib(indices, 6);
-
     // attaching a vertex and fragment shader to the program.
-    sloader.attach("regular_triangle_vertex");
-    sloader.attach("red");
+    sloader.attach("colored_triangle_vertex");
+    sloader.attach("vertices_colors");
 
     // creating an executable with both shaders and using the program on the GPU.
     sloader.createExecutable();
@@ -103,13 +110,21 @@ int main(void)
 
     CG_CONSOLE_INFO("Loggin to the main console.");
 
-    // running window loop.
-    Renderer->run(vbo);
+    /* Loop until the user closes the window */
+    while (!renderer->windowShouldClose()) {
+        renderer->clear();
+        renderer->draw(vao1, ibo, sloader);
+        renderer->draw(vao2, ibo, sloader);
+        renderer->drawUI();
+        renderer->pollEvents();
+        renderer->swapBuffers();
+    }
 
     CG_LOG_WARN("Ending session...");
 
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks();
 #endif /* ! _DEBUG */
+
     return 0;
 }

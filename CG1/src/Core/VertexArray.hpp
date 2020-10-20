@@ -2,6 +2,7 @@
 
 #include "VertexBuffer.hpp"
 #include "VertexArrayLayout.hpp"
+#include "Logger.hpp"
 
 namespace CG
 {

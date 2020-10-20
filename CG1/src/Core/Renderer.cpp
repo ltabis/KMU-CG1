@@ -79,29 +79,40 @@ CG::Renderer::~Renderer()
     glfwTerminate();
 }
 
-/* runs every frames. drawing elements and Imgui stuff. */
-void CG::Renderer::run(const CG::VertexArray& vbo)
+void CG::Renderer::clear()
 {
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(_window))
-    {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
 
-        vbo.bind();
+void CG::Renderer::draw(const VertexArray& vao, const IndexBuffer& ibo, const ShaderLoader& shader)
+{
+    shader.use();
+    vao.bind();
+    ibo.bind();
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, ibo.indices(), GL_UNSIGNED_INT, nullptr);
+}
 
-        /* Poll for and process events */
-        glfwPollEvents();
+void CG::Renderer::drawUI()
+{
+    _gui->newFrame();
+    _gui->drawUI();
+    _gui->renderGUI();
+}
 
-        _gui->newFrame();
-        _gui->drawUI();
-        _gui->renderGUI();
+void CG::Renderer::pollEvents()
+{
+    glfwPollEvents();
+}
 
-        /* Swap front and back buffers */
-        glfwSwapBuffers(_window);
-    }
+void CG::Renderer::swapBuffers()
+{
+    glfwSwapBuffers(_window);
+}
+
+bool CG::Renderer::windowShouldClose()
+{
+    return glfwWindowShouldClose(_window);
 }
 
 void CG::Renderer::registerKeyBindingCallback(

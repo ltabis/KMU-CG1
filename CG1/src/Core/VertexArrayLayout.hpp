@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <GL/glew.h>
+#include "VertexBuffer.hpp"
 
 namespace CG
 {
@@ -10,6 +11,7 @@ namespace CG
 		unsigned int type;
 		unsigned int count;
 		unsigned char normalized;
+		const VertexBuffer& reference;
 	};
 
 	class VertexArrayLayout
@@ -17,33 +19,35 @@ namespace CG
 	public:
 
 		VertexArrayLayout()
-			: _stride(0)
+			: _stride { 0 }
 		{}
 
 		template<typename T>
-		void push(unsigned int count)
+		void push(const VertexBuffer& vbo, unsigned int count)
 		{
+			(void)vbo;
+			(void)count;
 			throw "Cannot use this type to create a layout.";
 		}
 
 		template<>
-		void push<float>(unsigned int count)
+		void push<float>(const VertexBuffer& vbo, unsigned int count)
 		{
-			_layout.push_back(VertexBufferElement{ GL_FLOAT, count, GL_FALSE });
+			_layout.push_back(VertexBufferElement{ GL_FLOAT, count, GL_FALSE, vbo });
 			_stride += count * sizeof(float);
 		}
 
 		template<>
-		void push<unsigned int>(unsigned int count)
+		void push<unsigned int>(const VertexBuffer& vbo, unsigned int count)
 		{
-			_layout.push_back(VertexBufferElement{ GL_UNSIGNED_INT, count, GL_FALSE });
+			_layout.push_back(VertexBufferElement{ GL_UNSIGNED_INT, count, GL_FALSE, vbo });
 			_stride += count * sizeof(unsigned int);
 		}
 
 		template<>
-		void push<unsigned char>(unsigned int count)
+		void push<unsigned char>(const VertexBuffer& vbo, unsigned int count)
 		{
-			_layout.push_back(VertexBufferElement{ GL_UNSIGNED_BYTE, count, GL_FALSE });
+			_layout.push_back(VertexBufferElement{ GL_UNSIGNED_BYTE, count, GL_FALSE, vbo });
 			_stride += count * sizeof(unsigned char);
 		}
 

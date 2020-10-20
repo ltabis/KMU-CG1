@@ -3,7 +3,7 @@
 CG::VertexArray::VertexArray()
 {
 	glCreateVertexArrays(1, &_id);
-	glBindBuffer(GL_ARRAY_BUFFER, _id);
+	glBindVertexArray(_id);
 }
 
 CG::VertexArray::~VertexArray()
@@ -13,12 +13,16 @@ CG::VertexArray::~VertexArray()
 
 void CG::VertexArray::addBuffer(const VertexBuffer& vb, const VertexArrayLayout& layout)
 {
-	bind();
-	vb.bind();
-
 	const auto& elements = layout.layout();
 	unsigned int offset = 0;
-	for (size_t i = 0; i < elements.size(); ++i) {
+
+	// binding the current vertex array.
+	bind();
+
+	for (unsigned int i = 0; i < elements.size(); ++i) {
+
+		// binding the current vertex buffer.
+		elements[i].reference.bind();
 
 		// specifying that we're adding a new layout element to the array.
 		glEnableVertexAttribArray(i);
@@ -26,8 +30,8 @@ void CG::VertexArray::addBuffer(const VertexBuffer& vb, const VertexArrayLayout&
 			elements[i].count,
 			elements[i].type,
 			elements[i].normalized,
-			layout.stride(),
-			(const void*)offset);
+			0,
+			NULL);
 
 		offset += elements[i].count * elements[i].type;
 	}

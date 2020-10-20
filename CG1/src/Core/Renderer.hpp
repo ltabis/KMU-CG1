@@ -24,6 +24,8 @@
 #include "Logger.hpp"
 #include "VertexArray.hpp"
 #include "EventHandler.hpp"
+#include "ShaderLoader.hpp"
+#include "IndexBuffer.hpp"
 
 namespace glm
 {
@@ -47,7 +49,13 @@ namespace CG
 		Renderer(GUI::Style style);
 		~Renderer();
 
-		void run(const VertexArray& vbo);
+		void clear();
+		void draw(const VertexArray& vao, const IndexBuffer& ibo, const ShaderLoader& shader);
+		void drawUI();
+		void pollEvents();
+		void swapBuffers();
+		bool windowShouldClose();
+
 		void registerKeyBindingCallback(unsigned int key, void (*callback)(GLFWwindow* window, int key, int scancode, int action, int mods));
 	};
 }
