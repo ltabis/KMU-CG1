@@ -3,6 +3,30 @@
 
 #include "Renderer.hpp"
 #include "Profiling/Breakpoint.hpp"
+#include <glm/gtx/string_cast.hpp>
+
+glm::mat4 lookAt(const glm::vec3& campos, const glm::vec3 &look, const glm::vec3 &up)
+{
+    glm::vec3 z = glm::normalize(campos - look);
+    glm::vec3 x = glm::normalize(glm::cross(up, z));
+    glm::vec3 y = glm::normalize(glm::cross(z, x));
+
+    glm::mat4 translation {
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {-campos.x, -campos.y, -campos.z, 1},
+    };
+
+    glm::mat4 rotation {
+        { x.x, y.x, z.x, 0 },
+        { x.y, y.y, z.y, 0 },
+        { x.z, y.z, z.z, 0 },
+        { 0,   0,   0,   1 }
+    };
+
+    return rotation * translation;
+}
 
 // -- Callbacks -- //
 static void escape_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
