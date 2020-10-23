@@ -69,10 +69,10 @@ int main(void)
     }
 
     float verticesDataT1[] = {
-        -0.5f, -0.5f,
-         0.5f, -0.5f,
-         0.5f,  0.5f,
-        -0.5f,  0.5f,
+        -0.5f, -0.5f,   1.0f,  0.0f, 0.0f,
+         0.5f, -0.5f,   0.0f,  1.0f, 0.0f,
+         0.5f,  0.5f,   0.0f,  0.0f, 1.0f,
+        -0.5f,  0.5f,   1.0f,  1.0f, 1.0f
     };
 
     float verticesDataT2[] = {
@@ -81,13 +81,6 @@ int main(void)
          0.2f,  0.2f,
         -0.2f,  0.2f,
         -0.2f,  0.5f,
-    };
-
-    float colorData[] = {
-        1.0f,  0.0f, 0.0f,
-        0.0f,  1.0f, 0.0f,
-        0.0f,  0.0f, 1.0f,
-        1.0f,  1.0f, 1.0f
     };
 
     // order of vertex rendering.
@@ -105,17 +98,15 @@ int main(void)
     // creating a new vertex buffer.
     CG::VertexBuffer vboV1(verticesDataT1, sizeof(verticesDataT1));
     CG::VertexBuffer vboV2(verticesDataT2, sizeof(verticesDataT2));
-    CG::VertexBuffer vboC(colorData, sizeof(colorData));
     CG::VertexArrayLayout layout1;
     CG::VertexArrayLayout layout2;
 
-    layout1.push<float>(vboV1, 2);
-    layout1.push<float>(vboC, 3);
-    layout2.push<float>(vboV2, 2);
+    layout1.push<float>(2);
+    layout1.push<float>(3);
+    layout2.push<float>(2);
 
     CG::VertexArray vao1;
     vao1.addBuffer(vboV1, layout1);
-    vao1.addBuffer(vboC, layout1);
 
     CG::VertexArray vao2;
     vao2.addBuffer(vboV2, layout2);
@@ -123,14 +114,6 @@ int main(void)
     // creating a new index buffer.
     CG::IndexBuffer ibo1(indices1, 6);
     CG::IndexBuffer ibo2(indices2, 9);
-
-    // enabling the attribute.
-    //glEnableVertexAttribArray(0);
-    //glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-
-    //CG::VertexBuffer vbColors(colors, sizeof(colors));
-    //glEnableVertexAttribArray(1);
-    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
     // attaching a vertex and fragment shader to the program.
     sloader1.attach("colored_triangle_vertex");

@@ -11,7 +11,6 @@ namespace CG
 		unsigned int type;
 		unsigned int count;
 		unsigned char normalized;
-		const VertexBuffer& reference;
 	};
 
 	class VertexArrayLayout
@@ -23,36 +22,35 @@ namespace CG
 		{}
 
 		template<typename T>
-		void push(const VertexBuffer& vbo, unsigned int count)
+		void push(unsigned int count)
 		{
-			(void)vbo;
 			(void)count;
 			throw "Cannot use this type to create a layout.";
 		}
 
 		template<>
-		void push<float>(const VertexBuffer& vbo, unsigned int count)
+		void push<float>(unsigned int count)
 		{
-			_layout.push_back(VertexBufferElement{ GL_FLOAT, count, GL_FALSE, vbo });
-			_stride += count * sizeof(float);
+			_layout.push_back(VertexBufferElement{ GL_FLOAT, count, GL_FALSE });
+			_stride += count * sizeof(GL_FLOAT);
 		}
 
 		template<>
-		void push<unsigned int>(const VertexBuffer& vbo, unsigned int count)
+		void push<unsigned int>(unsigned int count)
 		{
-			_layout.push_back(VertexBufferElement{ GL_UNSIGNED_INT, count, GL_FALSE, vbo });
-			_stride += count * sizeof(unsigned int);
+			_layout.push_back(VertexBufferElement{ GL_UNSIGNED_INT, count, GL_FALSE });
+			_stride += count * sizeof(GL_UNSIGNED_INT);
 		}
 
 		template<>
-		void push<unsigned char>(const VertexBuffer& vbo, unsigned int count)
+		void push<unsigned char>(unsigned int count)
 		{
-			_layout.push_back(VertexBufferElement{ GL_UNSIGNED_BYTE, count, GL_FALSE, vbo });
-			_stride += count * sizeof(unsigned char);
+			_layout.push_back(VertexBufferElement{ GL_UNSIGNED_BYTE, count, GL_FALSE });
+			_stride += count * sizeof(GL_UNSIGNED_BYTE);
 		}
 
 		inline const std::vector<VertexBufferElement>& layout() const { return _layout; };
-		inline size_t stride() const { return _stride; };
+		inline unsigned int stride() const { return _stride; };
 
 	private:
 		std::vector<VertexBufferElement> _layout;
