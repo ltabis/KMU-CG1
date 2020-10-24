@@ -1,7 +1,6 @@
 #shader VERTEX regular_triangle_vertex
 #version 330 core
 layout(location = 0) in vec4 position;
-//uniform mat4 projection;
 void main()
 {
 	gl_Position = position;
@@ -9,14 +8,13 @@ void main()
 
 #shader VERTEX colored_triangle_vertex
 #version 330 core
-// location = 0 : glVertexAttribPointer(0
-// opengl will translate the attribute (vec2) to a vec4.
+uniform mat4 u_projection;
 layout(location = 0) in vec4 position;
 layout(location = 1) in vec3 colors;
 out vec3 outColor;
 void main()
 {
-	gl_Position = position;
+	gl_Position = u_projection * position;
 	outColor = colors;
 };
 

@@ -139,7 +139,7 @@ int CG::ShaderLoader::findUniform(const std::string& uniformName)
 	if (_uniforms.find(uniformName) == _uniforms.end()) {
 		location = glGetUniformLocation(_program, uniformName.c_str());
 		if (location == -1) {
-			CG_LOG_WARN("The uniform {} could not be found.", uniformName);
+			CG_LOG_WARN("The uniform '{}' could not be found.", uniformName);
 			return -1;
 		}
 		_uniforms.emplace(uniformName, location);
