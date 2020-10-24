@@ -11,13 +11,7 @@ glm::mat4 lookAt(const glm::vec3& campos, const glm::vec3 &look, const glm::vec3
     glm::vec3 x = glm::normalize(glm::cross(up, z));
     glm::vec3 y = glm::normalize(glm::cross(z, x));
 
-    glm::mat4 translation {
-        {1, 0, 0, 0},
-        {0, 1, 0, 0},
-        {0, 0, 1, 0},
-        {-campos.x, -campos.y, -campos.z, 1},
-    };
-
+    glm::mat4 translation { glm::translate(glm::mat4(1.0f), -campos) };
     glm::mat4 rotation {
         { x.x, y.x, z.x, 0 },
         { x.y, y.y, z.y, 0 },
@@ -69,18 +63,18 @@ int main(void)
     }
 
     float verticesDataT1[] = {
-        -0.5f, -0.5f,   1.0f,  0.0f, 0.0f,
-         0.5f, -0.5f,   0.0f,  1.0f, 0.0f,
-         0.5f,  0.5f,   0.0f,  0.0f, 1.0f,
-        -0.5f,  0.5f,   1.0f,  1.0f, 1.0f
+        -0.5f, -0.5f, 0.0f, 1.0f,    1.0f,  0.0f, 0.0f,
+         0.5f, -0.5f, 0.0f, 1.0f,    0.0f,  1.0f, 0.0f,
+         0.5f,  0.5f, 0.0f, 1.0f,    0.0f,  0.0f, 1.0f,
+        -0.5f,  0.5f, 0.0f, 1.0f,    1.0f,  1.0f, 1.0f
     };
 
     float verticesDataT2[] = {
-        -0.2f, -0.2f,
-         0.2f, -0.2f,
-         0.2f,  0.2f,
-        -0.2f,  0.2f,
-        -0.2f,  0.5f,
+        -0.2f, -0.2f, 0.0f, 1.0f,
+         0.2f, -0.2f, 0.0f, 1.0f,
+         0.2f,  0.2f, 0.0f, 1.0f,
+        -0.2f,  0.2f, 0.0f, 1.0f,
+        -0.2f,  0.5f, 0.0f, 1.0f
     };
 
     // order of vertex rendering.
@@ -101,9 +95,9 @@ int main(void)
     CG::VertexArrayLayout layout1;
     CG::VertexArrayLayout layout2;
 
-    layout1.push<float>(2);
+    layout1.push<float>(4);
     layout1.push<float>(3);
-    layout2.push<float>(2);
+    layout2.push<float>(4);
 
     CG::VertexArray vao1;
     vao1.addBuffer(vboV1, layout1);
