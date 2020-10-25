@@ -56,9 +56,9 @@ namespace CG
 			{ "FRAGMENT", ShaderType::FRAGMENT }
 		};
 
-		Shader findShader(std::string& line);
 		void createShader(std::ifstream& stream, std::string& line);
 		std::string getShaderSourceCode(std::ifstream& stream, std::string& line);
+		Shader findShader(std::string& line);
 		int findUniform(const std::string& uniformName);
 
 	public:

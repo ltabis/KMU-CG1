@@ -189,6 +189,7 @@
     <ClCompile Include="src\Core\VertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Callbacks.hpp" />
     <ClInclude Include="src\Core\EventHandler.hpp" />
     <ClInclude Include="src\Core\IndexBuffer.hpp" />
     <ClInclude Include="src\Loging\Logger.hpp" />

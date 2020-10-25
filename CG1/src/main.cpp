@@ -1,7 +1,7 @@
 ﻿// main.cpp
 // Application entry point.
 
-#include "Renderer.hpp"
+#include "Callbacks.hpp"
 #include "Profiling/Breakpoint.hpp"
 #include <glm/gtx/string_cast.hpp>
 
@@ -20,19 +20,6 @@ glm::mat4 lookAt(const glm::vec3& campos, const glm::vec3 &look, const glm::vec3
     };
 
     return rotation * translation;
-}
-
-// -- Callbacks -- //
-static void escape_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
-
-static void spacebar_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (action == GLFW_PRESS)
-        CG_CONSOLE_INFO("spacebar pressed");
 }
 
 int main(void)
@@ -124,8 +111,6 @@ int main(void)
     glm::mat4 u_projection = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f);
     sloader1.use();
     sloader1.setUniform("u_projection", u_projection);
-
-    CG_CONSOLE_INFO("Loggin to the main console.");
 
     /* Loop until the user closes the window */
     while (!renderer->windowShouldClose()) {
