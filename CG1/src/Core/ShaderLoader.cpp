@@ -150,6 +150,7 @@ int CG::ShaderLoader::findUniform(const std::string& uniformName)
 
 void CG::ShaderLoader::setUniform(const std::string& uniformName, const glm::mat4& matrix)
 {
+	use();
 	int location = findUniform(uniformName);
 	
 	if (location == -1)

@@ -109,7 +109,6 @@ int main(void)
 
     // 4:3 ratio.
     glm::mat4 u_projection = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f);
-    sloader1.use();
     sloader1.setUniform("u_projection", u_projection);
 
     /* Loop until the user closes the window */
