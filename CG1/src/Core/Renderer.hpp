@@ -50,6 +50,7 @@ namespace CG
 		~Renderer();
 
 		void clear();
+		void clearColor(float r, float g, float b, float a);
 		void draw(const VertexArray& vao, const IndexBuffer& ibo, const ShaderLoader& shader);
 		void drawUI();
 		void pollEvents();

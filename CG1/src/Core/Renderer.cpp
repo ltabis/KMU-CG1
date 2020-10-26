@@ -84,6 +84,11 @@ void CG::Renderer::clear()
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void CG::Renderer::clearColor(float r, float g, float b, float a)
+{
+    glClearColor(r, g, b, a);
+}
+
 void CG::Renderer::draw(const VertexArray& vao, const IndexBuffer& ibo, const ShaderLoader& shader)
 {
     shader.use();
