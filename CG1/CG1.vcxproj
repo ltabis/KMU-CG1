@@ -187,6 +187,7 @@
     <ClCompile Include="src\Core\VertexArrayLayout.cpp" />
     <ClCompile Include="src\Core\VertexArray.cpp" />
     <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp" />
+    <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
     <ClCompile Include="src\Tests\TestMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +211,7 @@
     <ClInclude Include="src\Core\VertexArray.hpp" />
     <ClInclude Include="src\Tests\ATest.hpp" />
     <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp" />
+    <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
     <ClInclude Include="src\Tests\TestMenu.hpp" />
   </ItemGroup>
   <ItemGroup>

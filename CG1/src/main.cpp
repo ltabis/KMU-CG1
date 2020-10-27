@@ -129,6 +129,7 @@
 #include "Callbacks.hpp"
 #include "Profiling/Breakpoint.hpp"
 #include "Tests/TestBackgroundColorChange.hpp"
+#include "Tests/TestDrawTriangle.hpp"
 #include "Tests/TestMenu.hpp"
 
 int main(void)
@@ -142,7 +143,8 @@ int main(void)
 	renderer->registerKeyBindingCallback(GLFW_KEY_ESCAPE, escape_callback);
 	renderer->registerKeyBindingCallback(GLFW_KEY_SPACE, spacebar_callback);
 
-	menu.registerTest<CG::Test::TestBackgroundColorChange>("backgroundColorChange");
+	menu.registerTest<CG::Test::TestBackgroundColorChange>("Change color of background");
+	menu.registerTest<CG::Test::TestDrawTriangle>("Display a single colored triangle");
 
 	while (!renderer->windowShouldClose())
 		menu.onRender();
