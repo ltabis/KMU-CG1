@@ -171,7 +171,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\EventHandler.cpp" />
     <ClCompile Include="src\Core\IndexBuffer.cpp" />
     <ClCompile Include="src\Loging\Logger.cpp" />
     <ClCompile Include="src\Core\GUI.cpp" />
@@ -187,10 +186,11 @@
     <ClCompile Include="src\Core\VertexBuffer.cpp" />
     <ClCompile Include="src\Core\VertexArrayLayout.cpp" />
     <ClCompile Include="src\Core\VertexArray.cpp" />
+    <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp" />
+    <ClCompile Include="src\Tests\TestMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Callbacks.hpp" />
-    <ClInclude Include="src\Core\EventHandler.hpp" />
     <ClInclude Include="src\Core\IndexBuffer.hpp" />
     <ClInclude Include="src\Loging\Logger.hpp" />
     <ClInclude Include="src\Core\GUI.hpp" />
@@ -208,6 +208,9 @@
     <ClInclude Include="src\Core\VertexBuffer.hpp" />
     <ClInclude Include="src\Core\VertexArrayLayout.hpp" />
     <ClInclude Include="src\Core\VertexArray.hpp" />
+    <ClInclude Include="src\Tests\ATest.hpp" />
+    <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp" />
+    <ClInclude Include="src\Tests\TestMenu.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />

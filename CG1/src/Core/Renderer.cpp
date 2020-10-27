@@ -1,5 +1,30 @@
 #include "Renderer.hpp"
 
+void CG::EventHandler::registerCallback(unsigned int key,
+    CG::CGCallback callback
+)
+{
+    auto key_index = _keyCallbacks.find(key);
+
+    if (key_index == _keyCallbacks.end())
+        _keyCallbacks.emplace(key, callback);
+    else {
+        CG_CONSOLE_WARN("callback '{}' already bound. overriding it.", key);
+        _keyCallbacks[key] = callback;
+    }
+}
+
+void CG::EventHandler::executeCallback(Renderer* renderer, int key, int scancode, int action, int mods)
+{
+    if (!_keyCallbacks.size())
+        return;
+
+    for (auto& [callbackKey, callback] : _keyCallbacks)
+        if (key == callbackKey)
+            callback(renderer, key, scancode, action, mods);
+}
+
+
 /* openGL error callback. will be called if any error is thrown by glew. */
 static void GLAPIENTRY glewErrorCallback(GLenum source,
     GLenum type,
@@ -24,9 +49,8 @@ static void glfwErrorCallback(int error, const char* description)
 }
 
 /* initializing the Renderer object. glfw / glew / spdlog */
-CG::Renderer::Renderer(CG::GUI::Style style)
+CG::Renderer::Renderer()
 {
-    CG::Logger::Init();
     CG_LOG_INFO("Initializing OpenGL Renderer.");
 
     /* using modern opengl */
@@ -62,10 +86,8 @@ CG::Renderer::Renderer(CG::GUI::Style style)
 
     CG_LOG_INFO("Glew initialized.");
 
-    /* Create a GUI instance to display debug */
-    _gui = std::make_unique<GUI>(_window, style);
     /* Create an event handler instance to register key callbacks */
-    _eventHandler = std::make_unique<EventHandler>(_window);
+    _eventHandler = std::make_unique<EventHandler>(this);
 
     /* Initializing error debug callback */
     glEnable(GL_DEBUG_OUTPUT);
@@ -79,17 +101,17 @@ CG::Renderer::~Renderer()
     glfwTerminate();
 }
 
-void CG::Renderer::clear()
+void CG::Renderer::clear() const
 {
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void CG::Renderer::clearColor(float r, float g, float b, float a)
+void CG::Renderer::clearColor(float r, float g, float b, float a) const
 {
     glClearColor(r, g, b, a);
 }
 
-void CG::Renderer::draw(const VertexArray& vao, const IndexBuffer& ibo, const ShaderLoader& shader)
+void CG::Renderer::draw(const VertexArray& vao, const IndexBuffer& ibo, const ShaderLoader& shader) const
 {
     shader.use();
     vao.bind();
@@ -98,19 +120,12 @@ void CG::Renderer::draw(const VertexArray& vao, const IndexBuffer& ibo, const Sh
     glDrawElements(GL_TRIANGLES, ibo.indices(), GL_UNSIGNED_INT, nullptr);
 }
 
-void CG::Renderer::drawUI()
-{
-    _gui->newFrame();
-    _gui->drawUI();
-    _gui->renderGUI();
-}
-
-void CG::Renderer::pollEvents()
+void CG::Renderer::pollEvents() const
 {
     glfwPollEvents();
 }
 
-void CG::Renderer::swapBuffers()
+void CG::Renderer::swapBuffers() const
 {
     glfwSwapBuffers(_window);
 }
@@ -122,8 +137,8 @@ bool CG::Renderer::windowShouldClose()
 
 void CG::Renderer::registerKeyBindingCallback(
     unsigned int key,
-    void(*callback)(GLFWwindow* window, int key, int scancode, int action, int mods
-))
+    CGCallback callback
+)
 {
     _eventHandler->registerCallback(key, callback);
 }

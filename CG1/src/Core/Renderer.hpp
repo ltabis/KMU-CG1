@@ -23,7 +23,6 @@
 #include "GUI.hpp"
 #include "Logger.hpp"
 #include "VertexArray.hpp"
-#include "EventHandler.hpp"
 #include "ShaderLoader.hpp"
 #include "IndexBuffer.hpp"
 
@@ -38,25 +37,72 @@ namespace glm
 
 namespace CG
 {
+	class Renderer;
+	class EventHandler;
+	typedef void (*CGCallback)(Renderer* renderer, int key, int scancode, int action, int mods);
+
 	class Renderer
 	{
 	private:
-		GLFWwindow *_window;
+		GLFWwindow* _window;
 		std::unique_ptr<EventHandler> _eventHandler;
-		std::unique_ptr<GUI> _gui;
 
 	public:
-		Renderer(GUI::Style style);
+		friend void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+		Renderer();
 		~Renderer();
 
-		void clear();
-		void clearColor(float r, float g, float b, float a);
-		void draw(const VertexArray& vao, const IndexBuffer& ibo, const ShaderLoader& shader);
-		void drawUI();
-		void pollEvents();
-		void swapBuffers();
+		void clear() const;
+		void clearColor(float r, float g, float b, float a) const;
+		void draw(const VertexArray& vao, const IndexBuffer& ibo, const ShaderLoader& shader) const;
+		void pollEvents() const;
+		void swapBuffers() const;
 		bool windowShouldClose();
 
-		void registerKeyBindingCallback(unsigned int key, void (*callback)(GLFWwindow* window, int key, int scancode, int action, int mods));
+		void registerKeyBindingCallback(unsigned int key, CGCallback callback);
+		GLFWwindow* window() { return _window; };
 	};
+
+	// forward declarations.
+	void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+	class EventHandler
+	{
+	private:
+		std::string _configPath;
+		std::unordered_map<unsigned int, CGCallback> _keyCallbacks;
+	public:
+
+		EventHandler(Renderer* renderer, const std::string& configPath = "")
+			: _configPath{ configPath }
+		{
+			if (!renderer || !renderer->window())
+				throw "Couldn't initialize the event handler, window null";
+
+			glfwSetKeyCallback(renderer->window(), input_handler);
+			glfwSetWindowUserPointer(renderer->window(), renderer);
+		}
+
+		void saveBindings() const;
+		void loadBindings() const;
+		void registerCallback(unsigned int, CGCallback callback);
+		void executeCallback(Renderer* renderer, int key, int scancode, int action, int mods);
+	};
+
+	/*
+		Initiate callbacks used by the event handler. TODO: rething about the whole thing.
+		the method to register the callback and set the user data pointer are not declared
+		inside the event handler, which is confusing.
+	*/
+	static void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		void* data = glfwGetWindowUserPointer(window);
+
+		if (!data)
+			return;
+
+		Renderer *handler = static_cast<CG::Renderer*>(data);
+		handler->_eventHandler->executeCallback(handler, key, scancode, action, mods);
+	}
 }

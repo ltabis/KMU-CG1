@@ -2,14 +2,14 @@
 
 #include "Renderer.hpp"
 
-static void escape_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+static void escape_callback(CG::Renderer* renderer, int key, int scancode, int action, int mods)
 {
     if (action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
+        glfwSetWindowShouldClose(renderer->window(), GLFW_TRUE);
 }
 
-static void spacebar_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+static void spacebar_callback(CG::Renderer* renderer, int key, int scancode, int action, int mods)
 {
-    if (action == GLFW_PRESS)
-        CG_CONSOLE_INFO("spacebar pressed");
+    //if (action == GLFW_PRESS)
+    //    CG_CONSOLE_INFO("spacebar pressed");
 }
