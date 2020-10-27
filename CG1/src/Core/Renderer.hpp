@@ -84,17 +84,13 @@ namespace CG
 			glfwSetWindowUserPointer(renderer->window(), renderer);
 		}
 
+		// TODO: implemente.
 		void saveBindings() const;
 		void loadBindings() const;
 		void registerCallback(unsigned int, CGCallback callback);
 		void executeCallback(Renderer* renderer, int key, int scancode, int action, int mods);
 	};
 
-	/*
-		Initiate callbacks used by the event handler. TODO: rething about the whole thing.
-		the method to register the callback and set the user data pointer are not declared
-		inside the event handler, which is confusing.
-	*/
 	static void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
 		void* data = glfwGetWindowUserPointer(window);

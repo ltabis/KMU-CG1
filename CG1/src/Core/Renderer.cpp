@@ -1,5 +1,6 @@
 #include "Renderer.hpp"
 
+/* register a new callback in memory that will be called when a key is pressed. */
 void CG::EventHandler::registerCallback(unsigned int key,
     CG::CGCallback callback
 )
@@ -14,16 +15,13 @@ void CG::EventHandler::registerCallback(unsigned int key,
     }
 }
 
+/* execute the callback assigned to a specific key. */
 void CG::EventHandler::executeCallback(Renderer* renderer, int key, int scancode, int action, int mods)
 {
-    if (!_keyCallbacks.size())
-        return;
-
     for (auto& [callbackKey, callback] : _keyCallbacks)
         if (key == callbackKey)
             callback(renderer, key, scancode, action, mods);
 }
-
 
 /* openGL error callback. will be called if any error is thrown by glew. */
 static void GLAPIENTRY glewErrorCallback(GLenum source,
@@ -48,7 +46,7 @@ static void glfwErrorCallback(int error, const char* description)
     CG_LOG_ERROR("Error '{}': {}", error, description);
 }
 
-/* initializing the Renderer object. glfw / glew / spdlog */
+/* initializing the Renderer object. glfw / glew */
 CG::Renderer::Renderer()
 {
     CG_LOG_INFO("Initializing OpenGL Renderer.");
