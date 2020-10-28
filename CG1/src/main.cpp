@@ -18,6 +18,20 @@
 //    return rotation * translation;
 //}
 //
+//glm::mat4 perspective(float fovy, float aspect, float nearPlane, float farPlane)
+//{
+//	fovy *= glm::pi<float>() / 180.f;
+//
+//	glm::mat4 perspeciveMatrix{
+//		{ 1 / (aspect * glm::tan(fovy / 2)), 0, 0, 0 },
+//		{ 0, 1 / glm::tan(fovy / 2), 0, 0 },
+//		{ 0, 0, -((farPlane + nearPlane) / (farPlane - nearPlane)), -1},
+//		{ 0, 0, -((2 * farPlane * nearPlane) / (farPlane - nearPlane)), 0 }
+//	};
+//
+//	return perspeciveMatrix;
+//}
+//
 //int main(void)
 //{
 //    std::unique_ptr<CG::Renderer> renderer = nullptr;
