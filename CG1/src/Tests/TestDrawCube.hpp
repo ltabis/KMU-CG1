@@ -37,6 +37,10 @@ namespace CG {
 				1, 0, 4,		3, 2, 6,		6, 7, 3,
 			};
 
+			float _rotation[3];
+			float _translation[3];
+			float _scale[3];
+
 			std::unique_ptr<VertexBuffer> _vbo;
 			std::unique_ptr<VertexArray> _vao;
 			std::unique_ptr<IndexBuffer> _ibo;

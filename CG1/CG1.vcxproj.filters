@@ -147,5 +147,6 @@
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
     <None Include="res\shaders\empty.shader" />
+    <None Include="res\shaders\square.shader" />
   </ItemGroup>
 </Project>
