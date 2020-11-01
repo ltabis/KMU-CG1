@@ -150,7 +150,7 @@ int main(void)
 {
 	CG::Logger::Init();
 
-	std::shared_ptr<CG::Renderer> renderer = std::make_shared<CG::Renderer>();
+	std::shared_ptr<CG::Renderer> renderer = std::make_shared<CG::Renderer>("Test framework", 1920, 1080);
 	std::shared_ptr<CG::GUI> gui = std::make_shared<CG::GUI>(renderer->window(), CG::GUI::Style::DARK);
 	CG::Test::TestMenu menu(renderer, gui);
 

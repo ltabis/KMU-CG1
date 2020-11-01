@@ -47,7 +47,7 @@ static void glfwErrorCallback(int error, const char* description)
 }
 
 /* initializing the Renderer object. glfw / glew */
-CG::Renderer::Renderer()
+CG::Renderer::Renderer(const std::string& windowName, float width, float height)
 {
     CG_LOG_INFO("Initializing OpenGL Renderer.");
 
@@ -64,7 +64,7 @@ CG::Renderer::Renderer()
     CG_LOG_INFO("Glfw initialized.");
 
     /* Create a windowed mode window and its OpenGL context */
-    _window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    _window = glfwCreateWindow(width, height, windowName.c_str(), NULL, NULL);
 
     if (!_window)
     {

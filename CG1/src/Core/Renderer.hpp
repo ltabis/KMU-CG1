@@ -50,7 +50,7 @@ namespace CG
 	public:
 		friend void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-		Renderer();
+		Renderer(const std::string &windowName = "Window", float width = 640, float height = 480);
 		~Renderer();
 
 		void clear() const;
