@@ -144,6 +144,7 @@
 #include "Profiling/Breakpoint.hpp"
 #include "Tests/TestBackgroundColorChange.hpp"
 #include "Tests/TestDrawTriangle.hpp"
+#include "Tests/TestDrawCube.hpp"
 #include "Tests/Framework/TestMenu.hpp"
 
 int main(void)
@@ -159,6 +160,7 @@ int main(void)
 
 	menu.registerTest<CG::Test::TestBackgroundColorChange>("Change color of background");
 	menu.registerTest<CG::Test::TestDrawTriangle>("Display a single colored triangle");
+	menu.registerTest<CG::Test::TestDrawCube>("Draw a colored cube");
 
 	while (!renderer->windowShouldClose())
 		menu.onRender();

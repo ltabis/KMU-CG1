@@ -189,6 +189,7 @@
     <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp" />
     <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
+    <ClCompile Include="src\Tests\TestDrawCube.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Callbacks.hpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp" />
     <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
     <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />
+    <ClInclude Include="src\Tests\TestDrawCube.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
