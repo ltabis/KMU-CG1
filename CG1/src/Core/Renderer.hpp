@@ -91,6 +91,7 @@ namespace CG
 		void executeCallback(Renderer* renderer, int key, int scancode, int action, int mods);
 	};
 
+	// CALLBACKS //
 	static void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
 		void* data = glfwGetWindowUserPointer(window);
@@ -100,5 +101,10 @@ namespace CG
 
 		Renderer *handler = static_cast<CG::Renderer*>(data);
 		handler->_eventHandler->executeCallback(handler, key, scancode, action, mods);
+	}
+
+	static void resize_callback(GLFWwindow* window, int width, int height)
+	{
+		glViewport(0, 0, width, height);
 	}
 }

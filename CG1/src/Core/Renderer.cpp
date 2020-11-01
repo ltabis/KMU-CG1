@@ -78,6 +78,9 @@ CG::Renderer::Renderer()
     /* disable Vsync, synchronises with monitor refresh rate */
     glfwSwapInterval(1);
 
+    /* setting window resize callback */
+    glfwSetWindowSizeCallback(_window, resize_callback);
+
     /* Initialize glew */
     if (glewInit() != GLEW_OK)
         throw "Couldn't initialize glew.";
