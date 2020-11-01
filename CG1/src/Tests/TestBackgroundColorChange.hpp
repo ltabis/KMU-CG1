@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ATest.hpp"
+#include "Framework/ATest.hpp"
 
 namespace CG {
 	namespace Test {

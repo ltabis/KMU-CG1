@@ -63,10 +63,10 @@
     <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tests\TestMenu.cpp">
+    <ClCompile Include="src\Tests\TestDrawTriangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tests\TestDrawTriangle.cpp">
+    <ClCompile Include="src\Tests\Framework\TestMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,13 +128,13 @@
     <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tests\TestMenu.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tests\ATest.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Tests\TestDrawTriangle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\Framework\ATest.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\Framework\TestMenu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

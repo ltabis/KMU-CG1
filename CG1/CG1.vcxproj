@@ -188,7 +188,7 @@
     <ClCompile Include="src\Core\VertexArray.cpp" />
     <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp" />
     <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
-    <ClCompile Include="src\Tests\TestMenu.cpp" />
+    <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Callbacks.hpp" />
@@ -209,10 +209,10 @@
     <ClInclude Include="src\Core\VertexBuffer.hpp" />
     <ClInclude Include="src\Core\VertexArrayLayout.hpp" />
     <ClInclude Include="src\Core\VertexArray.hpp" />
-    <ClInclude Include="src\Tests\ATest.hpp" />
+    <ClInclude Include="src\Tests\Framework\ATest.hpp" />
     <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp" />
     <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
-    <ClInclude Include="src\Tests\TestMenu.hpp" />
+    <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />

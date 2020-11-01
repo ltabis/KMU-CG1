@@ -144,7 +144,7 @@
 #include "Profiling/Breakpoint.hpp"
 #include "Tests/TestBackgroundColorChange.hpp"
 #include "Tests/TestDrawTriangle.hpp"
-#include "Tests/TestMenu.hpp"
+#include "Tests/Framework/TestMenu.hpp"
 
 int main(void)
 {
