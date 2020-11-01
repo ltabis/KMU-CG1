@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Framework/ATest.hpp"
-#include <glm/gtc/matrix_transform.hpp>
 
 namespace CG {
 	namespace Test {

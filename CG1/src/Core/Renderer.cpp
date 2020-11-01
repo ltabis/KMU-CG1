@@ -47,7 +47,7 @@ static void glfwErrorCallback(int error, const char* description)
 }
 
 /* initializing the Renderer object. glfw / glew */
-CG::Renderer::Renderer(const std::string& windowName, float width, float height)
+CG::Renderer::Renderer(const std::string& windowName, int width, int height)
 {
     CG_LOG_INFO("Initializing OpenGL Renderer.");
 

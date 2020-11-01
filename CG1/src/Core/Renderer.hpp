@@ -19,6 +19,7 @@
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "GUI.hpp"
 #include "Logger.hpp"
@@ -50,7 +51,7 @@ namespace CG
 	public:
 		friend void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-		Renderer(const std::string &windowName = "Window", float width = 640, float height = 480);
+		Renderer(const std::string &windowName = "Window", int width = 640, int height = 480);
 		~Renderer();
 
 		void clear() const;
