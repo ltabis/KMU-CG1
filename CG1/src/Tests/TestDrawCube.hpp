@@ -41,6 +41,7 @@ namespace CG {
 			glm::vec3 _rotation;
 			glm::vec3 _translation;
 			glm::vec3 _scale;
+			float _fov;
 
 			std::unique_ptr<VertexBuffer> _vbo;
 			std::unique_ptr<VertexArray> _vao;

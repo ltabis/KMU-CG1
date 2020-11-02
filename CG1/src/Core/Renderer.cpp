@@ -100,6 +100,7 @@ CG::Renderer::Renderer(const std::string& windowName, int width, int height)
 
     /* Initializing error debug callback */
     glEnable(GL_DEBUG_OUTPUT);
+    glEnable(GL_DEPTH_TEST);
     glDebugMessageCallback(glewErrorCallback, 0);
 
     CG_LOG_INFO("Renderer ready.");
@@ -118,11 +119,12 @@ void CG::Renderer::setAspectRatio(float width, float height)
 void CG::Renderer::setFov(float fov)
 {
     _fov = fov;
+    _createProjectionMatrix(glm::radians(fov), _aspectRatio, .1f, 500.f);
 }
 
 void CG::Renderer::clear() const
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void CG::Renderer::clearColor(float r, float g, float b, float a) const
@@ -154,51 +156,37 @@ bool CG::Renderer::windowShouldClose()
     return glfwWindowShouldClose(_window);
 }
 
-glm::mat4 CG::Renderer::_createModelMatrix(float degrees, float x, float y, float z)
-{
-    glm::mat4 rotation = glm::rotate(glm::mat4(1.f), glm::radians(degrees), glm::vec3(x, y, z));
-    glm::mat4 translation = glm::translate(glm::mat4(1.f), glm::vec3(x, y, z));
-    glm::mat4 scale = glm::scale(glm::mat4(1.f), glm::vec3(x, y, z));
-
-    return translation * scale * rotation;
-}
-
-glm::mat4 CG::Renderer::_createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up)
+void CG::Renderer::_createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up)
 {
     glm::vec3 z = glm::normalize(campos - look);
     glm::vec3 x = glm::normalize(glm::cross(up, z));
     glm::vec3 y = glm::normalize(glm::cross(z, x));
 
-    glm::mat4 translation{ glm::translate(glm::mat4(1.0f), -campos) };
-    glm::mat4 rotation{
+    glm::mat4 translation { glm::translate(glm::mat4(1.0f), -campos) };
+    glm::mat4 rotation {
         { x.x, y.x, z.x, 0 },
         { x.y, y.y, z.y, 0 },
         { x.z, y.z, z.z, 0 },
         { 0,   0,   0,   1 }
     };
 
-    return rotation * translation;
+    _view = rotation * translation;
 }
 
-glm::mat4 CG::Renderer::_createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane)
+void CG::Renderer::_createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane)
 {
-    fovy *= glm::pi<float>() / 180.f;
-
-    glm::mat4 perspeciveMatrix{
+    _projection = glm::mat4 {
         { 1 / (aspect * glm::tan(fovy / 2)), 0, 0, 0 },
         { 0, 1 / glm::tan(fovy / 2), 0, 0 },
         { 0, 0, -((farPlane + nearPlane) / (farPlane - nearPlane)), -1},
         { 0, 0, -((2 * farPlane * nearPlane) / (farPlane - nearPlane)), 0 }
     };
-
-    return perspeciveMatrix;
 }
 
 void CG::Renderer::createMVP()
 {
-    // TODO: use custom implementation.
-    _view = glm::lookAt(glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-    _projection = glm::perspective<float>(glm::radians(_fov), _aspectRatio, .1f, 500.f);
+    _createViewMatrix(glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    _createProjectionMatrix(glm::radians(_fov), _aspectRatio, .1f, 500.f);
 }
 
 glm::mat4 CG::Renderer::viewMatrix() const

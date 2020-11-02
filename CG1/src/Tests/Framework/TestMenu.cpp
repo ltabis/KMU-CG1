@@ -37,6 +37,7 @@ void CG::Test::TestMenu::onRender()
 		ImGui::End();
 	}
 
+	_gui->drawDebugUI();
 	_gui->renderGUI();
 	_renderer->pollEvents();
 	_renderer->swapBuffers();
