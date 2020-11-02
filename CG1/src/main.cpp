@@ -1,37 +1,6 @@
 ﻿// main.cpp
 // Application entry point.
 
-//glm::mat4 lookAt(const glm::vec3& campos, const glm::vec3 &look, const glm::vec3 &up)
-//{
-//    glm::vec3 z = glm::normalize(campos - look);
-//    glm::vec3 x = glm::normalize(glm::cross(up, z));
-//    glm::vec3 y = glm::normalize(glm::cross(z, x));
-//
-//    glm::mat4 translation { glm::translate(glm::mat4(1.0f), -campos) };
-//    glm::mat4 rotation {
-//        { x.x, y.x, z.x, 0 },
-//        { x.y, y.y, z.y, 0 },
-//        { x.z, y.z, z.z, 0 },
-//        { 0,   0,   0,   1 }
-//    };
-//
-//    return rotation * translation;
-//}
-//
-//glm::mat4 perspective(float fovy, float aspect, float nearPlane, float farPlane)
-//{
-//	fovy *= glm::pi<float>() / 180.f;
-//
-//	glm::mat4 perspeciveMatrix{
-//		{ 1 / (aspect * glm::tan(fovy / 2)), 0, 0, 0 },
-//		{ 0, 1 / glm::tan(fovy / 2), 0, 0 },
-//		{ 0, 0, -((farPlane + nearPlane) / (farPlane - nearPlane)), -1},
-//		{ 0, 0, -((2 * farPlane * nearPlane) / (farPlane - nearPlane)), 0 }
-//	};
-//
-//	return perspeciveMatrix;
-//}
-//
 //int main(void)
 //{
 //    std::unique_ptr<CG::Renderer> renderer = nullptr;
@@ -139,6 +108,8 @@
 //
 //    return 0;
 //}
+
+#include <glm/gtx/string_cast.hpp>
 
 #include "Callbacks.hpp"
 #include "Profiling/Breakpoint.hpp"

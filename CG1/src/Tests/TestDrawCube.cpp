@@ -1,7 +1,9 @@
 #include "TestDrawCube.hpp"
 
 CG::Test::TestDrawCube::TestDrawCube()
-	: _rotation { 0 }
+	: _rotation    { glm::vec3(0.f) }
+	, _translation { glm::vec3(0.f) }
+	, _scale       { glm::vec3(1.f) }
 {
 	_vbo = std::make_unique<VertexBuffer>(_cubeVertices, sizeof(_cubeVertices));
 	_dataLayout = std::make_unique<VertexArrayLayout>();
@@ -19,8 +21,6 @@ CG::Test::TestDrawCube::TestDrawCube()
 	_sloader->attach("triangle");
 	_sloader->attach("color");
 	_sloader->createExecutable();
-	_sloader->setUniform("u_mvp", glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f));
-	_sloader->setUniform("u_translation", glm::translate(glm::mat4(1.f), glm::vec3(0.f)));
 }
 
 CG::Test::TestDrawCube::~TestDrawCube()
@@ -29,6 +29,9 @@ CG::Test::TestDrawCube::~TestDrawCube()
 
 void CG::Test::TestDrawCube::onStart()
 {
+	_sloader->setUniform("u_model", glm::mat4(1.f));
+	_sloader->setUniform("u_view", _renderer->viewMatrix());
+	_sloader->setUniform("u_projection", _renderer->projectionMatrix());
 }
 
 void CG::Test::TestDrawCube::onUpdate(float deltaTime)
@@ -39,16 +42,25 @@ void CG::Test::TestDrawCube::onUpdate(float deltaTime)
 void CG::Test::TestDrawCube::onRender()
 {
 	ImGui::Begin("Cube Rotation");
+	glm::mat4 model = glm::mat4(1.f);
 
-	// translating if the UI if updated.
-	if (ImGui::SliderFloat3("translation", _translation, -1, 1)) {
-		auto translation = glm::translate(glm::mat4(1.f), glm::vec3(_translation[0], _translation[1], 1));
-		_sloader->setUniform("u_translation", translation);
-	}
+	ImGui::SliderFloat3("translation", &_translation[0], -10, 10, "%.1f");
+	ImGui::SliderFloat3("rotation", &_rotation[0], 0, 360, "%.1f");
+	ImGui::SliderFloat3("scale", &_scale[0], 1, 10, "%.1f");
 
-	ImGui::SliderFloat3("rotation", _rotation, 0, 360);
-	ImGui::SliderFloat3("scale", _scale, 0, 360);
+	_scale = glm::clamp(_scale, glm::vec3(1, 1, 1), glm::vec3(100, 100, 100));
+
 	ImGui::End();
+
+	model *= glm::translate(model, glm::vec3(_translation[0], _translation[1], _translation[2]));
+	model *= glm::scale(glm::mat4(1.f), glm::vec3(_scale[0], _scale[1], _scale[2]));
+
+	model *= glm::rotate(glm::mat4(1.f), glm::radians(_rotation[0]), glm::vec3(1, 0, 0))
+		   * glm::rotate(glm::mat4(1.f), glm::radians(_rotation[1]), glm::vec3(0, 1, 0))
+		   * glm::rotate(glm::mat4(1.f), glm::radians(_rotation[2]), glm::vec3(0, 0, 1));
+
+	if (model != glm::mat4(1.f))
+		_sloader->setUniform("u_model", model);
 
 	_renderer->draw(*_vao, *_ibo, *_sloader);
 }
@@ -60,10 +72,10 @@ void CG::Test::TestDrawCube::onStop()
 void CG::Test::TestDrawCube::onReset()
 {
 	// reseting the translation uniform.
-	_sloader->setUniform("u_translation", glm::translate(glm::mat4(1.f), glm::vec3(0.f)));
+	_sloader->setUniform("u_model", glm::translate(glm::mat4(1.f), glm::vec3(0.f)));
 	
 	// reseting transform.
-	std::memset(_rotation, 0, sizeof(_rotation));
-	std::memset(_scale, 0, sizeof(_scale));
-	std::memset(_translation, 0, sizeof(_translation));
+	_rotation = glm::vec3(0.f);
+	_scale = glm::vec3(0.f);
+	_translation = glm::vec3(1.f);
 }

@@ -30,7 +30,8 @@ static void GLAPIENTRY glewErrorCallback(GLenum source,
     GLenum severity,
     GLsizei length,
     const GLchar* message,
-    const void* userParam)
+    const void* userParam
+)
 {
     CG_LOG_ERROR("OpenGL internal error: {}, type: 0x{}, severity: 0x{}, message: {}",
         (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
@@ -48,6 +49,10 @@ static void glfwErrorCallback(int error, const char* description)
 
 /* initializing the Renderer object. glfw / glew */
 CG::Renderer::Renderer(const std::string& windowName, int width, int height)
+    : _view        { glm::mat4(1.f)               }
+    , _projection  { glm::mat4(1.f)               }
+    , _fov         { 45                           }
+    , _aspectRatio { (float)width / (float)height }
 {
     CG_LOG_INFO("Initializing OpenGL Renderer.");
 
@@ -81,6 +86,9 @@ CG::Renderer::Renderer(const std::string& windowName, int width, int height)
     /* setting window resize callback */
     glfwSetWindowSizeCallback(_window, resize_callback);
 
+    /* create the mvp matrix */
+    createMVP();
+
     /* Initialize glew */
     if (glewInit() != GLEW_OK)
         throw "Couldn't initialize glew.";
@@ -100,6 +108,16 @@ CG::Renderer::Renderer(const std::string& windowName, int width, int height)
 CG::Renderer::~Renderer()
 {
     glfwTerminate();
+}
+
+void CG::Renderer::setAspectRatio(float width, float height)
+{
+    _aspectRatio = width / height;
+}
+
+void CG::Renderer::setFov(float fov)
+{
+    _fov = fov;
 }
 
 void CG::Renderer::clear() const
@@ -135,6 +153,64 @@ bool CG::Renderer::windowShouldClose()
 {
     return glfwWindowShouldClose(_window);
 }
+
+glm::mat4 CG::Renderer::_createModelMatrix(float degrees, float x, float y, float z)
+{
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.f), glm::radians(degrees), glm::vec3(x, y, z));
+    glm::mat4 translation = glm::translate(glm::mat4(1.f), glm::vec3(x, y, z));
+    glm::mat4 scale = glm::scale(glm::mat4(1.f), glm::vec3(x, y, z));
+
+    return translation * scale * rotation;
+}
+
+glm::mat4 CG::Renderer::_createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up)
+{
+    glm::vec3 z = glm::normalize(campos - look);
+    glm::vec3 x = glm::normalize(glm::cross(up, z));
+    glm::vec3 y = glm::normalize(glm::cross(z, x));
+
+    glm::mat4 translation{ glm::translate(glm::mat4(1.0f), -campos) };
+    glm::mat4 rotation{
+        { x.x, y.x, z.x, 0 },
+        { x.y, y.y, z.y, 0 },
+        { x.z, y.z, z.z, 0 },
+        { 0,   0,   0,   1 }
+    };
+
+    return rotation * translation;
+}
+
+glm::mat4 CG::Renderer::_createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane)
+{
+    fovy *= glm::pi<float>() / 180.f;
+
+    glm::mat4 perspeciveMatrix{
+        { 1 / (aspect * glm::tan(fovy / 2)), 0, 0, 0 },
+        { 0, 1 / glm::tan(fovy / 2), 0, 0 },
+        { 0, 0, -((farPlane + nearPlane) / (farPlane - nearPlane)), -1},
+        { 0, 0, -((2 * farPlane * nearPlane) / (farPlane - nearPlane)), 0 }
+    };
+
+    return perspeciveMatrix;
+}
+
+void CG::Renderer::createMVP()
+{
+    // TODO: use custom implementation.
+    _view = glm::lookAt(glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    _projection = glm::perspective<float>(glm::radians(_fov), _aspectRatio, .1f, 500.f);
+}
+
+glm::mat4 CG::Renderer::viewMatrix() const
+{
+    return _view;
+}
+
+glm::mat4 CG::Renderer::projectionMatrix() const
+{
+    return _projection;
+}
+
 
 void CG::Renderer::registerKeyBindingCallback(
     unsigned int key,

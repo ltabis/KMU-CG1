@@ -4,12 +4,13 @@ layout(location = 0) in vec4 position;
 layout(location = 1) in vec3 color;
 out vec3 out_Color;
 
-uniform mat4 u_mvp;
-uniform mat4 u_translation;
+uniform mat4 u_model;
+uniform mat4 u_view;
+uniform mat4 u_projection;
 
 void main()
 {
-	gl_Position = u_translation * u_mvp * position;
+	gl_Position = u_projection * u_view  * u_model * position;
 	out_Color = color;
 };
 

@@ -17,6 +17,7 @@ namespace CG {
 			void onReset() override;
 
 		private:
+
 			float _cubeVertices[56] = {
 				// front
 			   -1.0, -1.0, 1.0, 1.0,  	1.0, 0.0, 0.0,
@@ -37,9 +38,9 @@ namespace CG {
 				1, 0, 4,		3, 2, 6,		6, 7, 3,
 			};
 
-			float _rotation[3];
-			float _translation[3];
-			float _scale[3];
+			glm::vec3 _rotation;
+			glm::vec3 _translation;
+			glm::vec3 _scale;
 
 			std::unique_ptr<VertexBuffer> _vbo;
 			std::unique_ptr<VertexArray> _vao;
