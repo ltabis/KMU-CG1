@@ -116,12 +116,20 @@ namespace CG
 		if (!data)
 			return;
 
-		Renderer *handler = static_cast<CG::Renderer*>(data);
-		handler->_eventHandler->executeCallback(handler, key, scancode, action, mods);
+		Renderer *renderer = static_cast<CG::Renderer*>(data);
+		renderer->_eventHandler->executeCallback(renderer, key, scancode, action, mods);
 	}
 
 	static void resize_callback(GLFWwindow* window, int width, int height)
 	{
+		void* data = glfwGetWindowUserPointer(window);
+
+		if (!data)
+			return;
+
+		Renderer* renderer = static_cast<CG::Renderer*>(data);
+
+		renderer->setAspectRatio((float)width, (float)height);
 		glViewport(0, 0, width, height);
 	}
 }

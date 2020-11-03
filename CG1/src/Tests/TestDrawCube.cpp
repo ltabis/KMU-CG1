@@ -45,11 +45,8 @@ void CG::Test::TestDrawCube::onRender()
 	ImGui::Begin("Cube Rotation");
 	glm::mat4 model = glm::mat4(1.f);
 
-	if (ImGui::SliderFloat("FOV", &_fov, 45, 120, "%.1f")) {
-		CG_CONSOLE_INFO("fov: {}", _fov);
+	if (ImGui::SliderFloat("FOV", &_fov, 45, 120, "%.1f"))
 		_renderer->setFov(_fov);
-		_sloader->setUniform("u_projection", _renderer->projectionMatrix());
-	}
 	ImGui::SliderFloat3("translation", &_translation[0], -10, 10, "%.1f");
 	ImGui::SliderFloat3("rotation", &_rotation[0], 0, 360, "%.1f");
 	ImGui::SliderFloat3("scale", &_scale[0], 1, 100, "%.1f");
@@ -65,9 +62,9 @@ void CG::Test::TestDrawCube::onRender()
 		   * glm::rotate(glm::mat4(1.f), glm::radians(_rotation[1]), glm::vec3(0, 1, 0))
 		   * glm::rotate(glm::mat4(1.f), glm::radians(_rotation[2]), glm::vec3(0, 0, 1));
 
-	if (model != glm::mat4(1.f))
-		_sloader->setUniform("u_model", model);
-
+	_sloader->setUniform("u_model", model);
+	_sloader->setUniform("u_view", _renderer->viewMatrix());
+	_sloader->setUniform("u_projection", _renderer->projectionMatrix());
 	_renderer->draw(*_vao, *_ibo, *_sloader);
 }
 

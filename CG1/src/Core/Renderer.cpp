@@ -114,6 +114,7 @@ CG::Renderer::~Renderer()
 void CG::Renderer::setAspectRatio(float width, float height)
 {
     _aspectRatio = width / height;
+    _createProjectionMatrix(glm::radians(_fov), _aspectRatio, .1f, 500.f);
 }
 
 void CG::Renderer::setFov(float fov)
