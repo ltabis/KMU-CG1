@@ -53,10 +53,6 @@ namespace CG
 		float _fov;
 		float _aspectRatio;
 
-		void _createModelMatrix(float degrees, float x, float y, float z);
-		void _createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up);
-		void _createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane);
-
 	public:
 		friend void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods);
 
@@ -72,7 +68,10 @@ namespace CG
 		void pollEvents() const;
 		void swapBuffers() const;
 		bool windowShouldClose();
+
 		void createMVP();
+		void createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up);
+		void createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane);
 
 		glm::mat4 viewMatrix() const;
 		glm::mat4 projectionMatrix() const;

@@ -19,6 +19,7 @@ void CG::Test::TestMenu::onRender()
 	_gui->newFrame();
 
 	if (_currentTest != "") {
+		_tests[_currentTest]->onUpdate(0);
 		_tests[_currentTest]->onRender();
 		ImGui::Begin("Go back to menu");
 		if (ImGui::Button("<-")) {

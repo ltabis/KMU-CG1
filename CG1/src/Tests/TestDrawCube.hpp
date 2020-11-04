@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Framework/ATest.hpp"
+//#include "../Viewer.h"
 
 namespace CG {
 	namespace Test {
@@ -15,6 +16,8 @@ namespace CG {
 			void onRender() override;
 			void onStop() override;
 			void onReset() override;
+
+			void mouseDragging(double width, double height);
 
 		private:
 

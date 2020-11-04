@@ -114,13 +114,13 @@ CG::Renderer::~Renderer()
 void CG::Renderer::setAspectRatio(float width, float height)
 {
     _aspectRatio = width / height;
-    _createProjectionMatrix(glm::radians(_fov), _aspectRatio, .1f, 500.f);
+    createProjectionMatrix(glm::radians(_fov), _aspectRatio, .1f, 500.f);
 }
 
 void CG::Renderer::setFov(float fov)
 {
     _fov = fov;
-    _createProjectionMatrix(glm::radians(fov), _aspectRatio, .1f, 500.f);
+    createProjectionMatrix(glm::radians(fov), _aspectRatio, .1f, 500.f);
 }
 
 void CG::Renderer::clear() const
@@ -157,7 +157,7 @@ bool CG::Renderer::windowShouldClose()
     return glfwWindowShouldClose(_window);
 }
 
-void CG::Renderer::_createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up)
+void CG::Renderer::createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up)
 {
     glm::vec3 z = glm::normalize(campos - look);
     glm::vec3 x = glm::normalize(glm::cross(up, z));
@@ -174,7 +174,7 @@ void CG::Renderer::_createViewMatrix(const glm::vec3& campos, const glm::vec3& l
     _view = rotation * translation;
 }
 
-void CG::Renderer::_createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane)
+void CG::Renderer::createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane)
 {
     _projection = glm::mat4 {
         { 1 / (aspect * glm::tan(fovy / 2)), 0, 0, 0 },
@@ -186,8 +186,8 @@ void CG::Renderer::_createProjectionMatrix(float fovy, float aspect, float nearP
 
 void CG::Renderer::createMVP()
 {
-    _createViewMatrix(glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-    _createProjectionMatrix(glm::radians(_fov), _aspectRatio, .1f, 500.f);
+    createViewMatrix(glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    createProjectionMatrix(glm::radians(_fov), _aspectRatio, .1f, 500.f);
 }
 
 glm::mat4 CG::Renderer::viewMatrix() const
