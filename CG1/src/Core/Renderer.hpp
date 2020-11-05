@@ -21,11 +21,11 @@
 #include <glm/vec3.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "GUI.hpp"
 #include "Logger.hpp"
-#include "VertexArray.hpp"
-#include "ShaderLoader.hpp"
-#include "IndexBuffer.hpp"
+#include "Components/GUI.hpp"
+#include "Components/ShaderLoader.hpp"
+#include "DataStructures/VertexArray.hpp"
+#include "DataStructures/IndexBuffer.hpp"
 
 namespace glm
 {

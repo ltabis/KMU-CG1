@@ -171,10 +171,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\IndexBuffer.cpp" />
+    <ClCompile Include="src\Core\Camera.cpp" />
+    <ClCompile Include="src\Core\DataStructures\IndexBuffer.cpp" />
     <ClCompile Include="src\Loging\Logger.cpp" />
-    <ClCompile Include="src\Core\GUI.cpp" />
-    <ClCompile Include="src\Core\ShaderLoader.cpp" />
+    <ClCompile Include="src\Core\Components\GUI.cpp" />
+    <ClCompile Include="src\Core\Components\ShaderLoader.cpp" />
     <ClCompile Include="src\Core\Renderer.cpp" />
     <ClCompile Include="src\dependencies\imgui\imgui\imgui.cpp" />
     <ClCompile Include="src\dependencies\imgui\imgui\imgui_demo.cpp" />
@@ -183,19 +184,20 @@
     <ClCompile Include="src\dependencies\imgui\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\dependencies\imgui\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Core\VertexBuffer.cpp" />
-    <ClCompile Include="src\Core\VertexArrayLayout.cpp" />
-    <ClCompile Include="src\Core\VertexArray.cpp" />
+    <ClCompile Include="src\Core\DataStructures\VertexBuffer.cpp" />
+    <ClCompile Include="src\Core\DataStructures\VertexArrayLayout.cpp" />
+    <ClCompile Include="src\Core\DataStructures\VertexArray.cpp" />
     <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp" />
     <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
     <ClCompile Include="src\Tests\TestDrawCube.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Camera.hpp" />
     <ClInclude Include="src\Callbacks.hpp" />
-    <ClInclude Include="src\Core\IndexBuffer.hpp" />
+    <ClInclude Include="src\Core\DataStructures\IndexBuffer.hpp" />
     <ClInclude Include="src\Loging\Logger.hpp" />
-    <ClInclude Include="src\Core\GUI.hpp" />
+    <ClInclude Include="src\Core\Components\GUI.hpp" />
     <ClInclude Include="src\dependencies\imgui\imgui\imconfig.h" />
     <ClInclude Include="src\dependencies\imgui\imgui\imgui.h" />
     <ClInclude Include="src\dependencies\imgui\imgui\imgui_impl_glfw.h" />
@@ -205,11 +207,11 @@
     <ClInclude Include="src\dependencies\imgui\imgui\imstb_textedit.h" />
     <ClInclude Include="src\dependencies\imgui\imgui\imstb_truetype.h" />
     <ClInclude Include="src\Profiling\Breakpoint.hpp" />
-    <ClInclude Include="src\Core\ShaderLoader.hpp" />
+    <ClInclude Include="src\Core\Components\ShaderLoader.hpp" />
     <ClInclude Include="src\Core\Renderer.hpp" />
-    <ClInclude Include="src\Core\VertexBuffer.hpp" />
-    <ClInclude Include="src\Core\VertexArrayLayout.hpp" />
-    <ClInclude Include="src\Core\VertexArray.hpp" />
+    <ClInclude Include="src\Core\DataStructures\VertexBuffer.hpp" />
+    <ClInclude Include="src\Core\DataStructures\VertexArrayLayout.hpp" />
+    <ClInclude Include="src\Core\DataStructures\VertexArray.hpp" />
     <ClInclude Include="src\Tests\Framework\ATest.hpp" />
     <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp" />
     <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
