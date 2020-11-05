@@ -20,8 +20,6 @@ void MatrixStack::scale(float x, float y, float z)
 	_stack.top() *= glm::scale(glm::mat4(1.f), glm::vec3(x, y, z));
 }
 
-#include <iostream>
-
 void MatrixStack::push()
 {
 	_stack.push(get());
