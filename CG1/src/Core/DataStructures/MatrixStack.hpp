@@ -18,5 +18,6 @@ public:
 
 	void push();
 	void pop();
+	void reset();
 	const glm::mat4 &get() const;
 };

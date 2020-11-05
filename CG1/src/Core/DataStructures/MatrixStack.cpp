@@ -22,13 +22,19 @@ void MatrixStack::scale(float x, float y, float z)
 
 void MatrixStack::push()
 {
-	_stack.push(_stack.top());
+	_stack.push(get());
 }
 
 void MatrixStack::pop()
 {
 	if (_stack.size() != 1)
-		_stack.push(_stack.top());
+		_stack.push(get());
+}
+
+void MatrixStack::reset()
+{
+	while (_stack.size() != 1)
+		pop();
 }
 
 const glm::mat4& MatrixStack::get() const
