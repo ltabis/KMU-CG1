@@ -55,6 +55,7 @@ void CG::Test::TestDrawCube::onRender()
 
 	model *= glm::translate(model, glm::vec3(_translation[0], _translation[1], _translation[2]));
 	model *= glm::scale(glm::mat4(1.f), glm::vec3(_scale[0], _scale[1], _scale[2]));
+
 	model *= glm::rotate(glm::mat4(1.f), glm::radians(_rotation[0]), glm::vec3(1, 0, 0))
 		   * glm::rotate(glm::mat4(1.f), glm::radians(_rotation[1]), glm::vec3(0, 1, 0))
 		   * glm::rotate(glm::mat4(1.f), glm::radians(_rotation[2]), glm::vec3(0, 0, 1));
@@ -71,7 +72,7 @@ void CG::Test::TestDrawCube::onStop()
 
 void CG::Test::TestDrawCube::onReset()
 {
-	// reseting the mvp uniform.
+	// reseting the translation uniform.
 	_sloader->setUniform("u_mvp", glm::translate(glm::mat4(1.f), glm::vec3(0.f)));
 	
 	// reseting transform.

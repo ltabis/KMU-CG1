@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Framework/ATest.hpp"
-//#include "../Viewer.h"
 
 namespace CG {
 	namespace Test {
