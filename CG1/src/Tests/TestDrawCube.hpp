@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Framework/ATest.hpp"
+#include "DataStructures/MatrixStack.hpp"
 
 namespace CG {
 	namespace Test {
@@ -16,9 +17,9 @@ namespace CG {
 			void onStop() override;
 			void onReset() override;
 
-			void mouseDragging(double width, double height);
-
 		private:
+
+			MatrixStack _matrixStack;
 
 			float _cubeVertices[56] = {
 				// front

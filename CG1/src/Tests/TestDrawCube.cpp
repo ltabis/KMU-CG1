@@ -1,10 +1,10 @@
 #include "TestDrawCube.hpp"
 
 CG::Test::TestDrawCube::TestDrawCube()
-	: _rotation    { glm::vec3(0.f) }
-	, _translation { glm::vec3(0.f) }
-	, _scale       { glm::vec3(1.f) }
-	, _fov         { 45             }
+	: _rotation			 { glm::vec3(0.f) }
+	, _translation		 { glm::vec3(0.f) }
+	, _scale			 { glm::vec3(1.f) }
+	, _fov				 { 45             }
 {
 	_vbo = std::make_unique<VertexBuffer>(_cubeVertices, sizeof(_cubeVertices));
 	_dataLayout = std::make_unique<VertexArrayLayout>();
@@ -40,28 +40,35 @@ void CG::Test::TestDrawCube::onUpdate(float deltaTime)
 
 void CG::Test::TestDrawCube::onRender()
 {
+	bool updated = false;
 	ImGui::Begin("Model transformation");
-	glm::mat4 model = glm::mat4(1.f);
 
+	// control over the projection matrix.
 	if (ImGui::SliderFloat("FOV", &_fov, 45, 120, "%.1f"))
 		_renderer->setFov(_fov);
-	ImGui::SliderFloat3("translation", &_translation[0], -10, 10, "%.1f");
-	ImGui::SliderFloat3("rotation", &_rotation[0], 0, 360, "%.1f");
-	ImGui::SliderFloat3("scale", &_scale[0], 1, 100, "%.1f");
 
-	_scale = glm::clamp(_scale, glm::vec3(1, 1, 1), glm::vec3(100, 100, 100));
+	// control over the model matrix.
+	if (ImGui::SliderFloat3("translation", &_translation[0], -10, 10, "%.1f") ||
+		ImGui::SliderFloat3("rotation", &_rotation[0], 0, 360, "%.1f") ||
+		ImGui::SliderFloat3("scale", &_scale[0], 1, 100, "%.1f"))
+		updated = true;
+	if (ImGui::Button("Undo transformation"))
+		_matrixStack.pop();
 
 	ImGui::End();
 
-	model *= glm::translate(model, glm::vec3(_translation[0], _translation[1], _translation[2]));
-	model *= glm::scale(glm::mat4(1.f), glm::vec3(_scale[0], _scale[1], _scale[2]));
+	// clamping scale value (to always be initialised to 1 at the start).
+	_scale = glm::clamp(_scale, glm::vec3(1, 1, 1), glm::vec3(100, 100, 100));
 
-	model *= glm::rotate(glm::mat4(1.f), glm::radians(_rotation[0]), glm::vec3(1, 0, 0))
-		   * glm::rotate(glm::mat4(1.f), glm::radians(_rotation[1]), glm::vec3(0, 1, 0))
-		   * glm::rotate(glm::mat4(1.f), glm::radians(_rotation[2]), glm::vec3(0, 0, 1));
+	if (updated) {
+		CG_CONSOLE_INFO("Pushing to stack.");
+		_matrixStack.setPosition(_translation[0], _translation[1], _translation[2]);
+		_matrixStack.setScale(_scale[0], _scale[1], _scale[2]);
+		_matrixStack.setRotation(_rotation[0], _rotation[1], _rotation[2], glm::mat4(1.f));
+		_matrixStack.push();
+	}
 
-	glm::mat4 mvp = _renderer->projectionMatrix() * _renderer->viewMatrix() * model;
-
+	glm::mat4 mvp = _renderer->projectionMatrix() * _renderer->viewMatrix() * _matrixStack.get();
 	_sloader->setUniform("u_mvp", mvp);
 	_renderer->draw(*_vao, *_ibo, *_sloader);
 }
@@ -76,7 +83,9 @@ void CG::Test::TestDrawCube::onReset()
 	_sloader->setUniform("u_mvp", glm::translate(glm::mat4(1.f), glm::vec3(0.f)));
 	
 	// reseting transform.
+	_matrixStack.reset();
 	_translation = glm::vec3(0.f);
 	_rotation = glm::vec3(0.f);
 	_scale = glm::vec3(1.f);
+
 }
