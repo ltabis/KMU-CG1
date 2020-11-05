@@ -27,7 +27,8 @@ void MatrixStack::push()
 
 void MatrixStack::pop()
 {
-	_stack.push(_stack.top());
+	if (_stack.size() != 1)
+		_stack.push(_stack.top());
 }
 
 const glm::mat4& MatrixStack::get() const
