@@ -7,18 +7,20 @@ MatrixStack::MatrixStack()
 
 void MatrixStack::translate(float x, float y, float z)
 {
-	_stack.top() = glm::translate(_stack.top(), glm::vec3(x, y, z));
+	_stack.top() *= glm::translate(glm::mat4(1.f), glm::vec3(x, y, z));
 }
 
 void MatrixStack::rotate(float degree, float x, float y, float z)
 {
-	_stack.top() = glm::rotate(_stack.top(), glm::radians(degree), glm::vec3(x, y, z));
+	_stack.top() *= glm::rotate(glm::mat4(1.f), glm::radians(degree), glm::vec3(x, y, z));
 }
 
 void MatrixStack::scale(float x, float y, float z)
 {
-	_stack.top() = glm::scale(_stack.top(), glm::vec3(x, y, z));
+	_stack.top() *= glm::scale(glm::mat4(1.f), glm::vec3(x, y, z));
 }
+
+#include <iostream>
 
 void MatrixStack::push()
 {
@@ -28,7 +30,7 @@ void MatrixStack::push()
 void MatrixStack::pop()
 {
 	if (_stack.size() != 1)
-		_stack.push(get());
+		_stack.pop();
 }
 
 void MatrixStack::reset()
