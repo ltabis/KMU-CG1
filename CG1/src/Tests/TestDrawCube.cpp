@@ -41,16 +41,21 @@ void CG::Test::TestDrawCube::onUpdate(float deltaTime)
 void CG::Test::TestDrawCube::onRender()
 {
 	bool updated = false;
-	ImGui::Begin("Model transformation");
-
+	
+	ImGui::Begin("Projection transformation");
 	// control over the projection matrix.
 	if (ImGui::SliderFloat("FOV", &_fov, 45, 120, "%.1f"))
 		_renderer->setFov(_fov);
+	ImGui::End();
+
+	ImGui::Begin("Model transformation");
 
 	// control over the model matrix.
-	if (ImGui::SliderFloat3("translation", &_translation[0], -10, 10, "%.1f") ||
-		ImGui::SliderFloat3("rotation", &_rotation[0], 0, 360, "%.1f") ||
-		ImGui::SliderFloat3("scale", &_scale[0], 1, 100, "%.1f"))
+	if (ImGui::SliderFloat3("translation", &_translation[0], -10, 10, "%.1f"))
+		updated = true;
+	if (ImGui::SliderFloat3("rotation", &_rotation[0], 0, 360, "%.1f"))
+		updated = true;
+	if (ImGui::SliderFloat3("scale", &_scale[0], 1, 100, "%.1f"))
 		updated = true;
 	if (ImGui::Button("Undo transformation"))
 		_matrixStack.pop();

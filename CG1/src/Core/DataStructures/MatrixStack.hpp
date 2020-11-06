@@ -24,8 +24,9 @@ public:
 	void setRotation(float anglex, float angley, float anglez, const glm::mat4& pivot);
 	void setScale(float x, float y, float z);
 
-	void push();
-	void pop();
-	void reset();
-	const glm::mat4 &get() const;
+	inline void recalculate() { _stack.top() = _translation * _scale * _rotation; }
+	inline void push() { _stack.push(get()); }
+	inline void pop() { if (_stack.size() != 1) _stack.pop(); }
+	inline void reset() { while (_stack.size() != 1) pop(); }
+	inline const glm::mat4& get() const { return _stack.top(); };
 };
