@@ -26,6 +26,7 @@
 #include "Components/ShaderLoader.hpp"
 #include "DataStructures/VertexArray.hpp"
 #include "DataStructures/IndexBuffer.hpp"
+#include "WorldObjects/AShape.hpp"
 
 namespace glm
 {
@@ -65,6 +66,7 @@ namespace CG
 		void clear() const;
 		void clearColor(float r, float g, float b, float a) const;
 		void draw(const VertexArray& vao, const IndexBuffer& ibo, const ShaderLoader& shader) const;
+		void draw(const AShape &shape, const ShaderLoader& shader) const;
 		void pollEvents() const;
 		void swapBuffers() const;
 		bool windowShouldClose();

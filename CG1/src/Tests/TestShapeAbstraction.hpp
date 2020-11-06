@@ -22,7 +22,7 @@ namespace CG {
 			float _fov;
 
 			std::unique_ptr<ShaderLoader> _sloader;
-			std::unique_ptr<Plane> _plane;
+			std::unique_ptr<AShape> _plane;
 		};
 	}
 }

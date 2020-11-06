@@ -142,6 +142,11 @@ void CG::Renderer::draw(const VertexArray& vao, const IndexBuffer& ibo, const Sh
     glDrawElements(GL_TRIANGLES, ibo.indices(), GL_UNSIGNED_INT, nullptr);
 }
 
+void CG::Renderer::draw(const AShape& shape, const ShaderLoader& shader) const
+{
+    draw(shape.vao(), shape.ibo(), shader);
+}
+
 void CG::Renderer::pollEvents() const
 {
     glfwPollEvents();

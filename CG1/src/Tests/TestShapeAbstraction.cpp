@@ -40,7 +40,7 @@ void CG::Test::TestShapeAbstraction::onRender()
 
 	glm::mat4 mvp = _renderer->projectionMatrix() * _renderer->viewMatrix() * glm::mat4(1.f);
 	_sloader->setUniform("u_mvp", mvp);
-	_renderer->draw(_plane->vao(), _plane->ibo(), *_sloader);
+	_renderer->draw(*_plane, *_sloader);
 }
 
 void CG::Test::TestShapeAbstraction::onStop()
