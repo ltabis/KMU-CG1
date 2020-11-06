@@ -171,6 +171,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\WorldObjects\Plane.cpp" />
+    <ClCompile Include="src\Core\DataStructures\MatrixStack.cpp" />
     <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\DataStructures\IndexBuffer.cpp" />
     <ClCompile Include="src\Loging\Logger.cpp" />
@@ -191,11 +193,16 @@
     <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
     <ClCompile Include="src\Tests\TestDrawCube.cpp" />
+    <ClCompile Include="src\Tests\TestShapeAbstraction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\WorldObjects\Plane.hpp" />
+    <ClInclude Include="src\Core\DataStructures\MatrixStack.hpp" />
     <ClInclude Include="src\Core\Camera.hpp" />
     <ClInclude Include="src\Callbacks.hpp" />
     <ClInclude Include="src\Core\DataStructures\IndexBuffer.hpp" />
+    <ClInclude Include="src\Core\DataStructures\Transform.hpp" />
+    <ClInclude Include="src\Core\WorldObjects\AShape.hpp" />
     <ClInclude Include="src\Loging\Logger.hpp" />
     <ClInclude Include="src\Core\Components\GUI.hpp" />
     <ClInclude Include="src\dependencies\imgui\imgui\imconfig.h" />
@@ -217,6 +224,7 @@
     <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
     <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />
     <ClInclude Include="src\Tests\TestDrawCube.hpp" />
+    <ClInclude Include="src\Tests\TestShapeAbstraction.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />

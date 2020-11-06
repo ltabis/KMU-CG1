@@ -186,7 +186,7 @@ void CG::Renderer::createProjectionMatrix(float fovy, float aspect, float nearPl
 
 void CG::Renderer::createMVP()
 {
-    createViewMatrix(glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    createViewMatrix(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     createProjectionMatrix(glm::radians(_fov), _aspectRatio, .1f, 500.f);
 }
 
