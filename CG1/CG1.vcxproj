@@ -172,7 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Renderer.cpp" />
-    <ClCompile Include="src\Core\WorldObjects\Plane.cpp" />
+    <ClCompile Include="src\Core\WorldObjects\Primitives\Plane.cpp" />
     <ClCompile Include="src\Core\DataStructures\MatrixStack.cpp" />
     <ClCompile Include="src\Core\DataStructures\IndexBuffer.cpp" />
     <ClCompile Include="src\Loging\Logger.cpp" />
@@ -195,7 +195,7 @@
     <ClCompile Include="src\Tests\TestShapeAbstraction.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\WorldObjects\Plane.hpp" />
+    <ClInclude Include="src\Core\WorldObjects\Primitives\Plane.hpp" />
     <ClInclude Include="src\Core\DataStructures\MatrixStack.hpp" />
     <ClInclude Include="src\Callbacks.hpp" />
     <ClInclude Include="src\Core\DataStructures\IndexBuffer.hpp" />

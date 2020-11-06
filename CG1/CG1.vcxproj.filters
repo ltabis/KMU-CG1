@@ -75,10 +75,10 @@
     <ClCompile Include="src\Tests\TestShapeAbstraction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\WorldObjects\Plane.cpp">
+    <ClCompile Include="src\Core\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Renderer.cpp">
+    <ClCompile Include="src\Core\WorldObjects\Primitives\Plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -164,7 +164,7 @@
     <ClInclude Include="src\Core\WorldObjects\AShape.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\WorldObjects\Plane.hpp">
+    <ClInclude Include="src\Core\WorldObjects\Primitives\Plane.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

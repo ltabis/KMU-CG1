@@ -2,7 +2,7 @@
 
 #include "Framework/ATest.hpp"
 #include "DataStructures/MatrixStack.hpp"
-#include "WorldObjects/Plane.hpp"
+#include "WorldObjects/Primitives/Plane.hpp"
 
 namespace CG {
 	namespace Test {
