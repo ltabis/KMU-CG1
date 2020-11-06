@@ -49,7 +49,7 @@ void CG::Test::TestDrawCube::onRender()
 	ImGui::End();
 
 	ImGui::Begin("Model transformation");
-
+	
 	// control over the model matrix.
 	if (ImGui::SliderFloat3("translation", &_translation[0], -10, 10, "%.1f"))
 		updated = true;

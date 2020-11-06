@@ -114,6 +114,7 @@
 #include "Callbacks.hpp"
 #include "Profiling/Breakpoint.hpp"
 #include "Tests/TestBackgroundColorChange.hpp"
+#include "Tests/TestShapeAbstraction.hpp"
 #include "Tests/TestDrawTriangle.hpp"
 #include "Tests/TestDrawCube.hpp"
 #include "Tests/Framework/TestMenu.hpp"
@@ -132,6 +133,7 @@ int main(void)
 	menu.registerTest<CG::Test::TestBackgroundColorChange>("Change color of background");
 	menu.registerTest<CG::Test::TestDrawTriangle>("Display a single colored triangle");
 	menu.registerTest<CG::Test::TestDrawCube>("Draw a colored cube");
+	menu.registerTest<CG::Test::TestShapeAbstraction>("Draw a colored cube from shape abstraction");
 
 	while (!renderer->windowShouldClose())
 		menu.onRender();
