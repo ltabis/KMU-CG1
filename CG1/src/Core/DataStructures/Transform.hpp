@@ -72,6 +72,8 @@ namespace CG {
 			_updateModel();
 		}
 
+		inline glm::mat4 model() const { return _modelCache; }
+
 	private:
 
 		// updates the model matrix in case of transform reset.
