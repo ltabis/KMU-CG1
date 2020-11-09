@@ -1,6 +1,18 @@
 // dear imgui, v1.78
 // (demo code)
 
+    //while (1) {
+    //	renderer->clear();
+    //	gui->newFrame();
+    //	ImGui::Begin("test");
+    //	ImGui::ShowDemoWindow();
+    //	ImGui::End();
+    //	gui->renderGUI();
+    //	renderer->pollEvents();
+    //	renderer->swapBuffers();
+    //}
+
+
 // Help:
 // - Read FAQ at http://dearimgui.org/faq
 // - Newcomers, read 'Programmer guide' in imgui.cpp for notes on how to setup Dear ImGui in your codebase.
