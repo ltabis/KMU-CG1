@@ -3,6 +3,7 @@
 #include "Framework/ATest.hpp"
 #include "DataStructures/MatrixStack.hpp"
 #include "WorldObjects/Primitives/Plane.hpp"
+#include "WorldObjects/Primitives/Triangle.hpp"
 
 namespace CG {
 	namespace Test {
@@ -23,6 +24,7 @@ namespace CG {
 
 			std::unique_ptr<ShaderLoader> _sloader;
 			std::unique_ptr<AShape> _plane;
+			std::unique_ptr<AShape> _triangle;
 		};
 	}
 }

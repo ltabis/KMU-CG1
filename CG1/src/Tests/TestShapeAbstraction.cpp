@@ -15,6 +15,12 @@ CG::Test::TestShapeAbstraction::TestShapeAbstraction()
 		glm::vec3(0.f),
 		glm::vec3(1.f)
 	);
+
+	_triangle = std::make_unique<Triangle>(
+		glm::vec3(0.f),
+		glm::vec3(0.f),
+		glm::vec3(1.5f)
+	);
 }
 
 CG::Test::TestShapeAbstraction::~TestShapeAbstraction()
@@ -38,9 +44,12 @@ void CG::Test::TestShapeAbstraction::onRender()
 		_renderer->setFov(_fov);
 	ImGui::End();
 
-	glm::mat4 mvp = _renderer->projectionMatrix() * _renderer->viewMatrix() * glm::mat4(1.f);
+	glm::mat4 mvp = _renderer->projectionMatrix() * _renderer->viewMatrix() * _plane->transform.model();
 	_sloader->setUniform("u_mvp", mvp);
 	_renderer->draw(*_plane, *_sloader);
+	mvp = _renderer->projectionMatrix() * _renderer->viewMatrix() * _triangle->transform.model();
+	_sloader->setUniform("u_mvp", mvp);
+	_renderer->draw(*_triangle, *_sloader);
 }
 
 void CG::Test::TestShapeAbstraction::onStop()
