@@ -42,20 +42,20 @@ void CG::Test::TestShapeSpawner::onRender()
 	if (ImGui::TreeNode("Shapes")) {
 		unsigned int id = 0;
 		for (auto shape = _shapes.begin(); shape != _shapes.end(); ++id) {
-			if (ImGui::TreeNode(std::to_string(id).c_str())) { // TODO: replace with the shape name.
+			if (ImGui::TreeNode(std::to_string(id).c_str())) {
 
 				glm::vec3 translation = glm::vec3(0.f);
 				glm::vec3 rotation = glm::vec3(0.f);
 				glm::vec3 scale = glm::vec3(1.f);
 
-				if (ImGui::SliderFloat3("translation", &translation[0], -10, 10, "%.1f"))
+				if (ImGui::InputFloat3("translation", &translation[0], 3))
 					(*shape)->transform.setPosition(translation.x, translation.y, translation.z);
 				if (ImGui::SliderFloat3("rotation", &rotation[0], 0, 360, "%.1f"))
-					(*shape)->transform.setRotation(translation.x, translation.y, translation.z, glm::mat4(1.f));
+					(*shape)->transform.setRotation(rotation.x, rotation.y, rotation.z, glm::mat4(1.f));
 				if (ImGui::SliderFloat3("scale", &scale[0], 1, 100, "%.1f"))
 					(*shape)->transform.setScale(scale.x, scale.y, scale.z);
 
-				if (ImGui::ColorButton("delete", ImVec4(1.f, 0.f, 0.f, 1.f)))
+				if (ImGui::Button("delete"))
 					shape = _shapes.erase(shape);
 				else
 					++shape;
