@@ -15,8 +15,9 @@ CG::Test::TestMenu::~TestMenu()
 
 void CG::Test::TestMenu::onRender()
 {
-	_renderer->clear();
+	_renderer->pollEvents();
 	_gui->newFrame();
+	_renderer->clear();
 
 	if (_currentTest != "") {
 		_tests[_currentTest]->onUpdate(0);
@@ -40,6 +41,5 @@ void CG::Test::TestMenu::onRender()
 
 	_gui->drawDebugUI();
 	_gui->renderGUI();
-	_renderer->pollEvents();
 	_renderer->swapBuffers();
 }
