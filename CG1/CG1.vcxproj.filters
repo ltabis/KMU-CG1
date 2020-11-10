@@ -87,6 +87,9 @@
     <ClCompile Include="src\Tests\TestShapeSpawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\WorldObjects\Complex\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Profiling\Breakpoint.hpp">
@@ -177,6 +180,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tests\TestShapeSpawner.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\WorldObjects\Complex\Cube.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

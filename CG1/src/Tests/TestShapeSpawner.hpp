@@ -3,6 +3,7 @@
 #include "Framework/ATest.hpp"
 #include "WorldObjects/Primitives/Plane.hpp"
 #include "WorldObjects/Primitives/Triangle.hpp"
+#include "WorldObjects/Complex/Cube.hpp"
 
 namespace CG {
 	namespace Test {

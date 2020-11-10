@@ -38,6 +38,8 @@ void CG::Test::TestShapeSpawner::onRender()
 		_shapes.push_back(std::make_unique<Triangle>(glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f)));
 	if (ImGui::Button("Create plane"))
 		_shapes.push_back(std::make_unique<Plane>(glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f)));
+	if (ImGui::Button("Create cube"))
+		_shapes.push_back(std::make_unique<Cube>(glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f)));
 
 	if (ImGui::TreeNode("Shapes")) {
 		unsigned int id = 0;
@@ -48,7 +50,7 @@ void CG::Test::TestShapeSpawner::onRender()
 				glm::vec3 rotation = glm::vec3(0.f);
 				glm::vec3 scale = glm::vec3(1.f);
 
-				if (ImGui::InputFloat3("translation", &translation[0], 3))
+				if (ImGui::InputFloat3("position", &translation[0], 3))
 					(*shape)->transform.setPosition(translation.x, translation.y, translation.z);
 				if (ImGui::SliderFloat3("rotation", &rotation[0], 0, 360, "%.1f"))
 					(*shape)->transform.setRotation(rotation.x, rotation.y, rotation.z, glm::mat4(1.f));
