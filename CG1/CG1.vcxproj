@@ -171,9 +171,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\Renderer.cpp" />
     <ClCompile Include="src\Core\WorldObjects\Complex\Cube.cpp" />
-    <ClCompile Include="src\Core\WorldObjects\Complex\Pyramid.cpp" />
     <ClCompile Include="src\Core\WorldObjects\Primitives\Plane.cpp" />
     <ClCompile Include="src\Core\DataStructures\MatrixStack.cpp" />
     <ClCompile Include="src\Core\DataStructures\IndexBuffer.cpp" />
@@ -192,6 +192,7 @@
     <ClCompile Include="src\Core\DataStructures\VertexArrayLayout.cpp" />
     <ClCompile Include="src\Core\DataStructures\VertexArray.cpp" />
     <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp" />
+    <ClCompile Include="src\Tests\TestCamera.cpp" />
     <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
     <ClCompile Include="src\Tests\TestDrawCube.cpp" />
@@ -199,8 +200,8 @@
     <ClCompile Include="src\Tests\TestShapeSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Camera.hpp" />
     <ClInclude Include="src\Core\WorldObjects\Complex\Cube.hpp" />
-    <ClInclude Include="src\Core\WorldObjects\Complex\Pyramid.hpp" />
     <ClInclude Include="src\Core\WorldObjects\Primitives\Plane.hpp" />
     <ClInclude Include="src\Core\DataStructures\MatrixStack.hpp" />
     <ClInclude Include="src\Callbacks.hpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="src\Core\DataStructures\VertexArray.hpp" />
     <ClInclude Include="src\Tests\Framework\ATest.hpp" />
     <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp" />
+    <ClInclude Include="src\Tests\TestCamera.hpp" />
     <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
     <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />
     <ClInclude Include="src\Tests\TestDrawCube.hpp" />
