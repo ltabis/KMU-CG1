@@ -1,14 +1,27 @@
 #include "Camera.hpp"
 
-CG::Camera::Camera(const glm::vec3& position, const glm::vec3& point, const glm::vec3& up, float fov, float width, float height)
-	: _view			{ glm::mat4(1.f) }
-	, _position		{ position       }
+CG::Camera::Camera(const glm::vec3& position, const glm::vec3& point, const glm::vec3& up, float width, float height, float nearPlane, float farPlane, float fov, CameraType type)
+	: _position		{ position       }
 	, _point		{ point          }
 	, _up			{ up             }
-	, _fov			{ fov            }
-	, _aspectRatio  { width / height }
+    , _fov          { fov            }
+    , _nearPlane    { nearPlane      }
+    , _farPlane     { farPlane       }
+    , _aspectRatio  { width / height }
+    , _type         { type           }
 {
+    _createProjectionMatrix();
     _createViewMatrix();
+}
+
+void CG::Camera::_createProjectionMatrix()
+{
+    _projection = glm::mat4{
+        { 1 / (_aspectRatio * glm::tan(_fov / 2)), 0, 0, 0 },
+        { 0, 1 / glm::tan(_fov / 2), 0, 0 },
+        { 0, 0, -((_farPlane + _nearPlane) / (_farPlane- _nearPlane)), -1},
+        { 0, 0, -((2 * _farPlane * _nearPlane) / (_farPlane - _nearPlane)), 0 }
+    };
 }
 
 void CG::Camera::_createViewMatrix()
@@ -60,5 +73,5 @@ void CG::Camera::setAspectRatio(float width, float height)
 
 glm::mat4 CG::Camera::view() const
 {
-	return _view;
+	return _projection * _view;
 }

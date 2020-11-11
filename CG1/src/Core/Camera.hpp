@@ -5,22 +5,20 @@
 namespace CG {
 	class Camera
 	{
-	private:
-		glm::mat4 _view;
-		glm::mat4 _projection;
-		glm::mat4 _mvp;
-
-		glm::vec3 _position;
-		glm::vec3 _point;
-		glm::vec3 _up;
-
-		float _fov;
-		float _aspectRatio;
-
-		void _createViewMatrix();
-
 	public:
-		Camera(const glm::vec3& position, const glm::vec3& point, const glm::vec3& up, float fov, float width, float height);
+
+		enum class CameraType { PERSPECTIVE, ORTHOGRAPHIC };
+
+		Camera(
+			const glm::vec3& position,
+			const glm::vec3& point,
+			const glm::vec3& up,
+			float width = 800.f,
+			float height = 800.f,
+			float nearPlane = .1f,
+			float farPlane = 500.f,
+			float fov = 45.f,
+			CameraType type = CameraType::PERSPECTIVE);
 		~Camera();
 
 		void translate(const glm::vec3& translation);
@@ -33,5 +31,23 @@ namespace CG {
 		void setAspectRatio(float width, float height);
 
 		glm::mat4 view() const;
+
+	private:
+		CameraType _type;
+
+		glm::mat4 _view;
+		glm::mat4 _projection;
+
+		glm::vec3 _position;
+		glm::vec3 _point;
+		glm::vec3 _up;
+
+		float _fov;
+		float _nearPlane;
+		float _farPlane;
+		float _aspectRatio;
+
+		void _createViewMatrix();
+		void _createProjectionMatrix();
 	};
 }
