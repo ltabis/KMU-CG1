@@ -35,7 +35,6 @@ void CG::Test::TestCamera::onStart()
 
 void CG::Test::TestCamera::onUpdate(float deltaTime)
 {
-	_renderer->pollEvents();
 }
 
 void CG::Test::TestCamera::onRender()
