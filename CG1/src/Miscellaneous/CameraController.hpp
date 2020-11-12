@@ -17,7 +17,7 @@ namespace CG {
 		);
 		~CameraController();
 
-		void update();
+		void update(float deltaTime);
 		glm::mat4 view() const;
 
 		float speed;

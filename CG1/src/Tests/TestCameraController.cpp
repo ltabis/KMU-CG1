@@ -28,7 +28,7 @@ void CG::Test::TestCameraController::onStart()
 			_renderer->window(),
 			glm::vec3(0.f, 0.f, 1.f),
 			glm::vec3(0.f),
-			0.05f,
+			1.f,
 			1.f
 		);
 
@@ -37,7 +37,7 @@ void CG::Test::TestCameraController::onStart()
 
 void CG::Test::TestCameraController::onUpdate(float deltaTime)
 {
-	_controller->update();
+	_controller->update(deltaTime);
 }
 
 void CG::Test::TestCameraController::onRender()

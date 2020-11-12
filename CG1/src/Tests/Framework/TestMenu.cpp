@@ -1,6 +1,7 @@
 #include "TestMenu.hpp"
 
 CG::Test::TestMenu::TestMenu(std::shared_ptr<Renderer>& renderer, std::shared_ptr <GUI> gui)
+	: _deltaTime { 0 }
 {
 	if (!renderer)
 		return;
@@ -15,12 +16,17 @@ CG::Test::TestMenu::~TestMenu()
 
 void CG::Test::TestMenu::onRender()
 {
+	float currentFrame = glfwGetTime();
+
+	_deltaTime = currentFrame - _lastFrame;
+	_lastFrame = currentFrame;
+
 	_renderer->pollEvents();
 	_gui->newFrame();
 	_renderer->clear();
 
 	if (_currentTest != "") {
-		_tests[_currentTest]->onUpdate(0);
+		_tests[_currentTest]->onUpdate(_deltaTime);
 		_tests[_currentTest]->onRender();
 		ImGui::Begin("Go back to menu");
 		if (ImGui::Button("<-")) {

@@ -24,6 +24,10 @@ namespace CG {
 				}
 			}
 		private:
+
+			float _deltaTime;
+			float _lastFrame;
+
 			std::unordered_map<std::string, std::unique_ptr<ATest>> _tests;
 			std::string _currentTest;
 			std::shared_ptr<Renderer> _renderer;

@@ -27,21 +27,21 @@ CG::CameraController::~CameraController()
 {
 }
 
-void CG::CameraController::update()
+void CG::CameraController::update(float deltaTime)
 {
     if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS)
-        _camera.translate(_camera.front() * speed);
+        _camera.translate(_camera.front() * speed * deltaTime);
     if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
-        _camera.translate(-_camera.front() * speed);
+        _camera.translate(-_camera.front() * speed * deltaTime);
     if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS)
-        _camera.translate(glm::normalize(glm::cross(_camera.front(), _camera.up())) * speed);
+        _camera.translate(glm::normalize(glm::cross(_camera.front(), _camera.up())) * speed * deltaTime);
     if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS)
-        _camera.translate(-glm::normalize(glm::cross(_camera.front(), _camera.up())) * speed);
+        _camera.translate(-glm::normalize(glm::cross(_camera.front(), _camera.up())) * speed * deltaTime);
 
     if (glfwGetKey(_window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-        _camera.translate(_camera.up() * speed);
+        _camera.translate(_camera.up() * speed * deltaTime);
     if (glfwGetKey(_window, GLFW_KEY_SPACE) == GLFW_PRESS)
-        _camera.translate(-_camera.up() * speed);
+        _camera.translate(-_camera.up() * speed * deltaTime);
 }
 
 glm::mat4 CG::CameraController::view() const
