@@ -11,7 +11,7 @@ namespace CG {
 
 		Camera(
 			const glm::vec3& position,
-			const glm::vec3& point,
+			const glm::vec3& front,
 			const glm::vec3& up,
 			float width = 800.f,
 			float height = 800.f,
@@ -29,6 +29,10 @@ namespace CG {
 
 		glm::mat4 view() const;
 
+		glm::vec3 position() const;
+		glm::vec3 front() const;
+		glm::vec3 up() const;
+
 	private:
 		CameraType _type;
 
@@ -36,7 +40,7 @@ namespace CG {
 		glm::mat4 _projection;
 
 		glm::vec3 _position;
-		glm::vec3 _point;
+		glm::vec3 _front;
 		glm::vec3 _up;
 
 		float _fov;

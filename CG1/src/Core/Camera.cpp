@@ -1,8 +1,8 @@
 #include "Camera.hpp"
 
-CG::Camera::Camera(const glm::vec3& position, const glm::vec3& point, const glm::vec3& up, float width, float height, float nearPlane, float farPlane, float fov, CameraType type)
+CG::Camera::Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up, float width, float height, float nearPlane, float farPlane, float fov, CameraType type)
 	: _position		{ position       }
-	, _point		{ point          }
+	, _front		{ front          }
 	, _up			{ up             }
     , _fov          { fov            }
     , _nearPlane    { nearPlane      }
@@ -27,7 +27,7 @@ void CG::Camera::_createProjectionMatrix()
 void CG::Camera::_createViewMatrix()
 {
     // finding the x, y and z axis of the camera using cross product.
-    glm::vec3 z = glm::normalize(_position - _point);
+    glm::vec3 z = glm::normalize(_position - _front);
     glm::vec3 x = glm::normalize(glm::cross(_up, z));
     glm::vec3 y = glm::normalize(glm::cross(z, x));
 
@@ -54,7 +54,7 @@ void CG::Camera::translate(const glm::vec3& translation)
 
 void CG::Camera::rotate(const glm::vec3& rotation)
 {
-    _point += rotation;
+    _front += rotation;
     _view *= glm::rotate(glm::mat4(1.f), rotation.x, glm::vec3(1, 0, 0)) *
              glm::rotate(glm::mat4(1.f), rotation.y, glm::vec3(0, 1, 0)) *
              glm::rotate(glm::mat4(1.f), rotation.z, glm::vec3(0, 0, 1));
@@ -75,4 +75,19 @@ void CG::Camera::setAspectRatio(float width, float height)
 glm::mat4 CG::Camera::view() const
 {
 	return _projection * _view;
+}
+
+glm::vec3 CG::Camera::position() const
+{
+    return _position;
+}
+
+glm::vec3 CG::Camera::front() const
+{
+    return _front;
+}
+
+glm::vec3 CG::Camera::up() const
+{
+    return _up;
 }
