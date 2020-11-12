@@ -24,9 +24,6 @@ namespace CG {
 		void translate(const glm::vec3& translation);
 		void rotate(const glm::vec3& position);
 
-		void setPosition();
-		void setRotation();
-
 		void setFieldOfView(float fov);
 		void setAspectRatio(float width, float height);
 

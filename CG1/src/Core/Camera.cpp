@@ -19,13 +19,14 @@ void CG::Camera::_createProjectionMatrix()
     _projection = glm::mat4{
         { 1 / (_aspectRatio * glm::tan(_fov / 2)), 0, 0, 0 },
         { 0, 1 / glm::tan(_fov / 2), 0, 0 },
-        { 0, 0, -((_farPlane + _nearPlane) / (_farPlane- _nearPlane)), -1},
+        { 0, 0, -((_farPlane + _nearPlane) / (_farPlane - _nearPlane)), -1},
         { 0, 0, -((2 * _farPlane * _nearPlane) / (_farPlane - _nearPlane)), 0 }
     };
 }
 
 void CG::Camera::_createViewMatrix()
 {
+    // finding the x, y and z axis of the camera using cross product.
     glm::vec3 z = glm::normalize(_position - _point);
     glm::vec3 x = glm::normalize(glm::cross(_up, z));
     glm::vec3 y = glm::normalize(glm::cross(z, x));
@@ -62,13 +63,13 @@ void CG::Camera::rotate(const glm::vec3& rotation)
 void CG::Camera::setFieldOfView(float fov)
 {
     _fov = fov;
-    // TODO: implemente
+    _createProjectionMatrix();
 }
 
 void CG::Camera::setAspectRatio(float width, float height)
 {
     _aspectRatio = width / height;
-    // TODO: implemente
+    _createProjectionMatrix();
 }
 
 glm::mat4 CG::Camera::view() const
