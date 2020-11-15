@@ -12,7 +12,7 @@ namespace CG {
 		Camera(
 			const glm::vec3& position,
 			const glm::vec3& front,
-			const glm::vec3& up,
+			const glm::vec3& up = glm::vec3(0.f, 1.f, 0.f),
 			float width = 800.f,
 			float height = 800.f,
 			float nearPlane = .1f,
@@ -24,10 +24,12 @@ namespace CG {
 		void translate(const glm::vec3& translation);
 		void rotate(const glm::vec3& position);
 
+		void setFront(const glm::vec3& front);
+
 		void setFieldOfView(float fov);
 		void setAspectRatio(float width, float height);
 
-		glm::mat4 view() const;
+		glm::mat4 view();
 
 		glm::vec3 position() const;
 		glm::vec3 front() const;

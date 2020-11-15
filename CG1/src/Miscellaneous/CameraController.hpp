@@ -10,10 +10,10 @@ namespace CG {
 
 		CameraController(
 			GLFWwindow* _window,
-			const glm::vec3& position,
-			const glm::vec3& point,
-			float speed,
-			float sensibility
+			const glm::vec3& position = glm::vec3(0.f),
+			const glm::vec3& point = glm::vec3(0.f),
+			float speed = 1.f,
+			float sensitivity = .1f
 		);
 		~CameraController();
 
@@ -21,15 +21,11 @@ namespace CG {
 		glm::mat4 view() const;
 
 		float speed;
-		float sensibility;
 
 	private:
 
-		Camera _camera;
 		GLFWwindow* _window;
 
-		float _pitch;
-		float _yaw;
-		float _roll;
+		void _computeCameraTranslation(float deltaTime);
 	};
 }
