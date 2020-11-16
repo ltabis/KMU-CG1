@@ -1,5 +1,5 @@
 # KMU-CG1
-Doing some rendering with C++ and OpenGL. *Current version*: 0.25.0
+Doing some rendering with C++ and OpenGL. *Current version*: 0.26.0
 
 ## Goal
 

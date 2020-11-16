@@ -147,6 +147,17 @@ void CG::Renderer::draw(const AShape& shape, const ShaderLoader& shader) const
     draw(shape.vao(), shape.ibo(), shader);
 }
 
+void CG::Renderer::drawWireFrame(const AShape& shape, const ShaderLoader& shader) const
+{
+    glPolygonMode(GL_FRONT, GL_LINE);
+    glPolygonMode(GL_BACK, GL_LINE);
+
+    draw(shape.vao(), shape.ibo(), shader);
+
+    glPolygonMode(GL_FRONT, GL_FILL);
+    glPolygonMode(GL_BACK, GL_FILL);
+}
+
 void CG::Renderer::pollEvents() const
 {
     glfwPollEvents();

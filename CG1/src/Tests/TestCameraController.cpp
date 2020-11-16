@@ -55,16 +55,18 @@ void CG::Test::TestCameraController::onRender()
 		_helpOpened = !_helpOpened;
 
 	if (_helpOpened) {
+		ImGui::BeginChild("Tips");
 		ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "How to use the controller.");
 		ImGui::Text("Use the mouse to look around.");
 		ImGui::Text("Use 'W' 'A' 'S' 'D' to move the camera.");
 		ImGui::Text("Use 'Space' and 'Left Shift' to move the camera up or down.");
+		ImGui::EndChild();
 	}
 	ImGui::End();
 
 	glm::mat4 mvp = _controller->view() * _cube->transform.model();
 	_sloader->setUniform("u_mvp", mvp);
-	_renderer->draw(*_cube, *_sloader);
+	_renderer->drawWireFrame(*_cube, *_sloader);
 }
 
 void CG::Test::TestCameraController::onStop()
