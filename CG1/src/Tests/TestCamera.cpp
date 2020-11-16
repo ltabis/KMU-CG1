@@ -14,8 +14,8 @@ CG::Test::TestCamera::TestCamera()
 		glm::vec3(0.f, 0.f, 1.f),
 		glm::vec3(0.f),
 		glm::vec3(0.f, 1.f, 0.f),
-		1920,
-		1080
+		1920.f,
+		1080.f
 	);
 
 	_sloader->load("./res/shaders/square.shader");

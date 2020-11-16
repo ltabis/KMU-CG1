@@ -26,11 +26,11 @@ void mouse_camera_controller_callback(GLFWwindow* window, double xpos, double yp
         first_mouse_position = false;
     }
 
-    float mouse_x_offset = (xpos - last_mouse_x_position) * sensitivity;
-    float mouse_y_offset = (last_mouse_y_position - ypos) * sensitivity;
+    float mouse_x_offset = ((float)xpos - last_mouse_x_position) * sensitivity;
+    float mouse_y_offset = (last_mouse_y_position - (float)ypos) * sensitivity;
 
-    last_mouse_x_position = xpos;
-    last_mouse_y_position = ypos;
+    last_mouse_x_position = (float)xpos;
+    last_mouse_y_position = (float)ypos;
 
     yaw += mouse_x_offset;
     pitch += mouse_y_offset;
@@ -63,8 +63,8 @@ CG::CameraController::CameraController(
             position,
             point,
             glm::vec3(0.f, 1.f, 0.f),
-            1920,
-            1080,
+            1920.f,
+            1080.f,
             .1f,
             500.f,
             90.f,

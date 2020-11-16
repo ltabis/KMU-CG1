@@ -16,7 +16,7 @@ CG::Test::TestMenu::~TestMenu()
 
 void CG::Test::TestMenu::onRender()
 {
-	float currentFrame = glfwGetTime();
+	float currentFrame = (float)glfwGetTime();
 
 	_deltaTime = currentFrame - _lastFrame;
 	_lastFrame = currentFrame;
