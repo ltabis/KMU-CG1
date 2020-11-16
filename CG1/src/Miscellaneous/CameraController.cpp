@@ -64,7 +64,11 @@ CG::CameraController::CameraController(
             point,
             glm::vec3(0.f, 1.f, 0.f),
             1920,
-            1080
+            1080,
+            .1f,
+            500.f,
+            90.f,
+            true
         );
 
     sensitivity = sensitivity;
