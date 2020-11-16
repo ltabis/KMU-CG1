@@ -17,6 +17,8 @@ namespace CG {
 		);
 		~CameraController();
 
+		void setFieldOfView(float fov);
+		void setAspectRatio(float width, float height);
 		void update(float deltaTime);
 		glm::mat4 view() const;
 

@@ -81,6 +81,16 @@ CG::CameraController::~CameraController()
 {
 }
 
+void CG::CameraController::setFieldOfView(float fov)
+{
+    camera->setFieldOfView(fov);
+}
+
+void CG::CameraController::setAspectRatio(float width, float height)
+{
+    camera->setAspectRatio(width, height);
+}
+
 void CG::CameraController::update(float deltaTime)
 {
     _computeCameraTranslation(deltaTime);

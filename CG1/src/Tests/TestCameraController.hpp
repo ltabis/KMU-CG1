@@ -25,6 +25,7 @@ namespace CG {
 			std::unique_ptr<CameraController> _controller;
 
 			float _fov;
+			bool _helpOpened;
 			glm::vec2 _aspectRatio;
 		};
 	}
