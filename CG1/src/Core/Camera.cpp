@@ -85,7 +85,7 @@ void CG::Camera::setFront(const glm::vec3& front)
     _createViewMatrix();
 }
 
-glm::mat4 CG::Camera::view()
+glm::mat4 CG::Camera::view() const
 {
 	return _projection * _view;
 }

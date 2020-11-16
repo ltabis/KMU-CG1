@@ -31,7 +31,7 @@ namespace CG {
 		void setFieldOfView(float fov);
 		void setAspectRatio(float width, float height);
 
-		glm::mat4 view();
+		glm::mat4 view() const;
 
 		glm::vec3 position() const;
 		glm::vec3 front() const;

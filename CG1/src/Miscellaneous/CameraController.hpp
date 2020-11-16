@@ -27,7 +27,20 @@ namespace CG {
 	private:
 
 		GLFWwindow* _window;
+		CG::Camera _camera;
+
+		float _sensitivity = 0.1f;
+		float _lastMouseXPosition = 0;
+		float _lastMouseYPosition = 0;
+
+		bool _firstMousePosition = true;
+
+		float _pitch = 0.f;
+		float _yaw = 0.f;
+		// Not really needed, but would be cool to implement.
+		float _roll = 0.f;
 
 		void _computeCameraTranslation(float deltaTime);
+		void _computeCameraRotation(float deltaTime);
 	};
 }

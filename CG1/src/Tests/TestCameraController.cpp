@@ -29,7 +29,6 @@ void CG::Test::TestCameraController::onStart()
 			_renderer->window(),
 			glm::vec3(0.f, 0.f, 1.f),
 			glm::vec3(0.f),
-			1.f,
 			1.f
 		);
 
