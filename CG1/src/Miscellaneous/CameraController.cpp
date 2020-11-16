@@ -3,12 +3,9 @@
 CG::CameraController::CameraController(
     GLFWwindow *window,
     const glm::vec3& position,
-    const glm::vec3& point,
-    float speed,
-    float sensitivity
+    const glm::vec3& point
 )
-    : speed   { speed  }
-    , _window { window }
+    : _window { window }
     , _camera {
         position,
         point,
@@ -17,13 +14,11 @@ CG::CameraController::CameraController(
         1080.f,
         .1f,
         500.f,
-        90.f,
-        true
+        90.f
     }
 {
-    _sensitivity = sensitivity;
-
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+    glfwGetCursorPos(_window, &_lastMouseXPosition, &_lastMouseYPosition);
 }
 
 CG::CameraController::~CameraController()
@@ -54,7 +49,6 @@ glm::mat4 CG::CameraController::view() const
 void CG::CameraController::_computeCameraTranslation(float deltaTime)
 {
     if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
-        
         _camera.translate(glm::normalize(_camera.front()) * speed * deltaTime);
     if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS)
         _camera.translate(glm::normalize(-_camera.front()) * speed * deltaTime);
@@ -76,17 +70,11 @@ void CG::CameraController::_computeCameraRotation(float deltaTime)
 
     glfwGetCursorPos(_window, &xpos, &ypos);
 
-    if (_firstMousePosition) {
-        _lastMouseXPosition = (float)xpos;
-        _lastMouseYPosition = (float)ypos;
-        _firstMousePosition = false;
-    }
+    float mouse_x_offset = static_cast<float>(xpos - _lastMouseXPosition) * sensitivity;
+    float mouse_y_offset = static_cast<float>(_lastMouseYPosition - ypos) * sensitivity;
 
-    float mouse_x_offset = ((float)xpos - _lastMouseXPosition) * _sensitivity;
-    float mouse_y_offset = (_lastMouseYPosition - (float)ypos) * _sensitivity;
-
-    _lastMouseXPosition = (float)xpos;
-    _lastMouseYPosition = (float)ypos;
+    _lastMouseXPosition = xpos;
+    _lastMouseYPosition = ypos;
 
     _yaw += mouse_x_offset;
     _pitch += mouse_y_offset;

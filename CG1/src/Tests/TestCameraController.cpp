@@ -28,8 +28,7 @@ void CG::Test::TestCameraController::onStart()
 		_controller = std::make_unique<CameraController>(
 			_renderer->window(),
 			glm::vec3(0.f, 0.f, 1.f),
-			glm::vec3(0.f),
-			1.f
+			glm::vec3(0.f)
 		);
 
 	_sloader->setUniform("u_mvp", glm::mat4(1.f));

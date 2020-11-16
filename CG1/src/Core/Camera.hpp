@@ -18,7 +18,6 @@ namespace CG {
 			float nearPlane = .1f,
 			float farPlane = 500.f,
 			float fov = 45.f,
-			bool  frontFixedToPosition = false,
 			CameraType type = CameraType::PERSPECTIVE);
 		~Camera();
 
@@ -51,8 +50,6 @@ namespace CG {
 		float _nearPlane;
 		float _farPlane;
 		float _aspectRatio;
-
-		bool _frontFixedToPosition;
 
 		void _createViewMatrix();
 		void _createProjectionMatrix();

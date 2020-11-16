@@ -1,6 +1,6 @@
 #include "Camera.hpp"
 
-CG::Camera::Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up, float width, float height, float nearPlane, float farPlane, float fov, bool frontFixedToPosition, CameraType type)
+CG::Camera::Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up, float width, float height, float nearPlane, float farPlane, float fov, CameraType type)
 	: _position		        { position             }
     , _front		        { front                }
 	, _up			        { up                   }
@@ -8,7 +8,6 @@ CG::Camera::Camera(const glm::vec3& position, const glm::vec3& front, const glm:
     , _nearPlane            { nearPlane            }
     , _farPlane             { farPlane             }
     , _aspectRatio          { width / height       }
-    , _frontFixedToPosition { frontFixedToPosition }
     , _type                 { type                 }
 {
     _createProjectionMatrix();
@@ -27,8 +26,8 @@ void CG::Camera::_createProjectionMatrix()
 
 void CG::Camera::_createViewMatrix()
 {
-    //// finding the x, y and z axis of the camera using cross product.
-    glm::vec3 z = glm::normalize(_frontFixedToPosition ? -_front : _position - _front);
+    // finding the x, y and z axis of the camera using cross product.
+    glm::vec3 z = glm::normalize(_position - _front);
     glm::vec3 x = glm::normalize(glm::cross(_up, z));
     glm::vec3 y = glm::normalize(glm::cross(z, x));
 

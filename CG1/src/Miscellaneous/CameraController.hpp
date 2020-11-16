@@ -11,9 +11,7 @@ namespace CG {
 		CameraController(
 			GLFWwindow* _window,
 			const glm::vec3& position = glm::vec3(0.f),
-			const glm::vec3& point = glm::vec3(0.f),
-			float speed = 1.f,
-			float sensitivity = .1f
+			const glm::vec3& point = glm::vec3(0.f)
 		);
 		~CameraController();
 
@@ -22,18 +20,16 @@ namespace CG {
 		void update(float deltaTime);
 		glm::mat4 view() const;
 
-		float speed;
+		float speed = 1.f;
+		float sensitivity = 0.1f;
 
 	private:
 
 		GLFWwindow* _window;
 		CG::Camera _camera;
 
-		float _sensitivity = 0.1f;
-		float _lastMouseXPosition = 0;
-		float _lastMouseYPosition = 0;
-
-		bool _firstMousePosition = true;
+		double _lastMouseXPosition = 0;
+		double _lastMouseYPosition = 0;
 
 		float _pitch = 0.f;
 		float _yaw = 0.f;
