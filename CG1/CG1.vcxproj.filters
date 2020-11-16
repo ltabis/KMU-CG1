@@ -96,10 +96,10 @@
     <ClCompile Include="src\Core\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Miscellaneous\CameraController.cpp">
+    <ClCompile Include="src\Miscellaneous\NoClipCameraController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tests\TestCameraController.cpp">
+    <ClCompile Include="src\Tests\TestNoClipCameraController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -203,10 +203,10 @@
     <ClInclude Include="src\Core\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Miscellaneous\CameraController.hpp">
+    <ClInclude Include="src\Miscellaneous\NoClipCameraController.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tests\TestCameraController.hpp">
+    <ClInclude Include="src\Tests\TestNoClipCameraController.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

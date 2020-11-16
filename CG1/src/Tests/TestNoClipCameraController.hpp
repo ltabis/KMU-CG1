@@ -2,15 +2,15 @@
 
 #include "Framework/ATest.hpp"
 #include "WorldObjects/Complex/Cube.hpp"
-#include "CameraController.hpp"
+#include "NoClipCameraController.hpp"
 
 namespace CG {
 	namespace Test {
-		class TestCameraController : public ATest
+		class TestNoClipCameraController : public ATest
 		{
 		public:
-			TestCameraController();
-			~TestCameraController();
+			TestNoClipCameraController();
+			~TestNoClipCameraController();
 
 			void onStart() override;
 			void onUpdate(float deltaTime) override;
@@ -22,7 +22,7 @@ namespace CG {
 			std::unique_ptr<ShaderLoader> _sloader;
 			std::unique_ptr<AShape> _cube;
 
-			std::unique_ptr<CameraController> _controller;
+			std::unique_ptr<NoClipCameraController> _controller;
 
 			float _fov;
 			bool _helpOpened;

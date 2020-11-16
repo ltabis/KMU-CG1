@@ -4,16 +4,16 @@
 #include "Renderer.hpp"
 
 namespace CG {
-	class CameraController
+	class NoClipCameraController
 	{
 	public:
 
-		CameraController(
+		NoClipCameraController(
 			GLFWwindow* _window,
 			const glm::vec3& position = glm::vec3(0.f),
 			const glm::vec3& point = glm::vec3(0.f)
 		);
-		~CameraController();
+		~NoClipCameraController();
 
 		void setFieldOfView(float fov);
 		void setAspectRatio(float width, float height);

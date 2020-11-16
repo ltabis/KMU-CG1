@@ -1,6 +1,6 @@
-#include "CameraController.hpp"
+#include "NoClipCameraController.hpp"
 
-CG::CameraController::CameraController(
+CG::NoClipCameraController::NoClipCameraController(
     GLFWwindow *window,
     const glm::vec3& position,
     const glm::vec3& point
@@ -21,32 +21,32 @@ CG::CameraController::CameraController(
     glfwGetCursorPos(_window, &_lastMouseXPosition, &_lastMouseYPosition);
 }
 
-CG::CameraController::~CameraController()
+CG::NoClipCameraController::~NoClipCameraController()
 {
 }
 
-void CG::CameraController::setFieldOfView(float fov)
+void CG::NoClipCameraController::setFieldOfView(float fov)
 {
     _camera.setFieldOfView(fov);
 }
 
-void CG::CameraController::setAspectRatio(float width, float height)
+void CG::NoClipCameraController::setAspectRatio(float width, float height)
 {
     _camera.setAspectRatio(width, height);
 }
 
-void CG::CameraController::update(float deltaTime)
+void CG::NoClipCameraController::update(float deltaTime)
 {
     _computeCameraTranslation(deltaTime);
     _computeCameraRotation(deltaTime);
 }
 
-glm::mat4 CG::CameraController::view() const
+glm::mat4 CG::NoClipCameraController::view() const
 {
     return _camera.view();
 }
 
-void CG::CameraController::_computeCameraTranslation(float deltaTime)
+void CG::NoClipCameraController::_computeCameraTranslation(float deltaTime)
 {
     if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
         _camera.translate(glm::normalize(_camera.front()) * speed * deltaTime);
@@ -63,7 +63,7 @@ void CG::CameraController::_computeCameraTranslation(float deltaTime)
         _camera.translate(glm::normalize(-_camera.up()) * speed * deltaTime);
 }
 
-void CG::CameraController::_computeCameraRotation(float deltaTime)
+void CG::NoClipCameraController::_computeCameraRotation(float deltaTime)
 {
     double xpos;
     double ypos;

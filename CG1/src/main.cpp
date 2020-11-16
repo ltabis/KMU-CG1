@@ -11,7 +11,7 @@
 #include "Tests/TestDrawTriangle.hpp"
 #include "Tests/TestDrawCube.hpp"
 #include "Tests/TestCamera.hpp"
-#include "Tests/TestCameraController.hpp"
+#include "Tests/TestNoClipCameraController.hpp"
 #include "Tests/Framework/TestMenu.hpp"
 
 int main(void)
@@ -31,7 +31,7 @@ int main(void)
 	menu.registerTest<CG::Test::TestShapeAbstraction>("Draw a colored plane from shape abstraction");
 	menu.registerTest<CG::Test::TestShapeSpawner>("Spawn multiple shapes");
 	menu.registerTest<CG::Test::TestCamera>("Test a camera transformation");
-	menu.registerTest<CG::Test::TestCameraController>("Camera controller");
+	menu.registerTest<CG::Test::TestNoClipCameraController>("Camera controller");
 
 	while (!renderer->windowShouldClose())
 		menu.onRender();

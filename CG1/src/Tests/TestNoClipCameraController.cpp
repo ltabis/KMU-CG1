@@ -1,6 +1,6 @@
-#include "TestCameraController.hpp"
+#include "TestNoClipCameraController.hpp"
 
-CG::Test::TestCameraController::TestCameraController()
+CG::Test::TestNoClipCameraController::TestNoClipCameraController()
 	: _fov		  { 90	  }
 	, _helpOpened { false }
 	, _fpsMode    { false }
@@ -19,14 +19,14 @@ CG::Test::TestCameraController::TestCameraController()
 	_sloader->createExecutable();
 }
 
-CG::Test::TestCameraController::~TestCameraController()
+CG::Test::TestNoClipCameraController::~TestNoClipCameraController()
 {
 }
 
-void CG::Test::TestCameraController::onStart()
+void CG::Test::TestNoClipCameraController::onStart()
 {
 	if (!_controller.get())
-		_controller = std::make_unique<CameraController>(
+		_controller = std::make_unique<NoClipCameraController>(
 			_renderer->window(),
 			glm::vec3(0.f, 0.f, 1.f),
 			glm::vec3(0.f)
@@ -35,12 +35,12 @@ void CG::Test::TestCameraController::onStart()
 	_sloader->setUniform("u_mvp", glm::mat4(1.f));
 }
 
-void CG::Test::TestCameraController::onUpdate(float deltaTime)
+void CG::Test::TestNoClipCameraController::onUpdate(float deltaTime)
 {
 	_controller->update(deltaTime);
 }
 
-void CG::Test::TestCameraController::onRender()
+void CG::Test::TestNoClipCameraController::onRender()
 {
 	ImGui::Begin("Camera Controller");
 	// control over the projection matrix.
@@ -78,11 +78,11 @@ void CG::Test::TestCameraController::onRender()
 	_renderer->drawWireFrame(*_cube, *_sloader);
 }
 
-void CG::Test::TestCameraController::onStop()
+void CG::Test::TestNoClipCameraController::onStop()
 {
 }
 
-void CG::Test::TestCameraController::onReset()
+void CG::Test::TestNoClipCameraController::onReset()
 {
 	// reseting the translation uniform.
 	_sloader->setUniform("u_mvp", glm::translate(glm::mat4(1.f), glm::vec3(0.f)));

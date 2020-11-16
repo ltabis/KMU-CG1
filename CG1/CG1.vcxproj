@@ -191,10 +191,10 @@
     <ClCompile Include="src\Core\DataStructures\VertexBuffer.cpp" />
     <ClCompile Include="src\Core\DataStructures\VertexArrayLayout.cpp" />
     <ClCompile Include="src\Core\DataStructures\VertexArray.cpp" />
-    <ClCompile Include="src\Miscellaneous\CameraController.cpp" />
+    <ClCompile Include="src\Miscellaneous\NoClipCameraController.cpp" />
     <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp" />
     <ClCompile Include="src\Tests\TestCamera.cpp" />
-    <ClCompile Include="src\Tests\TestCameraController.cpp" />
+    <ClCompile Include="src\Tests\TestNoClipCameraController.cpp" />
     <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
     <ClCompile Include="src\Tests\TestDrawCube.cpp" />
@@ -221,7 +221,7 @@
     <ClInclude Include="src\dependencies\imgui\imgui\imstb_rectpack.h" />
     <ClInclude Include="src\dependencies\imgui\imgui\imstb_textedit.h" />
     <ClInclude Include="src\dependencies\imgui\imgui\imstb_truetype.h" />
-    <ClInclude Include="src\Miscellaneous\CameraController.hpp" />
+    <ClInclude Include="src\Miscellaneous\NoClipCameraController.hpp" />
     <ClInclude Include="src\Profiling\Breakpoint.hpp" />
     <ClInclude Include="src\Core\Components\ShaderLoader.hpp" />
     <ClInclude Include="src\Core\Renderer.hpp" />
@@ -231,7 +231,7 @@
     <ClInclude Include="src\Tests\Framework\ATest.hpp" />
     <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp" />
     <ClInclude Include="src\Tests\TestCamera.hpp" />
-    <ClInclude Include="src\Tests\TestCameraController.hpp" />
+    <ClInclude Include="src\Tests\TestNoClipCameraController.hpp" />
     <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
     <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />
     <ClInclude Include="src\Tests\TestDrawCube.hpp" />
