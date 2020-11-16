@@ -3,6 +3,7 @@
 CG::Test::TestCameraController::TestCameraController()
 	: _fov		  { 90	  }
 	, _helpOpened { false }
+	, _fpsMode    { false }
 {
 	_cube = std::make_unique<Cube>(
 		glm::vec3(0.f, 0.f, -3.f),
@@ -58,9 +59,19 @@ void CG::Test::TestCameraController::onRender()
 		ImGui::Text("Use the mouse to look around.");
 		ImGui::Text("Use 'W' 'A' 'S' 'D' to move the camera.");
 		ImGui::Text("Use 'Space' and 'Left Shift' to move the camera up or down.");
+		ImGui::Text("Press mouse right click to enter fps mode and reclick to get out");
 		ImGui::EndChild();
 	}
 	ImGui::End();
+
+	if (glfwGetMouseButton(_renderer->window(), GLFW_MOUSE_BUTTON_2) == GLFW_PRESS) {
+		_fpsMode = !_fpsMode;
+		if (_fpsMode)
+			glfwSetInputMode(_renderer->window(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		else
+			glfwSetInputMode(_renderer->window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+
 
 	glm::mat4 mvp = _controller->view() * _cube->transform.model();
 	_sloader->setUniform("u_mvp", mvp);

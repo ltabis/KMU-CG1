@@ -27,7 +27,7 @@ void CG::Camera::_createProjectionMatrix()
 void CG::Camera::_createViewMatrix()
 {
     // finding the x, y and z axis of the camera using cross product.
-    glm::vec3 z = glm::normalize(_position - _front);
+    glm::vec3 z = glm::normalize(-_front);
     glm::vec3 x = glm::normalize(glm::cross(_up, z));
     glm::vec3 y = glm::normalize(glm::cross(z, x));
 

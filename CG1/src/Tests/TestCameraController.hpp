@@ -26,6 +26,7 @@ namespace CG {
 
 			float _fov;
 			bool _helpOpened;
+			bool _fpsMode;
 			glm::vec2 _aspectRatio;
 		};
 	}
