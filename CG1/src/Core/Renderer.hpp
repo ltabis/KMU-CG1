@@ -46,13 +46,13 @@ namespace CG
 	class Renderer
 	{
 	private:
-		GLFWwindow* _window;
-		std::unique_ptr<EventHandler> _eventHandler;
-		glm::mat4 _view;
-		glm::mat4 _projection;
+		GLFWwindow* m_Window;
+		std::unique_ptr<EventHandler> m_EventHandler;
+		glm::mat4 m_View;
+		glm::mat4 m_Projection;
 
-		float _fov;
-		float _aspectRatio;
+		float m_Fov;
+		float m_AspectRatio;
 
 	public:
 		friend void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -80,7 +80,7 @@ namespace CG
 		glm::mat4 projectionMatrix() const;
 
 		void registerKeyBindingCallback(unsigned int key, CGCallback callback);
-		GLFWwindow* window() { return _window; };
+		GLFWwindow* window() { return m_Window; };
 	};
 
 	// forward declarations.
@@ -89,12 +89,12 @@ namespace CG
 	class EventHandler
 	{
 	private:
-		std::string _configPath;
-		std::unordered_map<unsigned int, CGCallback> _keyCallbacks;
+		std::string m_ConfigPath;
+		std::unordered_map<unsigned int, CGCallback> m_KeyCallbacks;
 	public:
 
 		EventHandler(Renderer* renderer, const std::string& configPath = "")
-			: _configPath{ configPath }
+			: m_ConfigPath{ configPath }
 		{
 			if (!renderer || !renderer->window())
 				throw "Couldn't initialize the event handler, window null";
@@ -119,7 +119,7 @@ namespace CG
 			return;
 
 		Renderer *renderer = static_cast<CG::Renderer*>(data);
-		renderer->_eventHandler->executeCallback(renderer, key, scancode, action, mods);
+		renderer->m_EventHandler->executeCallback(renderer, key, scancode, action, mods);
 	}
 
 	static void resize_callback(GLFWwindow* window, int width, int height)

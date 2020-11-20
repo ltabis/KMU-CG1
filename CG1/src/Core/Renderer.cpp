@@ -5,20 +5,20 @@ void CG::EventHandler::registerCallback(unsigned int key,
     CG::CGCallback callback
 )
 {
-    auto key_index = _keyCallbacks.find(key);
+    auto key_index = m_KeyCallbacks.find(key);
 
-    if (key_index == _keyCallbacks.end())
-        _keyCallbacks.emplace(key, callback);
+    if (key_index == m_KeyCallbacks.end())
+        m_KeyCallbacks.emplace(key, callback);
     else {
         CG_CONSOLE_WARN("callback '{}' already bound. overriding it.", key);
-        _keyCallbacks[key] = callback;
+        m_KeyCallbacks[key] = callback;
     }
 }
 
 /* execute the callback assigned to a specific key. */
 void CG::EventHandler::executeCallback(Renderer* renderer, int key, int scancode, int action, int mods)
 {
-    for (auto& [callbackKey, callback] : _keyCallbacks)
+    for (auto& [callbackKey, callback] : m_KeyCallbacks)
         if (key == callbackKey)
             callback(renderer, key, scancode, action, mods);
 }
@@ -49,10 +49,10 @@ static void glfwErrorCallback(int error, const char* description)
 
 /* initializing the Renderer object. glfw / glew */
 CG::Renderer::Renderer(const std::string& windowName, int width, int height)
-    : _view        { glm::mat4(1.f)               }
-    , _projection  { glm::mat4(1.f)               }
-    , _fov         { 45                           }
-    , _aspectRatio { (float)width / (float)height }
+    : m_View        { glm::mat4(1.f)               }
+    , m_Projection  { glm::mat4(1.f)               }
+    , m_Fov         { 45                           }
+    , m_AspectRatio { (float)width / (float)height }
 {
     CG_LOG_INFO("Initializing OpenGL Renderer.");
 
@@ -69,22 +69,22 @@ CG::Renderer::Renderer(const std::string& windowName, int width, int height)
     CG_LOG_INFO("Glfw initialized.");
 
     /* Create a windowed mode window and its OpenGL context */
-    _window = glfwCreateWindow(width, height, windowName.c_str(), NULL, NULL);
+    m_Window = glfwCreateWindow(width, height, windowName.c_str(), NULL, NULL);
 
-    if (!_window)
+    if (!m_Window)
     {
         glfwTerminate();
         throw "Couldn't initialize glfw's window.";
     }
 
     /* Make the window's context current */
-    glfwMakeContextCurrent(_window);
+    glfwMakeContextCurrent(m_Window);
 
     /* disable Vsync, synchronises with monitor refresh rate */
     glfwSwapInterval(1);
 
     /* setting window resize callback */
-    glfwSetWindowSizeCallback(_window, resize_callback);
+    glfwSetWindowSizeCallback(m_Window, resize_callback);
 
     /* create the mvp matrix */
     createMVP();
@@ -96,7 +96,7 @@ CG::Renderer::Renderer(const std::string& windowName, int width, int height)
     CG_LOG_INFO("Glew initialized.");
 
     /* Create an event handler instance to register key callbacks */
-    _eventHandler = std::make_unique<EventHandler>(this);
+    m_EventHandler = std::make_unique<EventHandler>(this);
 
     /* Initializing error debug callback */
     glEnable(GL_DEBUG_OUTPUT);
@@ -113,14 +113,14 @@ CG::Renderer::~Renderer()
 
 void CG::Renderer::setAspectRatio(float width, float height)
 {
-    _aspectRatio = width / height;
-    createProjectionMatrix(glm::radians(_fov), _aspectRatio, .1f, 500.f);
+    m_AspectRatio = width / height;
+    createProjectionMatrix(glm::radians(m_Fov), m_AspectRatio, .1f, 500.f);
 }
 
 void CG::Renderer::setFov(float fov)
 {
-    _fov = fov;
-    createProjectionMatrix(glm::radians(fov), _aspectRatio, .1f, 500.f);
+    m_Fov = fov;
+    createProjectionMatrix(glm::radians(fov), m_AspectRatio, .1f, 500.f);
 }
 
 void CG::Renderer::clear() const
@@ -165,12 +165,12 @@ void CG::Renderer::pollEvents() const
 
 void CG::Renderer::swapBuffers() const
 {
-    glfwSwapBuffers(_window);
+    glfwSwapBuffers(m_Window);
 }
 
 bool CG::Renderer::windowShouldClose()
 {
-    return glfwWindowShouldClose(_window);
+    return glfwWindowShouldClose(m_Window);
 }
 
 void CG::Renderer::createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up)
@@ -187,12 +187,12 @@ void CG::Renderer::createViewMatrix(const glm::vec3& campos, const glm::vec3& lo
         { 0,   0,   0,   1 }
     };
 
-    _view = rotation * translation;
+    m_View = rotation * translation;
 }
 
 void CG::Renderer::createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane)
 {
-    _projection = glm::mat4 {
+    m_Projection = glm::mat4 {
         { 1 / (aspect * glm::tan(fovy / 2)), 0, 0, 0 },
         { 0, 1 / glm::tan(fovy / 2), 0, 0 },
         { 0, 0, -((farPlane + nearPlane) / (farPlane - nearPlane)), -1},
@@ -203,17 +203,17 @@ void CG::Renderer::createProjectionMatrix(float fovy, float aspect, float nearPl
 void CG::Renderer::createMVP()
 {
     createViewMatrix(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-    createProjectionMatrix(glm::radians(_fov), _aspectRatio, .1f, 500.f);
+    createProjectionMatrix(glm::radians(m_Fov), m_AspectRatio, .1f, 500.f);
 }
 
 glm::mat4 CG::Renderer::viewMatrix() const
 {
-    return _view;
+    return m_View;
 }
 
 glm::mat4 CG::Renderer::projectionMatrix() const
 {
-    return _projection;
+    return m_Projection;
 }
 
 
@@ -222,5 +222,5 @@ void CG::Renderer::registerKeyBindingCallback(
     CGCallback callback
 )
 {
-    _eventHandler->registerCallback(key, callback);
+    m_EventHandler->registerCallback(key, callback);
 }
