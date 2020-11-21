@@ -158,6 +158,16 @@ void CG::ShaderLoader::setUniform(const std::string& uniformName, const glm::mat
 	glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
 }
 
+void CG::ShaderLoader::setUniform(const std::string& uniformName, const glm::vec3& vector)
+{
+	use();
+	int location = findUniform(uniformName);
+
+	if (location == -1)
+		return;
+	glUniformMatrix4fv(location, 1, GL_FALSE, &vector[0]);
+}
+
 void CG::ShaderLoader::use() const
 {
 	glUseProgram(_program);
