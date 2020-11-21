@@ -165,7 +165,7 @@ void CG::ShaderLoader::setUniform(const std::string& uniformName, const glm::vec
 
 	if (location == -1)
 		return;
-	glUniformMatrix4fv(location, 1, GL_FALSE, &vector[0]);
+	glUniform3fv(location, 1, &vector[0]);
 }
 
 void CG::ShaderLoader::use() const
