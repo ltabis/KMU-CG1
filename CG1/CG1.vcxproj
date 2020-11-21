@@ -197,9 +197,11 @@
     <ClCompile Include="src\Tests\TestNoClipCameraController.cpp" />
     <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
+    <ClCompile Include="src\Tests\TestShaderEditor.cpp" />
     <ClCompile Include="src\Tests\TestShapeSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\WorldObjects\ALight.hpp" />
     <ClInclude Include="src\Core\Camera.hpp" />
     <ClInclude Include="src\Core\WorldObjects\Complex\Cube.hpp" />
     <ClInclude Include="src\Core\WorldObjects\Primitives\Plane.hpp" />
@@ -232,11 +234,13 @@
     <ClInclude Include="src\Tests\TestNoClipCameraController.hpp" />
     <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
     <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />
+    <ClInclude Include="src\Tests\TestShaderEditor.hpp" />
     <ClInclude Include="src\Tests\TestShapeSpawner.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
     <None Include="res\shaders\empty.shader" />
+    <None Include="res\shaders\phong.shader" />
     <None Include="res\shaders\square.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

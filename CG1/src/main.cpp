@@ -11,6 +11,7 @@
 #include "Tests/TestCamera.hpp"
 #include "Tests/TestNoClipCameraController.hpp"
 #include "Tests/Framework/TestMenu.hpp"
+#include "Tests/TestShaderEditor.hpp"
 
 int main(void)
 {
@@ -28,6 +29,7 @@ int main(void)
 	menu.registerTest<CG::Test::TestShapeSpawner>("Spawn multiple shapes");
 	menu.registerTest<CG::Test::TestCamera>("Test a camera transformation");
 	menu.registerTest<CG::Test::TestNoClipCameraController>("Camera controller");
+	menu.registerTest<CG::Test::TestShaderEditor>("Shader Editor");
 
 	while (!renderer->windowShouldClose())
 		menu.onRender();

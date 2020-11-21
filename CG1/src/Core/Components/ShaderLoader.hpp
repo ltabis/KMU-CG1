@@ -33,6 +33,10 @@ namespace CG
 			, source { source                                                      }
 		{}
 
+		~Shader() {
+
+		}
+
 		bool compileShader();
 
 		ShaderType type;
@@ -78,4 +82,3 @@ namespace CG
 		Shader& get(const std::string& name);
 	};
 }
-
