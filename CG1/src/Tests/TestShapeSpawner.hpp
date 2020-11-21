@@ -4,6 +4,7 @@
 #include "WorldObjects/Primitives/Plane.hpp"
 #include "WorldObjects/Primitives/Triangle.hpp"
 #include "WorldObjects/Complex/Cube.hpp"
+#include "Camera.hpp"
 
 namespace CG {
 	namespace Test {
@@ -24,6 +25,7 @@ namespace CG {
 
 			std::unique_ptr<ShaderLoader> _sloader;
 			std::vector<std::unique_ptr<AShape>> _shapes;
+			std::unique_ptr<Camera> _camera;
 		};
 	}
 }

@@ -48,7 +48,7 @@ void CG::Test::TestCamera::onRender()
 		CG_CONSOLE_INFO("fov: {}", _fov);
 	}
 	if (ImGui::InputFloat2("Aspect Ratio", &_aspectRatio[0], 1))
-		_renderer->setAspectRatio(_aspectRatio.x, _aspectRatio.y);
+		_camera->setAspectRatio(_aspectRatio.x, _aspectRatio.y);
 	
 	ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Transform");
 

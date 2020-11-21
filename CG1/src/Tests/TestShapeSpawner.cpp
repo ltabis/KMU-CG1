@@ -17,6 +17,13 @@ CG::Test::TestShapeSpawner::~TestShapeSpawner()
 
 void CG::Test::TestShapeSpawner::onStart()
 {
+	_camera = std::make_unique<Camera>(
+		glm::vec3(0.f, 0.f, 5.f),
+		glm::vec3(0.f),
+		glm::vec3(0.f, 1.f, 0.f),
+		1920.f,
+		1080.f
+	);
 }
 
 void CG::Test::TestShapeSpawner::onUpdate(float deltaTime)
@@ -29,17 +36,17 @@ void CG::Test::TestShapeSpawner::onRender()
 	ImGui::Begin("Projection transformation");
 	// control over the projection matrix.
 	if (ImGui::SliderFloat("FOV", &_fov, 45, 120, "%.1f"))
-		_renderer->setFov(_fov);
+		_camera->setFieldOfView(_fov);
 	ImGui::End();
 
 	ImGui::Begin("Spawner controller");
 
 	if (ImGui::Button("Create triangle"))
-		_shapes.push_back(std::make_unique<Triangle>(glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f)));
+		_shapes.push_back(std::make_unique<Triangle>(glm::vec3(0.f, 0.f, -3.f), glm::vec3(0.f), glm::vec3(1.f)));
 	if (ImGui::Button("Create plane"))
-		_shapes.push_back(std::make_unique<Plane>(glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f)));
+		_shapes.push_back(std::make_unique<Plane>(glm::vec3(0.f, 0.f, -3.f), glm::vec3(0.f), glm::vec3(1.f)));
 	if (ImGui::Button("Create cube"))
-		_shapes.push_back(std::make_unique<Cube>(glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f)));
+		_shapes.push_back(std::make_unique<Cube>(glm::vec3(0.f, 0.f, -3.f), glm::vec3(0.f), glm::vec3(1.f)));
 
 	if (ImGui::TreeNode("Shapes")) {
 		unsigned int id = 0;
@@ -71,7 +78,7 @@ void CG::Test::TestShapeSpawner::onRender()
 	ImGui::End();
 
 	for (auto& shape : _shapes) {
-		glm::mat4 mvp = _renderer->projectionMatrix() * _renderer->viewMatrix() * shape->transform.model();
+		glm::mat4 mvp = _camera->view() * shape->transform.model();
 		_sloader->setUniform("u_mvp", mvp);
 		_renderer->draw(*shape, *_sloader);
 	}

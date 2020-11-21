@@ -48,20 +48,12 @@ namespace CG
 	private:
 		GLFWwindow* m_Window;
 		std::unique_ptr<EventHandler> m_EventHandler;
-		glm::mat4 m_View;
-		glm::mat4 m_Projection;
-
-		float m_Fov;
-		float m_AspectRatio;
-
+		
 	public:
 		friend void input_handler(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 		Renderer(const std::string &windowName = "Window", int width = 640, int height = 480);
 		~Renderer();
-
-		void setAspectRatio(float width, float height);
-		void setFov(float fov);
 
 		void clear() const;
 		void clearColor(float r, float g, float b, float a) const;
@@ -71,13 +63,6 @@ namespace CG
 		void pollEvents() const;
 		void swapBuffers() const;
 		bool windowShouldClose();
-
-		void createMVP();
-		void createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up);
-		void createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane);
-
-		glm::mat4 viewMatrix() const;
-		glm::mat4 projectionMatrix() const;
 
 		void registerKeyBindingCallback(unsigned int key, CGCallback callback);
 		GLFWwindow* window() { return m_Window; };
@@ -131,7 +116,6 @@ namespace CG
 
 		Renderer* renderer = static_cast<CG::Renderer*>(data);
 
-		renderer->setAspectRatio((float)width, (float)height);
 		glViewport(0, 0, width, height);
 	}
 }

@@ -49,10 +49,6 @@ static void glfwErrorCallback(int error, const char* description)
 
 /* initializing the Renderer object. glfw / glew */
 CG::Renderer::Renderer(const std::string& windowName, int width, int height)
-    : m_View        { glm::mat4(1.f)               }
-    , m_Projection  { glm::mat4(1.f)               }
-    , m_Fov         { 45                           }
-    , m_AspectRatio { (float)width / (float)height }
 {
     CG_LOG_INFO("Initializing OpenGL Renderer.");
 
@@ -86,9 +82,6 @@ CG::Renderer::Renderer(const std::string& windowName, int width, int height)
     /* setting window resize callback */
     glfwSetWindowSizeCallback(m_Window, resize_callback);
 
-    /* create the mvp matrix */
-    createMVP();
-
     /* Initialize glew */
     if (glewInit() != GLEW_OK)
         throw "Couldn't initialize glew.";
@@ -109,18 +102,6 @@ CG::Renderer::Renderer(const std::string& windowName, int width, int height)
 CG::Renderer::~Renderer()
 {
     glfwTerminate();
-}
-
-void CG::Renderer::setAspectRatio(float width, float height)
-{
-    m_AspectRatio = width / height;
-    createProjectionMatrix(glm::radians(m_Fov), m_AspectRatio, .1f, 500.f);
-}
-
-void CG::Renderer::setFov(float fov)
-{
-    m_Fov = fov;
-    createProjectionMatrix(glm::radians(fov), m_AspectRatio, .1f, 500.f);
 }
 
 void CG::Renderer::clear() const
@@ -172,50 +153,6 @@ bool CG::Renderer::windowShouldClose()
 {
     return glfwWindowShouldClose(m_Window);
 }
-
-void CG::Renderer::createViewMatrix(const glm::vec3& campos, const glm::vec3& look, const glm::vec3& up)
-{
-    glm::vec3 z = glm::normalize(campos - look);
-    glm::vec3 x = glm::normalize(glm::cross(up, z));
-    glm::vec3 y = glm::normalize(glm::cross(z, x));
-
-    glm::mat4 translation { glm::translate(glm::mat4(1.0f), -campos) };
-    glm::mat4 rotation {
-        { x.x, y.x, z.x, 0 },
-        { x.y, y.y, z.y, 0 },
-        { x.z, y.z, z.z, 0 },
-        { 0,   0,   0,   1 }
-    };
-
-    m_View = rotation * translation;
-}
-
-void CG::Renderer::createProjectionMatrix(float fovy, float aspect, float nearPlane, float farPlane)
-{
-    m_Projection = glm::mat4 {
-        { 1 / (aspect * glm::tan(fovy / 2)), 0, 0, 0 },
-        { 0, 1 / glm::tan(fovy / 2), 0, 0 },
-        { 0, 0, -((farPlane + nearPlane) / (farPlane - nearPlane)), -1},
-        { 0, 0, -((2 * farPlane * nearPlane) / (farPlane - nearPlane)), 0 }
-    };
-}
-
-void CG::Renderer::createMVP()
-{
-    createViewMatrix(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-    createProjectionMatrix(glm::radians(m_Fov), m_AspectRatio, .1f, 500.f);
-}
-
-glm::mat4 CG::Renderer::viewMatrix() const
-{
-    return m_View;
-}
-
-glm::mat4 CG::Renderer::projectionMatrix() const
-{
-    return m_Projection;
-}
-
 
 void CG::Renderer::registerKeyBindingCallback(
     unsigned int key,
