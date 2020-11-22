@@ -33,6 +33,7 @@ namespace CG {
 
 			glm::vec3 m_AmbiantLightColor;
 			glm::vec3 m_AmbiantObjectColor;
+			glm::vec3 m_lightPos;
 
 			glm::vec2 m_AspectRatio;
 		};

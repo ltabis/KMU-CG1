@@ -1,10 +1,14 @@
 #include "TestShaderEditor.hpp"
 
 CG::Test::TestShaderEditor::TestShaderEditor()
-	: m_Fov				 { 90	 }
-	, m_HelpOpened		 { false }
-	, m_ControllerFreeze { false }
-	, m_FpsMode			 { false }
+	: m_Fov				   { 90						   }
+	, m_HelpOpened		   { false					   }
+	, m_ControllerFreeze   { false					   }
+	, m_FpsMode			   { false					   }
+	, m_AmbiantLightColor  { glm::vec3(1.f)			   }
+	, m_AmbiantObjectColor { glm::vec3(1.f)			   }
+	, m_lightPos		   { glm::vec3(5.f, 10.f, 0.f) }
+
 {
 	// creating triangles
 	// front
@@ -166,7 +170,8 @@ void CG::Test::TestShaderEditor::onRender()
 	ImGui::End();
 	ImGui::Begin("Light control");
 	if (ImGui::InputFloat3("Ambiant light color", &m_AmbiantLightColor[0], 1) ||
-		ImGui::InputFloat3("Ambiant object color", &m_AmbiantObjectColor[0], 1))
+		ImGui::InputFloat3("Ambiant object color", &m_AmbiantObjectColor[0], 1) ||
+		ImGui::InputFloat3("Light position", &m_lightPos[0], 1))
 		hotReloadShader(*m_Sloader);
 
 	ImGui::End();
@@ -218,5 +223,5 @@ void CG::Test::TestShaderEditor::hotReloadShader(ShaderLoader& shader)
 	m_Sloader->setUniform("u_ambiantObjectColor", m_AmbiantObjectColor);
 	m_Sloader->setUniform("u_mvp", glm::mat4(1.f));
 	m_Sloader->setUniform("u_model", glm::mat4(1.f));
-	m_Sloader->setUniform("u_lightPos", glm::vec4(0.0, 10.0, 0.0, 1.0));
+	m_Sloader->setUniform("u_lightPos", m_lightPos);
 }
