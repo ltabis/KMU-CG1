@@ -113,7 +113,7 @@ void CG::Test::TestShaderEditor::onStart()
 	if (!m_Controller.get())
 		m_Controller = std::make_unique<NoClipCameraController>(
 			_renderer->window(),
-			glm::vec3(0.f, 0.f, 1.f),
+			glm::vec3(0.f, 3.f, 3.f),
 			glm::vec3(0.f)
 		);
 
@@ -123,7 +123,7 @@ void CG::Test::TestShaderEditor::onStart()
 	m_Sloader->setUniform("u_model", glm::mat4(1.f));
 
 	// add the option to change the light's position.
-	m_Sloader->setUniform("u_lightPos", glm::vec4(0.0, 10.0, 0.0, 1.0));
+	m_Sloader->setUniform("u_lightPos", glm::vec4(-2.0, 10.0, 0.0, 1.0));
 }
 
 void CG::Test::TestShaderEditor::onUpdate(float deltaTime)
