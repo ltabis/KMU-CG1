@@ -62,7 +62,7 @@ void CG::Test::TestCamera::onRender()
 
 	ImGui::End();
 
-	glm::mat4 mvp = _camera->view() * _cube->transform.model();
+	glm::mat4 mvp = _camera->projectionView() * _cube->transform.model();
 	_sloader->setUniform("u_mvp", mvp);
 	_renderer->draw(*_cube, *_sloader);
 }

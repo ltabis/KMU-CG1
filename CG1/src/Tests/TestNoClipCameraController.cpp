@@ -73,7 +73,7 @@ void CG::Test::TestNoClipCameraController::onRender()
 	}
 
 
-	glm::mat4 mvp = _controller->view() * _cube->transform.model();
+	glm::mat4 mvp = _controller->projectionView() * _cube->transform.model();
 	_sloader->setUniform("u_mvp", mvp);
 	_renderer->drawWireFrame(*_cube, *_sloader);
 }

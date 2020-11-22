@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Framework/ATest.hpp"
-#include "WorldObjects/Complex/Cube.hpp"
+#include "WorldObjects/Primitives/Triangle.hpp"
 #include "NoClipCameraController.hpp"
 
 namespace CG {
@@ -22,13 +22,18 @@ namespace CG {
 
 		private:
 			std::unique_ptr<ShaderLoader> m_Sloader;
-			std::unique_ptr<AShape> m_Cube;
+			std::vector<std::unique_ptr<AShape>> m_Triangles;
 
 			std::unique_ptr<NoClipCameraController> m_Controller;
 
 			float m_Fov;
 			bool m_HelpOpened;
+			bool m_ControllerFreeze;
 			bool m_FpsMode;
+
+			glm::vec3 m_AmbiantLightColor;
+			glm::vec3 m_AmbiantObjectColor;
+
 			glm::vec2 m_AspectRatio;
 		};
 	}

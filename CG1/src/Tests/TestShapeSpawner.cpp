@@ -78,7 +78,7 @@ void CG::Test::TestShapeSpawner::onRender()
 	ImGui::End();
 
 	for (auto& shape : _shapes) {
-		glm::mat4 mvp = _camera->view() * shape->transform.model();
+		glm::mat4 mvp = _camera->projectionView() * shape->transform.model();
 		_sloader->setUniform("u_mvp", mvp);
 		_renderer->draw(*shape, *_sloader);
 	}

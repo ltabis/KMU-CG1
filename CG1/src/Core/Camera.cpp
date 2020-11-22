@@ -86,7 +86,16 @@ void CG::Camera::setFront(const glm::vec3& front)
 
 glm::mat4 CG::Camera::view() const
 {
-	return m_Projection * m_View;
+    return m_View;
+}
+
+glm::mat4 CG::Camera::projection() const
+{
+    return m_Projection;
+}
+glm::mat4 CG::Camera::projectionView() const
+{
+    return m_Projection * m_View;
 }
 
 glm::vec3 CG::Camera::position() const

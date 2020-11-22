@@ -31,6 +31,8 @@ namespace CG {
 		void setAspectRatio(float width, float height);
 
 		glm::mat4 view() const;
+		glm::mat4 projection() const;
+		glm::mat4 projectionView() const;
 
 		glm::vec3 position() const;
 		glm::vec3 front() const;

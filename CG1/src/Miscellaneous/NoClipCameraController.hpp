@@ -18,7 +18,10 @@ namespace CG {
 		void setFieldOfView(float fov);
 		void setAspectRatio(float width, float height);
 		void update(float deltaTime);
+
 		glm::mat4 view() const;
+		glm::mat4 projection() const;
+		glm::mat4 projectionView() const;
 
 		float speed = 1.f;
 		float sensitivity = 0.1f;
