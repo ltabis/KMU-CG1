@@ -119,9 +119,9 @@ void CG::Test::TestShaderEditor::onStart()
 	m_Sloader->setUniform("u_ambiantLightColor", m_AmbiantLightColor);
 	m_Sloader->setUniform("u_objectColor", m_ObjectColor);
 	m_Sloader->setUniform("u_mvp", glm::mat4(1.f));
-	m_Sloader->setUniform("u_model", glm::mat4(1.f));
+	m_Sloader->setUniform("u_modelView", glm::mat4(1.f));
+	m_Sloader->setUniform("u_view", glm::mat4(1.f));
 	m_Sloader->setUniform("u_lightPos", glm::vec4(-2.0, 10.0, 0.0, 1.0));
-	m_Sloader->setUniform("u_viewPos", m_Controller->position());
 }
 
 void CG::Test::TestShaderEditor::onUpdate(float deltaTime)
@@ -184,11 +184,11 @@ void CG::Test::TestShaderEditor::onRender()
 
 	for (auto& triangle : m_Triangles) {
 		glm::mat4 mvp = m_Controller->projectionView() * triangle->transform.model();
-		glm::mat4 normalMat = glm::transpose(glm::inverse(triangle->transform.model()));
+		glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * triangle->transform.model())));
 
 		m_Sloader->setUniform("u_mvp", mvp);
-		m_Sloader->setUniform("u_model", triangle->transform.model());
-		m_Sloader->setUniform("u_viewPos", m_Controller->position());
+		m_Sloader->setUniform("u_view", m_Controller->view());
+		m_Sloader->setUniform("u_modelView", m_Controller->view() * triangle->transform.model());
 		m_Sloader->setUniform("u_normalMat", normalMat);
 		_renderer->draw(*triangle, *m_Sloader);
 	}
@@ -202,9 +202,9 @@ void CG::Test::TestShaderEditor::onReset()
 {
 	// reseting the translation uniform.
 	m_Sloader->setUniform("u_mvp", glm::mat4(1.f));
-	m_Sloader->setUniform("u_model", glm::mat4(1.f));
+	m_Sloader->setUniform("u_view", glm::mat4(1.f));
+	m_Sloader->setUniform("u_modelView", glm::mat4(1.f));
 	m_Sloader->setUniform("u_normalMat", glm::mat4(1.f));
-	m_Sloader->setUniform("u_viewPos", m_Controller->position());
 
 	// TODO: reset cam position and rotation.
 }

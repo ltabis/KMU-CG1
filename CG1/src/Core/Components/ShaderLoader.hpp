@@ -76,6 +76,7 @@ namespace CG
 		void attach();
 		void createExecutable();
 		void setUniform(const std::string& uniformName, const glm::mat4& matrix);
+		void setUniform(const std::string& uniformName, const glm::mat3& matrix);
 		void setUniform(const std::string& uniformName, const glm::vec3& vector);
 
 		void use() const;

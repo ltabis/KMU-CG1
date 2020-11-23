@@ -7,13 +7,13 @@ layout(location = 2) in vec3 normal;
 out vec3 FragColor;
 
 uniform mat4 u_mvp;
-uniform mat4 u_model;
-uniform mat4 u_normalMat;
+uniform mat4 u_view;
+uniform mat4 u_modelView;
+uniform mat3 u_normalMat;
 
 uniform vec3 u_ambiantLightColor;
 uniform vec3 u_objectColor;
 uniform vec3 u_lightPos;
-uniform vec3 u_viewPos;
 
 float p = 256.0;
 
@@ -23,10 +23,10 @@ void main()
 	vec3 diffuseLightColor = vec3(1.0, 1.0, 1.0);
 	vec3 specularLightColor = vec3(0.0, 1.0, 1.0);
 
-	vec3 pos = vec3(u_model * position);
-	vec3 N = mat3(u_normalMat) * normal;
-	vec3 L = normalize(u_lightPos - pos);
-	vec3 V = normalize(u_viewPos - pos);
+	vec3 pos = vec3(u_modelView * position);
+	vec3 N = u_normalMat * normal;
+	vec3 L = normalize(vec3(u_view * vec4(u_lightPos, 1.0)) - pos);
+	vec3 V = normalize(-pos);
 	vec3 R = reflect(-L, N);
 
 	vec3 diffuseColor = diffuseLightColor * max(dot(N, L), 0.0);
