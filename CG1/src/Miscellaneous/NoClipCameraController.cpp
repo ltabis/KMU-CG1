@@ -46,6 +46,11 @@ glm::mat4 CG::NoClipCameraController::projectionView() const
     return _camera.projectionView();
 }
 
+glm::vec3 CG::NoClipCameraController::position() const
+{
+    return _camera.position();
+}
+
 glm::mat4 CG::NoClipCameraController::projection() const
 {
     return _camera.projection();
@@ -55,7 +60,6 @@ glm::mat4 CG::NoClipCameraController::view() const
 {
     return _camera.view();
 }
-
 
 void CG::NoClipCameraController::_computeCameraTranslation(float deltaTime)
 {

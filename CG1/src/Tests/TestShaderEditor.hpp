@@ -32,7 +32,7 @@ namespace CG {
 			bool m_FpsMode;
 
 			glm::vec3 m_AmbiantLightColor;
-			glm::vec3 m_AmbiantObjectColor;
+			glm::vec3 m_ObjectColor;
 			glm::vec3 m_lightPos;
 
 			glm::vec2 m_AspectRatio;

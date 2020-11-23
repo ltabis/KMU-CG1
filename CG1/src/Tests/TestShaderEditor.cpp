@@ -5,10 +5,9 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 	, m_HelpOpened		   { false					   }
 	, m_ControllerFreeze   { false					   }
 	, m_FpsMode			   { false					   }
-	, m_AmbiantLightColor  { glm::vec3(1.f)			   }
-	, m_AmbiantObjectColor { glm::vec3(1.f)			   }
+	, m_AmbiantLightColor  { glm::vec3(.2f, .2f, .2f)  }
+	, m_ObjectColor        { glm::vec3(1.f, .0f, .0f)  }
 	, m_lightPos		   { glm::vec3(5.f, 10.f, 0.f) }
-
 {
 	// creating triangles
 	// front
@@ -57,13 +56,13 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 	m_Triangles.push_back(
 		std::make_unique<Triangle>(
 			glm::vec3(0.f, -1.f, 0.f),
-			glm::vec3(90.f, 0.f, 0.f),
+			glm::vec3(-90.f, 0.f, 0.f),
 			glm::vec3(1.f)
 	));
 	m_Triangles.push_back(
 		std::make_unique<Triangle>(
 			glm::vec3(0.f, -1.f, 0.f),
-			glm::vec3(90.f, 0.f, 180.f),
+			glm::vec3(-90.f, 0.f, 180.f),
 			glm::vec3(1.f)
 	));
 
@@ -118,12 +117,11 @@ void CG::Test::TestShaderEditor::onStart()
 		);
 
 	m_Sloader->setUniform("u_ambiantLightColor", m_AmbiantLightColor);
-	m_Sloader->setUniform("u_ambiantObjectColor", m_AmbiantObjectColor);
+	m_Sloader->setUniform("u_objectColor", m_ObjectColor);
 	m_Sloader->setUniform("u_mvp", glm::mat4(1.f));
 	m_Sloader->setUniform("u_model", glm::mat4(1.f));
-
-	// add the option to change the light's position.
 	m_Sloader->setUniform("u_lightPos", glm::vec4(-2.0, 10.0, 0.0, 1.0));
+	m_Sloader->setUniform("u_viewPos", m_Controller->position());
 }
 
 void CG::Test::TestShaderEditor::onUpdate(float deltaTime)
@@ -168,10 +166,10 @@ void CG::Test::TestShaderEditor::onRender()
 	}
 
 	ImGui::End();
-	ImGui::Begin("Light control");
-	if (ImGui::InputFloat3("Ambiant light color", &m_AmbiantLightColor[0], 1) ||
-		ImGui::InputFloat3("Ambiant object color", &m_AmbiantObjectColor[0], 1) ||
-		ImGui::InputFloat3("Light position", &m_lightPos[0], 1))
+	ImGui::Begin("Shader control");
+	if (ImGui::ColorEdit3("Ambiant light color", &m_AmbiantLightColor[0], 1) ||
+		ImGui::InputFloat3("Light position", &m_lightPos[0], 1) ||
+		ImGui::ColorEdit3("object color", &m_ObjectColor[0], 1))
 		hotReloadShader(*m_Sloader);
 
 	ImGui::End();
@@ -186,9 +184,12 @@ void CG::Test::TestShaderEditor::onRender()
 
 	for (auto& triangle : m_Triangles) {
 		glm::mat4 mvp = m_Controller->projectionView() * triangle->transform.model();
+		glm::mat4 normalMat = glm::transpose(glm::inverse(triangle->transform.model()));
 
 		m_Sloader->setUniform("u_mvp", mvp);
 		m_Sloader->setUniform("u_model", triangle->transform.model());
+		m_Sloader->setUniform("u_viewPos", m_Controller->position());
+		m_Sloader->setUniform("u_normalMat", normalMat);
 		_renderer->draw(*triangle, *m_Sloader);
 	}
 }
@@ -202,6 +203,8 @@ void CG::Test::TestShaderEditor::onReset()
 	// reseting the translation uniform.
 	m_Sloader->setUniform("u_mvp", glm::mat4(1.f));
 	m_Sloader->setUniform("u_model", glm::mat4(1.f));
+	m_Sloader->setUniform("u_normalMat", glm::mat4(1.f));
+	m_Sloader->setUniform("u_viewPos", m_Controller->position());
 
 	// TODO: reset cam position and rotation.
 }
@@ -220,8 +223,6 @@ void CG::Test::TestShaderEditor::hotReloadShader(ShaderLoader& shader)
 	m_Sloader->createExecutable();
 
 	m_Sloader->setUniform("u_ambiantLightColor", m_AmbiantLightColor);
-	m_Sloader->setUniform("u_ambiantObjectColor", m_AmbiantObjectColor);
-	m_Sloader->setUniform("u_mvp", glm::mat4(1.f));
-	m_Sloader->setUniform("u_model", glm::mat4(1.f));
+	m_Sloader->setUniform("u_objectColor", m_ObjectColor);
 	m_Sloader->setUniform("u_lightPos", m_lightPos);
 }
