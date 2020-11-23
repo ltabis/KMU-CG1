@@ -204,7 +204,7 @@ void CG::Test::TestShaderEditor::onReset()
 	m_Sloader->setUniform("u_mvp", glm::mat4(1.f));
 	m_Sloader->setUniform("u_view", glm::mat4(1.f));
 	m_Sloader->setUniform("u_modelView", glm::mat4(1.f));
-	m_Sloader->setUniform("u_normalMat", glm::mat4(1.f));
+	m_Sloader->setUniform("u_normalMat", glm::mat3(1.f));
 
 	// TODO: reset cam position and rotation.
 }

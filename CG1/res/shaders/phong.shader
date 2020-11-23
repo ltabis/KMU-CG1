@@ -15,7 +15,7 @@ uniform vec3 u_ambiantLightColor;
 uniform vec3 u_objectColor;
 uniform vec3 u_lightPos;
 
-float p = 256.0;
+float p = 32.0;
 
 void main()
 {
@@ -30,7 +30,7 @@ void main()
 	vec3 R = reflect(-L, N);
 
 	vec3 diffuseColor = diffuseLightColor * max(dot(N, L), 0.0);
-	vec3 specularColor = specularLightColor * pow(max(dot(R, V), 0.0), p);
+	vec3 specularColor = 0.5 * specularLightColor * pow(max(dot(V, R), 0.0), p);
 
 	FragColor = (u_ambiantLightColor + diffuseColor + specularColor) * u_objectColor;
 	gl_Position = u_mvp * position;
