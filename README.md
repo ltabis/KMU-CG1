@@ -34,4 +34,8 @@ You will be able to load the test using an ImGui interface when launching the so
 
 ## Screenshots
 
+> basic cube
 ![Test framework](placeholder.png)
+
+> phong illumination model
+![Phong](phong-shader)
