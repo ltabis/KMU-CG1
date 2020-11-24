@@ -179,6 +179,7 @@
     <ClCompile Include="src\Core\DataStructures\IndexBuffer.cpp" />
     <ClCompile Include="src\Core\WorldObjects\Primitives\Triangle.cpp" />
     <ClCompile Include="src\Dependencies\models\Sphere.cpp" />
+    <ClCompile Include="src\Dependencies\models\vboteapot.cpp" />
     <ClCompile Include="src\Loging\Logger.cpp" />
     <ClCompile Include="src\Core\Components\GUI.cpp" />
     <ClCompile Include="src\Core\Components\ShaderLoader.cpp" />
@@ -213,6 +214,8 @@
     <ClInclude Include="src\Core\WorldObjects\AShape.hpp" />
     <ClInclude Include="src\Core\WorldObjects\Primitives\Triangle.hpp" />
     <ClInclude Include="src\Dependencies\models\Sphere.hpp" />
+    <ClInclude Include="src\Dependencies\models\teapotdata.hpp" />
+    <ClInclude Include="src\Dependencies\models\vboteapot.hpp" />
     <ClInclude Include="src\Loging\Logger.hpp" />
     <ClInclude Include="src\Core\Components\GUI.hpp" />
     <ClInclude Include="src\dependencies\imgui\imgui\imconfig.h" />

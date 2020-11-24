@@ -1,17 +1,14 @@
-#include "vboteapot.h"
-#include "teapotdata.h"
+#include "vboteapot.hpp"
+#include "teapotdata.hpp"
 
-#include <GL/glew.h>
-#include <GL/gl.h>
-#include <cstdio>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/matrix_inverse.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/constants.hpp>
-
-
-
+//#include <GL/glew.h>
+//#include <GL/gl.h>
+//#include <cstdio>
+//#include <glm/glm.hpp>
+//#include <glm/gtc/matrix_transform.hpp>
+//#include <glm/gtc/matrix_inverse.hpp>
+//#include <glm/gtc/type_ptr.hpp>
+//#include <glm/gtc/constants.hpp>
 
 //set grid = 64, lidTransform = 4x4 identity matrix
 VBOTeapot::VBOTeapot(int grid, mat4 lidTransform)
@@ -19,26 +16,28 @@ VBOTeapot::VBOTeapot(int grid, mat4 lidTransform)
     int verts = 32 * (grid + 1) * (grid + 1);
     faces = grid * grid * 32;
 
+    m_V = new float[ verts * 3 ];  //vertex positions : vec3
+    m_N = new float[ verts * 3 ];  //vertex normals : vec3
+    m_Tex = new float[ verts * 2 ]; //texture coordinates : vec2 (we don't use it at this point)
+    m_El = new unsigned int[faces * 6];  //indices for IBO 
 
-    float * v = new float[ verts * 3 ];  //vertex positions : vec3
-    float * n = new float[ verts * 3 ];  //vertex normals : vec3
-    float * tc = new float[ verts * 2 ]; //texture coordinates : vec2 (we don't use it at this point)
-    unsigned int * el = new unsigned int[faces * 6];  //indices for IBO 
-
-	generatePatches(v, n, tc, el, grid);
-
-
-
+	generatePatches(m_V, m_N, m_Tex, m_El, grid);
 
 	//create vao, vbos, ibo here
-	
+    m_VBOVerts = std::make_unique<CG::VertexBuffer>(m_V, sizeof(float) * 3 * verts);
+    m_VBONormals = std::make_unique<CG::VertexBuffer>(m_N, sizeof(float) * 3 * verts);
 
-    delete [] v;
-    delete [] n;
-    delete [] el;
-    delete [] tc;
+    // creating the layout of the buffer's data.
+    m_VAL = std::make_unique<CG::VertexArrayLayout>();
+    m_VAL->push<float>(3);
 
+    // creating the vertex array, add the layout to it.
+    m_VAO = std::make_unique<CG::VertexArray>();
+    m_VAO->addBuffer(*m_VBOVerts, *m_VAL);
+    m_VAO->addBuffer(*m_VBONormals, *m_VAL);
 
+    // creating the index buffer.
+    m_IBO = std::make_unique<CG::IndexBuffer>(m_El, faces * 6);
 }
 
 void VBOTeapot::generatePatches(float * v, float * n, float * tc, unsigned int* el, int grid) {
@@ -251,7 +250,12 @@ vec3 VBOTeapot::evaluateNormal( int gridU, int gridV, float *B, float *dB, vec3 
     return glm::normalize( glm::cross( du, dv ) );
 }
 
-void VBOTeapot::draw() const
+const CG::VertexArray& VBOTeapot::vao() const
 {
-	
+    return *m_VAO;
+}
+
+const CG::IndexBuffer& VBOTeapot::ibo() const
+{
+    return *m_IBO;
 }

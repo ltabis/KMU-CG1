@@ -2,10 +2,12 @@
 
 #include "Framework/ATest.hpp"
 #include "WorldObjects/Primitives/Triangle.hpp"
+#include "WorldObjects/Complex/Cube.hpp"
 #include "NoClipCameraController.hpp"
 
 // vendor.
 #include "../Dependencies/models/Sphere.hpp"
+#include "../Dependencies/models/vboteapot.hpp"
 
 namespace CG {
 	namespace Test {
@@ -28,8 +30,9 @@ namespace CG {
 			std::vector<std::unique_ptr<AShape>> m_Triangles;
 
 			// TODO: implemente a debug light vizualiser.
-			// std::unique_ptr<AShape> m_LightCube;
+			std::unique_ptr<AShape> m_LightCube;
 			std::unique_ptr<AShape> m_Sphere;
+			std::unique_ptr<AShape> m_TeaPot;
 			std::unique_ptr<ShaderLoader> m_ShaderSphere;
 
 			std::unique_ptr<NoClipCameraController> m_Controller;

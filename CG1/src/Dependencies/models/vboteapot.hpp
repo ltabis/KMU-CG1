@@ -1,20 +1,14 @@
-#ifndef VBOTEAPOT_H
-#define VBOTEAPOT_H
+#pragma once
 
-
-
-
-#include <GL/glew.h>
-#include <GL/gl.h>
-#include <glm/glm.hpp>
-#include "Loader.h"
+#include "Components/ShaderLoader.hpp"
+#include "WorldObjects/AShape.hpp"
 
 using glm::vec4;
 using glm::vec3;
 using glm::mat3;
 using glm::mat4;
 
-class VBOTeapot
+class VBOTeapot : public CG::AShape
 {
 private:
     unsigned int vaoHandle;
@@ -37,10 +31,20 @@ private:
     vec3 evaluateNormal( int gridU, int gridV, float *B, float *dB, vec3 patch[][4] );
     void moveLid(int,float *,mat4);
 
+    float* m_V;
+    float* m_N;
+    float* m_Tex;
+    unsigned int* m_El;
+
+    std::unique_ptr<CG::VertexBuffer> m_VBOVerts;
+    std::unique_ptr<CG::VertexBuffer> m_VBONormals;
+    std::unique_ptr<CG::IndexBuffer> m_IBO;
+    std::unique_ptr<CG::VertexArrayLayout> m_VAL;
+    std::unique_ptr<CG::VertexArray> m_VAO;
+
 public:
     VBOTeapot(int grid, mat4 lidTransform);
-	void draw() const;
 
+    const CG::VertexArray& vao() const override;
+    const CG::IndexBuffer& ibo() const override;
 };
-
-#endif // VBOTEAPOT_H

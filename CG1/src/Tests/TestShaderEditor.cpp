@@ -95,7 +95,11 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 	));
 
 	// creating a simple sphere from the dep list.
+	m_LightCube = std::make_unique<Cube>(glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f));
 	m_Sphere = std::make_unique<Sphere>(1.f, 100, 100);
+	m_TeaPot = std::make_unique<VBOTeapot>(64, glm::mat4(1.f));
+	m_TeaPot->transform.translate(5.f, 0.f, 0.f);
+	m_TeaPot->transform.rotate(-90, 1, 0, 0);
 	m_ShaderSphere = std::make_unique<ShaderLoader>();
 
 	m_ShaderSphere->load("./res/shaders/phong-sphere.shader");
@@ -215,6 +219,13 @@ void CG::Test::TestShaderEditor::onRender()
 	m_ShaderSphere->setUniform("u_normalMat", normalMat);
 	_renderer->draw(*m_Sphere, *m_ShaderSphere);
 
+	normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * m_TeaPot->transform.model())));
+
+	m_ShaderSphere->setUniform("u_mvp", m_Controller->projectionView() * m_TeaPot->transform.model());
+	m_ShaderSphere->setUniform("u_view", m_Controller->view());
+	m_ShaderSphere->setUniform("u_modelView", m_Controller->view() * m_TeaPot->transform.model());
+	m_ShaderSphere->setUniform("u_normalMat", normalMat);
+	_renderer->draw(*m_TeaPot, *m_ShaderSphere);
 }
 
 void CG::Test::TestShaderEditor::onStop()

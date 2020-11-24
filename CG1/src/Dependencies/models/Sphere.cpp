@@ -32,7 +32,7 @@ Sphere::Sphere(float rad, GLuint sl, GLuint st)
 
 	// Generate the vertex data
 	generateVerts(m_V, m_N, m_Tex, m_El);
-	
+
 	//create vao, vbo and ibo here... (We didn't use std::vector here...)
 	m_VBOVerts = std::make_unique<CG::VertexBuffer>(m_V, sizeof(float) * 3 * nVerts);
 	m_VBONormals = std::make_unique<CG::VertexBuffer>(m_N, sizeof(float) * 3 * nVerts);
