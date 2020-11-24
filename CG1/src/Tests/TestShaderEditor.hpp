@@ -4,6 +4,9 @@
 #include "WorldObjects/Primitives/Triangle.hpp"
 #include "NoClipCameraController.hpp"
 
+// vendor.
+#include "../Dependencies/models/Sphere.hpp"
+
 namespace CG {
 	namespace Test {
 		class TestShaderEditor : public ATest
@@ -18,11 +21,16 @@ namespace CG {
 			void onStop() override;
 			void onReset() override;
 
-			void hotReloadShader(ShaderLoader &shader);
+			void hotReloadShader(std::unique_ptr<ShaderLoader>& shader, const std::string &shaderPath);
 
 		private:
 			std::unique_ptr<ShaderLoader> m_Sloader;
 			std::vector<std::unique_ptr<AShape>> m_Triangles;
+
+			// TODO: implemente a debug light vizualiser.
+			// std::unique_ptr<AShape> m_LightCube;
+			std::unique_ptr<AShape> m_Sphere;
+			std::unique_ptr<ShaderLoader> m_ShaderSphere;
 
 			std::unique_ptr<NoClipCameraController> m_Controller;
 

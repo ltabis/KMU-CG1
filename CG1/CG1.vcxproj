@@ -178,6 +178,7 @@
     <ClCompile Include="src\Core\DataStructures\MatrixStack.cpp" />
     <ClCompile Include="src\Core\DataStructures\IndexBuffer.cpp" />
     <ClCompile Include="src\Core\WorldObjects\Primitives\Triangle.cpp" />
+    <ClCompile Include="src\Dependencies\models\Sphere.cpp" />
     <ClCompile Include="src\Loging\Logger.cpp" />
     <ClCompile Include="src\Core\Components\GUI.cpp" />
     <ClCompile Include="src\Core\Components\ShaderLoader.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="src\Core\DataStructures\Transform.hpp" />
     <ClInclude Include="src\Core\WorldObjects\AShape.hpp" />
     <ClInclude Include="src\Core\WorldObjects\Primitives\Triangle.hpp" />
+    <ClInclude Include="src\Dependencies\models\Sphere.hpp" />
     <ClInclude Include="src\Loging\Logger.hpp" />
     <ClInclude Include="src\Core\Components\GUI.hpp" />
     <ClInclude Include="src\dependencies\imgui\imgui\imconfig.h" />
@@ -240,6 +242,7 @@
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
     <None Include="res\shaders\empty.shader" />
+    <None Include="res\shaders\phong-sphere.shader" />
     <None Include="res\shaders\phong.shader" />
     <None Include="res\shaders\square.shader" />
   </ItemGroup>

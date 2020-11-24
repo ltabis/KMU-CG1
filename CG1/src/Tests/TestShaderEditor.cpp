@@ -94,6 +94,14 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 			glm::vec3(1.f)
 	));
 
+	// creating a simple sphere from the dep list.
+	m_Sphere = std::make_unique<Sphere>(1.f, 100, 100);
+	m_ShaderSphere = std::make_unique<ShaderLoader>();
+
+	m_ShaderSphere->load("./res/shaders/phong-sphere.shader");
+	m_ShaderSphere->attach("triangle");
+	m_ShaderSphere->attach("color");
+	m_ShaderSphere->createExecutable();
 
 	m_Sloader = std::make_unique<ShaderLoader>();
 
@@ -132,8 +140,10 @@ void CG::Test::TestShaderEditor::onUpdate(float deltaTime)
 	if (glfwGetKey(_renderer->window(), GLFW_KEY_F))
 		m_ControllerFreeze = !m_ControllerFreeze;
 
-	if (glfwGetKey(_renderer->window(), GLFW_KEY_R))
-		hotReloadShader(*m_Sloader);
+	if (glfwGetKey(_renderer->window(), GLFW_KEY_R)) {
+		hotReloadShader(m_Sloader, "./res/shaders/phong.shader");
+		hotReloadShader(m_ShaderSphere, "./res/shaders/phong-sphere.shader");
+	}
 }
 
 void CG::Test::TestShaderEditor::onRender()
@@ -169,8 +179,10 @@ void CG::Test::TestShaderEditor::onRender()
 	ImGui::Begin("Shader control");
 	if (ImGui::ColorEdit3("Ambiant light color", &m_AmbiantLightColor[0], 1) ||
 		ImGui::InputFloat3("Light position", &m_lightPos[0], 1) ||
-		ImGui::ColorEdit3("object color", &m_ObjectColor[0], 1))
-		hotReloadShader(*m_Sloader);
+		ImGui::ColorEdit3("object color", &m_ObjectColor[0], 1)) {
+		hotReloadShader(m_Sloader, "./res/shaders/phong.shader");
+		hotReloadShader(m_ShaderSphere, "./res/shaders/phong-sphere.shader");
+	}
 
 	ImGui::End();
 
@@ -182,16 +194,27 @@ void CG::Test::TestShaderEditor::onRender()
 			glfwSetInputMode(_renderer->window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 
-	for (auto& triangle : m_Triangles) {
-		glm::mat4 mvp = m_Controller->projectionView() * triangle->transform.model();
-		glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * triangle->transform.model())));
+	// drawing each triangles for the cube.
+	//for (auto& triangle : m_Triangles) {
+	//	glm::mat4 mvp = m_Controller->projectionView() * triangle->transform.model();
+	//	glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * triangle->transform.model())));
 
-		m_Sloader->setUniform("u_mvp", mvp);
-		m_Sloader->setUniform("u_view", m_Controller->view());
-		m_Sloader->setUniform("u_modelView", m_Controller->view() * triangle->transform.model());
-		m_Sloader->setUniform("u_normalMat", normalMat);
-		_renderer->draw(*triangle, *m_Sloader);
-	}
+	//	m_Sloader->setUniform("u_mvp", mvp);
+	//	m_Sloader->setUniform("u_view", m_Controller->view());
+	//	m_Sloader->setUniform("u_modelView", m_Controller->view() * triangle->transform.model());
+	//	m_Sloader->setUniform("u_normalMat", normalMat);
+	//	_renderer->draw(*triangle, *m_Sloader);
+	//}
+
+	// drawing the sphere.
+	glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * m_Sphere->transform.model())));
+
+	m_ShaderSphere->setUniform("u_mvp", m_Controller->projectionView() * m_Sphere->transform.model());
+	m_ShaderSphere->setUniform("u_view", m_Controller->view());
+	m_ShaderSphere->setUniform("u_modelView", m_Controller->view() * m_Sphere->transform.model());
+	m_ShaderSphere->setUniform("u_normalMat", normalMat);
+	_renderer->draw(*m_Sphere, *m_ShaderSphere);
+
 }
 
 void CG::Test::TestShaderEditor::onStop()
@@ -209,20 +232,20 @@ void CG::Test::TestShaderEditor::onReset()
 	// TODO: reset cam position and rotation.
 }
 
-void CG::Test::TestShaderEditor::hotReloadShader(ShaderLoader& shader)
+void CG::Test::TestShaderEditor::hotReloadShader(std::unique_ptr<ShaderLoader>& shader, const std::string &shaderPath)
 {
 	CG_CONSOLE_INFO("Reloading shaders ...");
 	// deleting the current shaders.
-	m_Sloader.reset();
+	shader.reset();
 
 	// reloading them.
-	m_Sloader = std::make_unique<ShaderLoader>();
-	m_Sloader->load("./res/shaders/phong.shader");
-	m_Sloader->attach("triangle");
-	m_Sloader->attach("color");
-	m_Sloader->createExecutable();
+	shader = std::make_unique<ShaderLoader>();
+	shader->load(shaderPath);
+	shader->attach("triangle");
+	shader->attach("color");
+	shader->createExecutable();
 
-	m_Sloader->setUniform("u_ambiantLightColor", m_AmbiantLightColor);
-	m_Sloader->setUniform("u_objectColor", m_ObjectColor);
-	m_Sloader->setUniform("u_lightPos", m_lightPos);
+	shader->setUniform("u_ambiantLightColor", m_AmbiantLightColor);
+	shader->setUniform("u_objectColor", m_ObjectColor);
+	shader->setUniform("u_lightPos", m_lightPos);
 }

@@ -99,6 +99,9 @@
     <ClCompile Include="src\Tests\TestShaderEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Dependencies\models\Sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Profiling\Breakpoint.hpp">
@@ -206,11 +209,15 @@
     <ClInclude Include="src\Tests\TestShaderEditor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Dependencies\models\Sphere.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
     <None Include="res\shaders\empty.shader" />
     <None Include="res\shaders\square.shader" />
     <None Include="res\shaders\phong.shader" />
+    <None Include="res\shaders\phong-sphere.shader" />
   </ItemGroup>
 </Project>
