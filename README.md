@@ -38,4 +38,4 @@ You will be able to load the test using an ImGui interface when launching the so
 ![Test framework](placeholder.png)
 
 > phong illumination model
-![Phong](phong-shader)
+![Phong](phong-shader.png)
