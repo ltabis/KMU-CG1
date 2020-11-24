@@ -26,14 +26,14 @@ namespace CG {
 			void hotReloadShader(std::unique_ptr<ShaderLoader>& shader, const std::string &shaderPath);
 
 		private:
-			std::unique_ptr<ShaderLoader> m_Sloader;
 			std::vector<std::unique_ptr<AShape>> m_Triangles;
 
 			// TODO: implemente a debug light vizualiser.
 			std::unique_ptr<AShape> m_LightCube;
 			std::unique_ptr<AShape> m_Sphere;
 			std::unique_ptr<AShape> m_TeaPot;
-			std::unique_ptr<ShaderLoader> m_ShaderSphere;
+			std::unique_ptr<ShaderLoader> m_PhongShader;
+			std::unique_ptr<ShaderLoader> m_LightCubeShader;
 
 			std::unique_ptr<NoClipCameraController> m_Controller;
 
@@ -44,7 +44,7 @@ namespace CG {
 
 			glm::vec3 m_AmbiantLightColor;
 			glm::vec3 m_ObjectColor;
-			glm::vec3 m_lightPos;
+			glm::vec3 m_LightPos;
 
 			glm::vec2 m_AspectRatio;
 		};

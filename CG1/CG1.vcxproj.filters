@@ -228,5 +228,6 @@
     <None Include="res\shaders\square.shader" />
     <None Include="res\shaders\phong.shader" />
     <None Include="res\shaders\phong-sphere.shader" />
+    <None Include="res\shaders\white.shader" />
   </ItemGroup>
 </Project>
