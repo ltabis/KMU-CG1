@@ -196,6 +196,7 @@
     <ClCompile Include="src\Miscellaneous\NoClipCameraController.cpp" />
     <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp" />
     <ClCompile Include="src\Tests\TestCamera.cpp" />
+    <ClCompile Include="src\Tests\TestDrawMesh.cpp" />
     <ClCompile Include="src\Tests\TestNoClipCameraController.cpp" />
     <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="src\Tests\Framework\ATest.hpp" />
     <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp" />
     <ClInclude Include="src\Tests\TestCamera.hpp" />
+    <ClInclude Include="src\Tests\TestDrawMesh.hpp" />
     <ClInclude Include="src\Tests\TestNoClipCameraController.hpp" />
     <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
     <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />

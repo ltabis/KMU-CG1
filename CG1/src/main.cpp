@@ -12,6 +12,7 @@
 #include "Tests/TestNoClipCameraController.hpp"
 #include "Tests/Framework/TestMenu.hpp"
 #include "Tests/TestShaderEditor.hpp"
+#include "Tests/TestDrawMesh.hpp"
 
 int main(void)
 {
@@ -30,6 +31,7 @@ int main(void)
 	menu.registerTest<CG::Test::TestCamera>("Test a camera transformation");
 	menu.registerTest<CG::Test::TestNoClipCameraController>("Camera controller");
 	menu.registerTest<CG::Test::TestShaderEditor>("Shader Editor");
+	menu.registerTest<CG::Test::TestDrawMesh>("Shader Editor");
 
 	while (!renderer->windowShouldClose())
 		menu.onRender();

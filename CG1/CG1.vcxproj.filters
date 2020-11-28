@@ -105,6 +105,9 @@
     <ClCompile Include="src\Dependencies\models\vboteapot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tests\TestDrawMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Profiling\Breakpoint.hpp">
@@ -219,6 +222,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dependencies\models\teapotdata.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\TestDrawMesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
