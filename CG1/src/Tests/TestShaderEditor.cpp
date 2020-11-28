@@ -200,18 +200,6 @@ void CG::Test::TestShaderEditor::onRender()
 			glfwSetInputMode(_renderer->window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 
-	// drawing each triangles for the cube.
-	//for (auto& triangle : m_Triangles) {
-	//	glm::mat4 mvp = m_Controller->projectionView() * triangle->transform.model();
-	//	glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * triangle->transform.model())));
-
-	//	m_Sloader->setUniform("u_mvp", mvp);
-	//	m_Sloader->setUniform("u_view", m_Controller->view());
-	//	m_Sloader->setUniform("u_modelView", m_Controller->view() * triangle->transform.model());
-	//	m_Sloader->setUniform("u_normalMat", normalMat);
-	//	_renderer->draw(*triangle, *m_Sloader);
-	//}
-
 	// drawing the sphere.
 	glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * m_Sphere->transform.model())));
 

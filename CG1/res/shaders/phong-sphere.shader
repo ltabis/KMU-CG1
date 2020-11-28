@@ -1,8 +1,8 @@
 #shader VERTEX triangle
 #version 330 core
-in vec3 position;
-in vec3 normal;
-
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 normal;
+	
 out vec3 FragColor;
 
 uniform mat4 u_mvp;
@@ -20,15 +20,15 @@ void main()
 {
 	// to transform into uniforms.
 	vec3 diffuseLightColor = vec3(1.0, 1.0, 1.0);
-	vec3 specularLightColor = vec3(0.0, 1.0, 1.0);
+	vec3 specularLightColor = vec3(1.0, 1.0, 1.0);
 
 	vec3 pos = vec3(u_modelView * vec4(position, 1.0));
-	vec3 N = u_normalMat * normal;
+	vec3 N = normalize(u_normalMat * normal);
 	vec3 L = normalize(vec3(u_view * vec4(u_lightPos, 1.0)) - pos);
 	vec3 V = normalize(-pos);
 	vec3 R = reflect(-L, N);
 
-	vec3 diffuseColor = diffuseLightColor * max(dot(N, L), 0.0);
+	vec3 diffuseColor = diffuseLightColor * max(dot(L, N), 0.0);
 	vec3 specularColor = 0.5 * specularLightColor * pow(max(dot(V, R), 0.0), p);
 
 	FragColor = (u_ambiantLightColor + diffuseColor + specularColor) * u_objectColor;
