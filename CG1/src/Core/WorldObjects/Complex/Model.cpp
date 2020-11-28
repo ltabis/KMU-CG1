@@ -6,15 +6,11 @@ CG::Model::Model(const std::string &modelPath, const glm::vec3& position, const 
 {
     Assimp::Importer importer;
 
-    const aiScene* scene = importer.ReadFile(modelPath,
-        aiProcess_CalcTangentSpace |
-        aiProcess_Triangulate |
-        aiProcess_JoinIdenticalVertices |
-        aiProcess_SortByPType);
+    const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
     // TODO: add more details to the error.
-    if (!scene || !scene->mRootNode) {
-        CG_LOG_ERROR("Couldn't load '{}' model", modelPath);
+    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
+        CG_LOG_ERROR("Couldn't load '{}' model: {}", modelPath, importer.GetErrorString());
         return;
     }
 

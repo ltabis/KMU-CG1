@@ -10,8 +10,8 @@ CG::Test::TestDrawMesh::TestDrawMesh()
 	, m_LightPos		   { glm::vec3(5.f, 10.f, 0.f) }
 {
 	// creating models.
-	m_Models.push_back(std::make_unique<Model>("../meshes/bunny.obj"));
-	
+	m_Models.push_back(std::make_unique<Model>("../meshes/buddha.obj", glm::vec3(-2, 0, 0)));
+
 	m_LightCube = std::make_unique<Cube>(m_LightPos, glm::vec3(0.f), glm::vec3(1.f));
 
 	m_PhongShader = std::make_unique<ShaderLoader>();
@@ -113,16 +113,16 @@ void CG::Test::TestDrawMesh::onRender()
 			glfwSetInputMode(_renderer->window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 
-	const auto &meshes = m_Models[0]->meshes();
+	for (auto& model : m_Models) {
+		for (auto& mesh : model->meshes()) {
+			glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * mesh->transform.model())));
 
-	for (auto& mesh : meshes) {
-		glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * mesh->transform.model())));
-
-		m_PhongShader->setUniform("u_mvp", m_Controller->projectionView() * mesh->transform.model());
-		m_PhongShader->setUniform("u_view", m_Controller->view());
-		m_PhongShader->setUniform("u_modelView", m_Controller->view() * mesh->transform.model());
-		m_PhongShader->setUniform("u_normalMat", normalMat);
-		_renderer->draw(*mesh, *m_PhongShader);
+			m_PhongShader->setUniform("u_mvp", m_Controller->projectionView() * mesh->transform.model());
+			m_PhongShader->setUniform("u_view", m_Controller->view());
+			m_PhongShader->setUniform("u_modelView", m_Controller->view() * mesh->transform.model());
+			m_PhongShader->setUniform("u_normalMat", normalMat);
+			_renderer->draw(*mesh, *m_PhongShader);
+		}
 	}
 
 	m_LightCubeShader->setUniform("u_mvp", m_Controller->projectionView() * m_LightCube->transform.model());
