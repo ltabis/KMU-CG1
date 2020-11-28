@@ -31,7 +31,7 @@ int main(void)
 	menu.registerTest<CG::Test::TestCamera>("Test a camera transformation");
 	menu.registerTest<CG::Test::TestNoClipCameraController>("Camera controller");
 	menu.registerTest<CG::Test::TestShaderEditor>("Shader Editor");
-	menu.registerTest<CG::Test::TestDrawMesh>("Shader Editor");
+	menu.registerTest<CG::Test::TestDrawMesh>("Draw mesh");
 
 	while (!renderer->windowShouldClose())
 		menu.onRender();

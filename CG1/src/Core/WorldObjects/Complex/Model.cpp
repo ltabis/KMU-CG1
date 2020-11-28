@@ -18,18 +18,20 @@ CG::Model::Model(const std::string &modelPath, const glm::vec3& position, const 
         return;
     }
 
-    loadModel(scene);
+    loadModel(scene, scene->mRootNode);
 }
 
 CG::Model::~Model()
 {
 }
 
-void CG::Model::loadModel(const aiScene* scene)
+void CG::Model::loadModel(const aiScene* scene, aiNode* node)
 {
-    for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
+    for (unsigned int i = 0; i < node->mNumMeshes; ++i)
         createMesh(scene, i);
-    }
+
+    for (unsigned int i = 0; i < node->mNumChildren; ++i)
+        loadModel(scene, node->mChildren[i]);
 }
 
 void CG::Model::createMesh(const aiScene* scene, unsigned int meshIndex)
@@ -43,6 +45,7 @@ void CG::Model::createMesh(const aiScene* scene, unsigned int meshIndex)
         glm::vec3 vertex = { mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
         glm::vec3 normal = { mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
 
+        // no texture for the moment.
         vertices.push_back({ vertex, normal, glm::vec3(0.f) });
     }
 
@@ -53,11 +56,7 @@ void CG::Model::createMesh(const aiScene* scene, unsigned int meshIndex)
             indices.push_back(face.mIndices[j]);
     }
 
-    std::unique_ptr<Mesh> meshObject = std::make_unique<Mesh>(
-        vertices,
-        indices
-    );
+    std::unique_ptr<Mesh> meshObject = std::make_unique<Mesh>(vertices, indices);
 
-    // no texture for the moment.
     m_Meshes.push_back(std::move(meshObject));
 }

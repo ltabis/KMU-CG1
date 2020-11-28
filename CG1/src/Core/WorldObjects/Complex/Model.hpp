@@ -13,10 +13,10 @@ namespace CG {
 		std::vector<std::unique_ptr<AShape>> m_Meshes;
 		std::string m_ModelPath;
 
-		void loadModel(const aiScene* scene);
+		void loadModel(const aiScene* scene, aiNode* node);
 		void createMesh(const aiScene* scene, unsigned int meshIndex);
 	public:
-		Model(const std::string & modelPath, const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale);
+		Model(const std::string& modelPath, const glm::vec3& position = glm::vec3(0.f), const glm::vec3& rotation = glm::vec3(0.f), const glm::vec3& scale = glm::vec3(1.f));
 		~Model();
 
 		inline const std::vector<std::unique_ptr<AShape>>& meshes() const { return m_Meshes; };

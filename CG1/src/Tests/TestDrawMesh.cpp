@@ -9,7 +9,9 @@ CG::Test::TestDrawMesh::TestDrawMesh()
 	, m_ObjectColor        { glm::vec3(1.f, .0f, .0f)  }
 	, m_LightPos		   { glm::vec3(5.f, 10.f, 0.f) }
 {
-	// creating a sphere, a teapot and a cube from the dep list.
+	// creating models.
+	m_Models.push_back(std::make_unique<Model>("../meshes/bunny.obj"));
+	
 	m_LightCube = std::make_unique<Cube>(m_LightPos, glm::vec3(0.f), glm::vec3(1.f));
 
 	m_PhongShader = std::make_unique<ShaderLoader>();
@@ -109,6 +111,13 @@ void CG::Test::TestDrawMesh::onRender()
 			glfwSetInputMode(_renderer->window(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		else
 			glfwSetInputMode(_renderer->window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+
+	const auto &meshes = m_Models[0]->meshes();
+
+	for (auto& mesh : meshes) {
+		m_PhongShader->setUniform("u_mvp", m_Controller->projectionView() * mesh->transform.model());
+		_renderer->draw(*mesh, *m_PhongShader);
 	}
 
 	m_LightCubeShader->setUniform("u_mvp", m_Controller->projectionView() * m_LightCube->transform.model());

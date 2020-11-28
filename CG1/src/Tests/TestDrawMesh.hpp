@@ -2,6 +2,7 @@
 
 #include "Framework/ATest.hpp"
 #include "WorldObjects/Primitives/Triangle.hpp"
+#include "WorldObjects/Complex/Model.hpp"
 #include "WorldObjects/Complex/Cube.hpp"
 #include "NoClipCameraController.hpp"
 
@@ -22,7 +23,7 @@ namespace CG {
 			void hotReloadShader(std::unique_ptr<ShaderLoader>& shader, const std::string &shaderPath);
 
 		private:
-			std::vector<std::unique_ptr<AShape>> m_Meshes;
+			std::vector<std::unique_ptr<Model>> m_Models;
 
 			std::unique_ptr<AShape> m_LightCube;
 			std::unique_ptr<ShaderLoader> m_PhongShader;
