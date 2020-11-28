@@ -1,5 +1,5 @@
 # KMU-CG1
-Doing some rendering with C++ and OpenGL. *Current version*: 0.27.0
+Doing some rendering with C++ and OpenGL. *Current version*: 0.28.0
 
 ## Goal
 
@@ -39,3 +39,6 @@ You will be able to load the test using an ImGui interface when launching the so
 
 > phong illumination model
 ![Phong](phong-shader.png)
+
+> Model loading (Happy buddha)
+![Model](model-loader.png)
