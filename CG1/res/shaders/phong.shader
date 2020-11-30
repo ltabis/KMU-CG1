@@ -27,6 +27,7 @@ void main()
 	vec3 N = u_normalMat * normal;
 	vec3 L = normalize(vec3(u_view * vec4(u_lightPos, 1.0)) - pos);
 	vec3 V = normalize(-pos);
+	// computation heavy
 	vec3 R = reflect(-L, N);
 
 	vec3 diffuseColor = diffuseLightColor * max(dot(N, L), 0.0);

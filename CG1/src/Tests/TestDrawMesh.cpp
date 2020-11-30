@@ -21,14 +21,14 @@ void CG::Test::TestDrawMesh::onStart()
 		);
 
 	// creating models.
-	m_Models.push_back(std::make_unique<Model>("../meshes/buddha.obj", glm::vec3(0.f), glm::vec3(0.f), glm::vec3(2.f)));
+	m_Models.push_back(std::make_unique<Model>("../meshes/bunny.obj", glm::vec3(0.f), glm::vec3(0.f), glm::vec3(2.f)));
 
 	m_LightCube = std::make_unique<Cube>(m_LightPos, glm::vec3(0.f), glm::vec3(1.f));
 
 	m_PhongShader = std::make_unique<ShaderLoader>();
 	m_LightCubeShader = std::make_unique<ShaderLoader>();
 
-	m_PhongShader->load("./res/shaders/phong-sphere.shader");
+	m_PhongShader->load("./res/shaders/phong-frag.shader");
 	m_PhongShader->attach("triangle");
 	m_PhongShader->attach("color");
 	m_PhongShader->createExecutable();
@@ -55,7 +55,7 @@ void CG::Test::TestDrawMesh::onUpdate(float deltaTime)
 		m_ControllerFreeze = !m_ControllerFreeze;
 
 	if (glfwGetKey(_renderer->window(), GLFW_KEY_R))
-		hotReloadShader(m_PhongShader, "./res/shaders/phong-sphere.shader");
+		hotReloadShader(m_PhongShader, "./res/shaders/phong-frag.shader");
 }
 
 void CG::Test::TestDrawMesh::onRender()
@@ -91,11 +91,11 @@ void CG::Test::TestDrawMesh::onRender()
 	ImGui::Begin("Shader control");
 	if (ImGui::ColorEdit3("Ambiant light color", &m_AmbiantLightColor[0], 1) ||
 		ImGui::ColorEdit3("object color", &m_ObjectColor[0], 1)) {
-		hotReloadShader(m_PhongShader, "./res/shaders/phong-sphere.shader");
+		hotReloadShader(m_PhongShader, "./res/shaders/phong-frag.shader");
 	}
 	if (ImGui::InputFloat3("Light position", &m_LightPos[0], 1)) {
 		m_LightCube->transform.setPosition(m_LightPos.x, m_LightPos.y, m_LightPos.z);
-		hotReloadShader(m_PhongShader, "./res/shaders/phong-sphere.shader");
+		hotReloadShader(m_PhongShader, "./res/shaders/phong-frag.shader");
 	}
 
 	ImGui::End();

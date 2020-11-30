@@ -241,6 +241,7 @@
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
     <None Include="res\shaders\empty.shader" />
+    <None Include="res\shaders\phong-frag.shader" />
     <None Include="res\shaders\phong-sphere.shader" />
     <None Include="res\shaders\phong.shader" />
     <None Include="res\shaders\square.shader" />
