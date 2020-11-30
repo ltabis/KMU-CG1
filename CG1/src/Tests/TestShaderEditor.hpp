@@ -15,7 +15,7 @@ namespace CG {
 		{
 		public:
 			TestShaderEditor();
-			~TestShaderEditor();
+			~TestShaderEditor() = default;
 
 			void onStart() override;
 			void onUpdate(float deltaTime) override;

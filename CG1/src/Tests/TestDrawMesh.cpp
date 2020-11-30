@@ -9,27 +9,6 @@ CG::Test::TestDrawMesh::TestDrawMesh()
 	, m_ObjectColor        { glm::vec3(1.f, .0f, .0f)  }
 	, m_LightPos		   { glm::vec3(5.f, 10.f, 0.f) }
 {
-	// creating models.
-	m_Models.push_back(std::make_unique<Model>("../meshes/buddha.obj", glm::vec3(-2, 0, 0)));
-
-	m_LightCube = std::make_unique<Cube>(m_LightPos, glm::vec3(0.f), glm::vec3(1.f));
-
-	m_PhongShader = std::make_unique<ShaderLoader>();
-	m_LightCubeShader = std::make_unique<ShaderLoader>();
-
-	m_PhongShader->load("./res/shaders/phong-sphere.shader");
-	m_PhongShader->attach("triangle");
-	m_PhongShader->attach("color");
-	m_PhongShader->createExecutable();
-	
-	m_LightCubeShader->load("./res/shaders/white.shader");
-	m_LightCubeShader->attach("triangle");
-	m_LightCubeShader->attach("color");
-	m_LightCubeShader->createExecutable();
-}
-
-CG::Test::TestDrawMesh::~TestDrawMesh()
-{
 }
 
 void CG::Test::TestDrawMesh::onStart()
@@ -41,6 +20,18 @@ void CG::Test::TestDrawMesh::onStart()
 			glm::vec3(0.f)
 		);
 
+	// creating models.
+	m_Models.push_back(std::make_unique<Model>("../meshes/buddha.obj", glm::vec3(0.f), glm::vec3(0.f), glm::vec3(2.f)));
+
+	m_LightCube = std::make_unique<Cube>(m_LightPos, glm::vec3(0.f), glm::vec3(1.f));
+
+	m_PhongShader = std::make_unique<ShaderLoader>();
+	m_LightCubeShader = std::make_unique<ShaderLoader>();
+
+	m_PhongShader->load("./res/shaders/phong-sphere.shader");
+	m_PhongShader->attach("triangle");
+	m_PhongShader->attach("color");
+	m_PhongShader->createExecutable();
 	m_PhongShader->setUniform("u_ambiantLightColor", m_AmbiantLightColor);
 	m_PhongShader->setUniform("u_objectColor", m_ObjectColor);
 	m_PhongShader->setUniform("u_mvp", glm::mat4(1.f));
@@ -48,6 +39,10 @@ void CG::Test::TestDrawMesh::onStart()
 	m_PhongShader->setUniform("u_view", glm::mat4(1.f));
 	m_PhongShader->setUniform("u_lightPos", glm::vec4(-2.0, 10.0, 0.0, 1.0));
 
+	m_LightCubeShader->load("./res/shaders/white.shader");
+	m_LightCubeShader->attach("triangle");
+	m_LightCubeShader->attach("color");
+	m_LightCubeShader->createExecutable();
 	m_LightCubeShader->setUniform("u_mvp", glm::mat4(1.f));
 }
 

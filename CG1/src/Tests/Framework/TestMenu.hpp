@@ -18,9 +18,8 @@ namespace CG {
 					return;
 
 				if (_tests.find(testName) == _tests.end()) {
-					_tests.emplace(testName, std::make_unique<T>());
-					_tests[testName]->onInit(_renderer);
-					_tests[testName]->onStart();
+					_tests.emplace(testName, std::make_pair(std::make_unique<T>(), false));
+					_tests[testName].first->onInit(_renderer);
 				}
 			}
 		private:
@@ -28,7 +27,7 @@ namespace CG {
 			float _deltaTime;
 			float _lastFrame;
 
-			std::unordered_map<std::string, std::unique_ptr<ATest>> _tests;
+			std::unordered_map<std::string, std::pair<std::unique_ptr<ATest>, bool>> _tests;
 			std::string _currentTest;
 			std::shared_ptr<Renderer> _renderer;
 			std::shared_ptr<GUI> _gui;

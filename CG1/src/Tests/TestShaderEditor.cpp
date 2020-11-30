@@ -9,6 +9,10 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 	, m_ObjectColor        { glm::vec3(1.f, .0f, .0f)  }
 	, m_LightPos		   { glm::vec3(5.f, 10.f, 0.f) }
 {
+}
+
+void CG::Test::TestShaderEditor::onStart()
+{
 	// creating triangles
 	// front
 	m_Triangles.push_back(
@@ -16,13 +20,13 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 			glm::vec3(0.f, 0.f, 1.f),
 			glm::vec3(0.f),
 			glm::vec3(1.f)
-	));
+			));
 	m_Triangles.push_back(
 		std::make_unique<Triangle>(
 			glm::vec3(0.f, 0.f, 1.f),
 			glm::vec3(0.f, 0.f, 180.f),
 			glm::vec3(1.f)
-	));
+			));
 
 	// back
 	m_Triangles.push_back(
@@ -30,13 +34,13 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 			glm::vec3(0.f, 0.f, -1.f),
 			glm::vec3(0.f, 180.f, 0.f),
 			glm::vec3(1.f)
-	));
+			));
 	m_Triangles.push_back(
 		std::make_unique<Triangle>(
 			glm::vec3(0.f, 0.f, -1.f),
 			glm::vec3(0.f, 180.f, 180.f),
 			glm::vec3(1.f)
-	));
+			));
 
 	// top
 	m_Triangles.push_back(
@@ -44,13 +48,13 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 			glm::vec3(0.f, 1.f, 0.f),
 			glm::vec3(90.f, 0.f, 0.f),
 			glm::vec3(1.f)
-	));
+			));
 	m_Triangles.push_back(
 		std::make_unique<Triangle>(
 			glm::vec3(0.f, 1.f, 0.f),
 			glm::vec3(90.f, 0.f, 180.f),
 			glm::vec3(1.f)
-	));
+			));
 
 	// bottom
 	m_Triangles.push_back(
@@ -58,13 +62,13 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 			glm::vec3(0.f, -1.f, 0.f),
 			glm::vec3(-90.f, 0.f, 0.f),
 			glm::vec3(1.f)
-	));
+			));
 	m_Triangles.push_back(
 		std::make_unique<Triangle>(
 			glm::vec3(0.f, -1.f, 0.f),
 			glm::vec3(-90.f, 0.f, 180.f),
 			glm::vec3(1.f)
-	));
+			));
 
 	// left
 	m_Triangles.push_back(
@@ -72,13 +76,13 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 			glm::vec3(-1.f, 0.f, 0.f),
 			glm::vec3(0.f, 90.f, 0.f),
 			glm::vec3(1.f)
-	));
+			));
 	m_Triangles.push_back(
 		std::make_unique<Triangle>(
 			glm::vec3(-1.f, 0.f, 0.f),
 			glm::vec3(0.f, 90, 180.f),
 			glm::vec3(1.f)
-	));
+			));
 
 	// right
 	m_Triangles.push_back(
@@ -86,13 +90,13 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 			glm::vec3(1.f, 0.f, 0.f),
 			glm::vec3(0.f, -90.f, 0.f),
 			glm::vec3(1.f)
-	));
+			));
 	m_Triangles.push_back(
 		std::make_unique<Triangle>(
 			glm::vec3(1.f, 0.f, 0.f),
 			glm::vec3(0.f, -90, 180.f),
 			glm::vec3(1.f)
-	));
+			));
 
 	// creating a sphere, a teapot and a cube from the dep list.
 	m_LightCube = std::make_unique<Cube>(m_LightPos, glm::vec3(0.f), glm::vec3(1.f));
@@ -108,19 +112,12 @@ CG::Test::TestShaderEditor::TestShaderEditor()
 	m_PhongShader->attach("triangle");
 	m_PhongShader->attach("color");
 	m_PhongShader->createExecutable();
-	
+
 	m_LightCubeShader->load("./res/shaders/white.shader");
 	m_LightCubeShader->attach("triangle");
 	m_LightCubeShader->attach("color");
 	m_LightCubeShader->createExecutable();
-}
 
-CG::Test::TestShaderEditor::~TestShaderEditor()
-{
-}
-
-void CG::Test::TestShaderEditor::onStart()
-{
 	if (!m_Controller.get())
 		m_Controller = std::make_unique<NoClipCameraController>(
 			_renderer->window(),

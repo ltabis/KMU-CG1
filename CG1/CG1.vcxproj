@@ -196,14 +196,9 @@
     <ClCompile Include="src\Core\DataStructures\VertexArrayLayout.cpp" />
     <ClCompile Include="src\Core\DataStructures\VertexArray.cpp" />
     <ClCompile Include="src\Miscellaneous\NoClipCameraController.cpp" />
-    <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp" />
-    <ClCompile Include="src\Tests\TestCamera.cpp" />
     <ClCompile Include="src\Tests\TestDrawMesh.cpp" />
-    <ClCompile Include="src\Tests\TestNoClipCameraController.cpp" />
-    <ClCompile Include="src\Tests\TestDrawTriangle.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
     <ClCompile Include="src\Tests\TestShaderEditor.cpp" />
-    <ClCompile Include="src\Tests\TestShapeSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Camera.hpp" />
@@ -238,14 +233,9 @@
     <ClInclude Include="src\Core\DataStructures\VertexArrayLayout.hpp" />
     <ClInclude Include="src\Core\DataStructures\VertexArray.hpp" />
     <ClInclude Include="src\Tests\Framework\ATest.hpp" />
-    <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp" />
-    <ClInclude Include="src\Tests\TestCamera.hpp" />
     <ClInclude Include="src\Tests\TestDrawMesh.hpp" />
-    <ClInclude Include="src\Tests\TestNoClipCameraController.hpp" />
-    <ClInclude Include="src\Tests\TestDrawTriangle.hpp" />
     <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />
     <ClInclude Include="src\Tests\TestShaderEditor.hpp" />
-    <ClInclude Include="src\Tests\TestShapeSpawner.hpp" />
     <ClInclude Include="src\Core\DataStructures\Vertex.hpp" />
   </ItemGroup>
   <ItemGroup>

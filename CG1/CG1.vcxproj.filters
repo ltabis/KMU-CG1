@@ -39,12 +39,6 @@
     <ClCompile Include="src\Loging\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tests\TestBackgroundColorChange.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tests\TestDrawTriangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,22 +72,13 @@
     <ClCompile Include="src\Core\WorldObjects\Primitives\Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tests\TestShapeSpawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\WorldObjects\Complex\Cube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tests\TestCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Miscellaneous\NoClipCameraController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tests\TestNoClipCameraController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Tests\TestShaderEditor.cpp">
@@ -152,12 +137,6 @@
     <ClInclude Include="src\Callbacks.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tests\TestBackgroundColorChange.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tests\TestDrawTriangle.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Tests\Framework\ATest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -197,22 +176,13 @@
     <ClInclude Include="src\Core\WorldObjects\Primitives\Triangle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tests\TestShapeSpawner.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\WorldObjects\Complex\Cube.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tests\TestCamera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Miscellaneous\NoClipCameraController.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tests\TestNoClipCameraController.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tests\TestShaderEditor.hpp">

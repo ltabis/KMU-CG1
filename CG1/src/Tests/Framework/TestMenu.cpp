@@ -2,6 +2,7 @@
 
 CG::Test::TestMenu::TestMenu(std::shared_ptr<Renderer>& renderer, std::shared_ptr <GUI> gui)
 	: _deltaTime { 0 }
+	, _lastFrame { 0 }
 {
 	if (!renderer)
 		return;
@@ -26,11 +27,11 @@ void CG::Test::TestMenu::onRender()
 	_renderer->clear();
 
 	if (_currentTest != "") {
-		_tests[_currentTest]->onUpdate(_deltaTime);
-		_tests[_currentTest]->onRender();
+		_tests[_currentTest].first->onUpdate(_deltaTime);
+		_tests[_currentTest].first->onRender();
 		ImGui::Begin("Go back to menu");
 		if (ImGui::Button("<-")) {
-			_tests[_currentTest]->onStop();
+			_tests[_currentTest].first->onStop();
 			_currentTest = "";
 		}
 		ImGui::End();
@@ -39,7 +40,12 @@ void CG::Test::TestMenu::onRender()
 		for (auto& it : _tests)
 			if (ImGui::Button(it.first.c_str())) {
 				_currentTest = it.first;
-				_tests[_currentTest]->onReset();
+				if (_tests[_currentTest].second)
+					_tests[_currentTest].first->onReset();
+				else {
+					_tests[_currentTest].first->onStart();
+					_tests[_currentTest].second = true;
+				}
 				break;
 			}
 		ImGui::End();

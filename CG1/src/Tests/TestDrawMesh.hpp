@@ -12,7 +12,7 @@ namespace CG {
 		{
 		public:
 			TestDrawMesh();
-			~TestDrawMesh();
+			~TestDrawMesh() = default;
 
 			void onStart() override;
 			void onUpdate(float deltaTime) override;
