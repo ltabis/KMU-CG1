@@ -218,5 +218,6 @@
     <None Include="res\shaders\phong-sphere.shader" />
     <None Include="res\shaders\white.shader" />
     <None Include="res\shaders\phong-frag.shader" />
+    <None Include="res\shaders\blinn-phong.shader" />
   </ItemGroup>
 </Project>

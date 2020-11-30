@@ -28,7 +28,7 @@ void CG::Test::TestDrawMesh::onStart()
 	m_PhongShader = std::make_unique<ShaderLoader>();
 	m_LightCubeShader = std::make_unique<ShaderLoader>();
 
-	m_PhongShader->load("./res/shaders/phong-frag.shader");
+	m_PhongShader->load("./res/shaders/blinn-phong.shader");
 	m_PhongShader->attach("triangle");
 	m_PhongShader->attach("color");
 	m_PhongShader->createExecutable();
@@ -55,7 +55,7 @@ void CG::Test::TestDrawMesh::onUpdate(float deltaTime)
 		m_ControllerFreeze = !m_ControllerFreeze;
 
 	if (glfwGetKey(_renderer->window(), GLFW_KEY_R))
-		hotReloadShader(m_PhongShader, "./res/shaders/phong-frag.shader");
+		hotReloadShader(m_PhongShader, "./res/shaders/blinn-phong.shader");
 }
 
 void CG::Test::TestDrawMesh::onRender()
@@ -91,11 +91,11 @@ void CG::Test::TestDrawMesh::onRender()
 	ImGui::Begin("Shader control");
 	if (ImGui::ColorEdit3("Ambiant light color", &m_AmbiantLightColor[0], 1) ||
 		ImGui::ColorEdit3("object color", &m_ObjectColor[0], 1)) {
-		hotReloadShader(m_PhongShader, "./res/shaders/phong-frag.shader");
+		hotReloadShader(m_PhongShader, "./res/shaders/blinn-phong.shader");
 	}
 	if (ImGui::InputFloat3("Light position", &m_LightPos[0], 1)) {
 		m_LightCube->transform.setPosition(m_LightPos.x, m_LightPos.y, m_LightPos.z);
-		hotReloadShader(m_PhongShader, "./res/shaders/phong-frag.shader");
+		hotReloadShader(m_PhongShader, "./res/shaders/blinn-phong.shader");
 	}
 
 	ImGui::End();
