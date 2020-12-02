@@ -37,9 +37,19 @@ void CG::Test::TestDrawMesh::onStart()
 	m_PhongShader->createExecutable();
 
 	// generating lights.
-	for (unsigned int i = 0, x = 0; i < 5; ++i, x += 3) {
+	for (unsigned int i = 0, angle = 72; i < 5; ++i, angle += 72) {
+
+		float currentAngle = glm::radians(static_cast<float>(angle));
+
+		m_Shapes.push_back(std::make_unique<Cube>(
+			glm::vec3(glm::cos(currentAngle) * 10.f, 10.f, glm::sin(currentAngle) * 10.f),
+			glm::vec3(0.f),
+			glm::vec3(1.f)
+		));
+
+
 		std::string light = "u_lights[" + std::to_string(i) + "].Position";
-		m_PhongShader->setUniform(light, glm::vec4(x, 10.f, 0.f, 0.f));
+		m_PhongShader->setUniform(light, glm::vec4(glm::cos(currentAngle) * 10.f, 10.f, glm::sin(currentAngle) * 10.f, 1.f));
 	}
 
 	m_PhongShader->setUniform("u_lights[0].Intensity", glm::vec3(0.0f, 0.8f, 0.8f));
