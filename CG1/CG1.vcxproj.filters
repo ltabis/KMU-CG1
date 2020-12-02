@@ -99,6 +99,9 @@
     <ClCompile Include="src\Core\WorldObjects\Complex\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Dependencies\models\vbotorus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Profiling\Breakpoint.hpp">
@@ -209,6 +212,9 @@
     <ClInclude Include="src\Core\DataStructures\Vertex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Dependencies\models\vbotorus.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
@@ -219,5 +225,6 @@
     <None Include="res\shaders\white.shader" />
     <None Include="res\shaders\phong-frag.shader" />
     <None Include="res\shaders\blinn-phong.shader" />
+    <None Include="res\shaders\blinn-phong-mul-lights.shader" />
   </ItemGroup>
 </Project>

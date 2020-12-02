@@ -30,7 +30,7 @@ uniform mat4 u_view;
 in vec3 Position;
 in vec3 Normal;
 
-float p = 32.0;
+float p = 1.0;
 
 void main()
 {

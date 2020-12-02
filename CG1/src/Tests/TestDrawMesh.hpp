@@ -6,6 +6,8 @@
 #include "WorldObjects/Complex/Cube.hpp"
 #include "NoClipCameraController.hpp"
 
+#include "../Dependencies/models/vbotorus.hpp"
+
 namespace CG {
 	namespace Test {
 		class TestDrawMesh : public ATest
@@ -24,6 +26,7 @@ namespace CG {
 
 		private:
 			std::vector<std::unique_ptr<Model>> m_Models;
+			std::vector<std::unique_ptr<AShape>> m_Shapes;
 
 			std::unique_ptr<AShape> m_LightCube;
 			std::unique_ptr<ShaderLoader> m_PhongShader;
@@ -36,9 +39,7 @@ namespace CG {
 			bool m_ControllerFreeze;
 			bool m_FpsMode;
 
-			glm::vec3 m_AmbiantLightColor;
 			glm::vec3 m_ObjectColor;
-			glm::vec3 m_LightPos;
 
 			glm::vec2 m_AspectRatio;
 		};

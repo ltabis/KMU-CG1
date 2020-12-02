@@ -178,6 +178,16 @@ void CG::ShaderLoader::setUniform(const std::string& uniformName, const glm::vec
 	glUniform3fv(location, 1, &vector[0]);
 }
 
+void CG::ShaderLoader::setUniform(const std::string& uniformName, const glm::vec4& vector)
+{
+	use();
+	int location = findUniform(uniformName);
+
+	if (location == -1)
+		return;
+	glUniform4fv(location, 1, &vector[0]);
+}
+
 void CG::ShaderLoader::use() const
 {
 	glUseProgram(_program);
