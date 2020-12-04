@@ -1,12 +1,14 @@
 #include "TestDrawMesh.hpp"
 
 CG::Test::TestDrawMesh::TestDrawMesh()
-	: m_Fov				   { 90						   }
-	, m_HelpOpened		   { false					   }
-	, m_ControllerFreeze   { false					   }
-	, m_FpsMode			   { false					   }
-	, m_ObjectColor        { glm::vec3(1.f, .0f, .0f)  }
-{
+	: m_Fov				   { 90						     }
+	, m_HelpOpened		   { false					     }
+	, m_ControllerFreeze   { false					     }
+	, m_FpsMode			   { false					     }
+	, m_ObjectColor		   { glm::vec3(1.f, .0f, .0f)    }
+	, m_LightPos		   { glm::vec3(0.f, 10.0f, 5.0f) }
+	, m_AmbiantLightColor  { glm::vec3(1.f, .0f, .0f)    }
+{ 
 }
 
 void CG::Test::TestDrawMesh::onStart()
@@ -19,46 +21,22 @@ void CG::Test::TestDrawMesh::onStart()
 		);
 
 	// creating models.
-	// m_Models.push_back(std::make_unique<Model>("../meshes/bunny.obj", glm::vec3(0.f), glm::vec3(0.f), glm::vec3(2.f)));
+	m_Models.push_back(std::make_unique<Model>("../meshes/bunny.obj", glm::vec3(0.f), glm::vec3(0.f), glm::vec3(2.f)));
 
-	// creating shapes.
-	m_Shapes.push_back(std::make_unique<VBOTorus>(2, 1, 100, 100));
-	m_Shapes[0]->transform.rotate(90.f, 1.f, 0.f, 0.f);
-
-	// TODO: create each light cubes for every lights created.
-	// m_LightCube = std::make_unique<Cube>(m_LightPos, glm::vec3(0.f), glm::vec3(1.f));
+	// creating a single light source.
+	m_LightCube = std::make_unique<Cube>(m_LightPos, glm::vec3(0.f), glm::vec3(1.f));
 
 	m_PhongShader = std::make_unique<ShaderLoader>();
 	m_LightCubeShader = std::make_unique<ShaderLoader>();
 
-	m_PhongShader->load("./res/shaders/blinn-phong-mul-lights.shader");
+	m_PhongShader->load("./res/shaders/blinn-phong.shader");
 	m_PhongShader->attach("triangle");
 	m_PhongShader->attach("color");
 	m_PhongShader->createExecutable();
 
-	// generating lights.
-	for (unsigned int i = 0, angle = 72; i < 5; ++i, angle += 72) {
-
-		float currentAngle = glm::radians(static_cast<float>(angle));
-
-		m_Shapes.push_back(std::make_unique<Cube>(
-			glm::vec3(glm::cos(currentAngle) * 10.f, 10.f, glm::sin(currentAngle) * 10.f),
-			glm::vec3(0.f),
-			glm::vec3(1.f)
-		));
-
-
-		std::string light = "u_lights[" + std::to_string(i) + "].Position";
-		m_PhongShader->setUniform(light, glm::vec4(glm::cos(currentAngle) * 10.f, 10.f, glm::sin(currentAngle) * 10.f, 1.f));
-	}
-
-	m_PhongShader->setUniform("u_lights[0].Intensity", glm::vec3(0.0f, 0.8f, 0.8f));
-	m_PhongShader->setUniform("u_lights[1].Intensity", glm::vec3(0.0f, 0.0f, 0.8f));
-	m_PhongShader->setUniform("u_lights[2].Intensity", glm::vec3(0.8f, 0.0f, 0.0f));
-	m_PhongShader->setUniform("u_lights[3].Intensity", glm::vec3(0.0f, 0.8f, 0.0f));
-	m_PhongShader->setUniform("u_lights[4].Intensity", glm::vec3(0.8f, 0.8f, 0.8f));
-
 	m_PhongShader->setUniform("u_objectColor", m_ObjectColor);
+	m_PhongShader->setUniform("u_lightPos", m_LightPos);
+	m_PhongShader->setUniform("u_ambiantLightColor", m_AmbiantLightColor);
 	m_PhongShader->setUniform("u_mvp", glm::mat4(1.f));
 	m_PhongShader->setUniform("u_modelView", glm::mat4(1.f));
 	m_PhongShader->setUniform("u_view", glm::mat4(1.f));
@@ -79,7 +57,7 @@ void CG::Test::TestDrawMesh::onUpdate(float deltaTime)
 		m_ControllerFreeze = !m_ControllerFreeze;
 
 	if (glfwGetKey(_renderer->window(), GLFW_KEY_R))
-		hotReloadShader(m_PhongShader, "./res/shaders/blinn-phong-mul-lights.shader");
+		hotReloadShader(m_PhongShader, "./res/shaders/blinn-phong.shader");
 }
 
 void CG::Test::TestDrawMesh::onRender()
@@ -113,13 +91,14 @@ void CG::Test::TestDrawMesh::onRender()
 	ImGui::End();
 
 	ImGui::Begin("Shader control");
-	if (ImGui::ColorEdit3("object color", &m_ObjectColor[0], 1)) {
-		hotReloadShader(m_PhongShader, "./res/shaders/blinn-phong-mul-lights.shader");
+	if (ImGui::ColorEdit3("ambiant light color", &m_AmbiantLightColor[0], 1) ||
+		ImGui::ColorEdit3("object color", &m_ObjectColor[0], 1)) {
+		hotReloadShader(m_PhongShader, "./res/shaders/blinn-phong.shader");
 	}
-	//if (ImGui::InputFloat3("Light position", &m_LightPos[0], 1)) {
-	//	m_LightCube->transform.setPosition(m_LightPos.x, m_LightPos.y, m_LightPos.z);
-	//	hotReloadShader(m_PhongShader, "./res/shaders/blinn-phong-mul-lights.shader");
-	//}
+	if (ImGui::InputFloat3("Light position", &m_LightPos[0], 1)) {
+		m_LightCube->transform.setPosition(m_LightPos.x, m_LightPos.y, m_LightPos.z);
+		hotReloadShader(m_PhongShader, "./res/shaders/blinn-phong.shader");
+	}
 
 	ImGui::End();
 
@@ -144,20 +123,8 @@ void CG::Test::TestDrawMesh::onRender()
 		}
 	}
 
-	// draw eventual shapes.
-	for (auto& shape : m_Shapes) {
-		glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * shape->transform.model())));
-
-		m_PhongShader->setUniform("u_mvp", m_Controller->projectionView() * shape->transform.model());
-		m_PhongShader->setUniform("u_view", m_Controller->view());
-		m_PhongShader->setUniform("u_modelView", m_Controller->view() * shape->transform.model());
-		m_PhongShader->setUniform("u_normalMat", normalMat);
-		_renderer->draw(*shape, *m_PhongShader);
-	}
-
-
-//	m_LightCubeShader->setUniform("u_mvp", m_Controller->projectionView() * m_LightCube->transform.model());
-//	_renderer->draw(*m_LightCube, *m_LightCubeShader);
+	m_LightCubeShader->setUniform("u_mvp", m_Controller->projectionView() * m_LightCube->transform.model());
+	_renderer->draw(*m_LightCube, *m_LightCubeShader);
 }
 
 void CG::Test::TestDrawMesh::onStop()
@@ -183,14 +150,6 @@ void CG::Test::TestDrawMesh::hotReloadShader(std::unique_ptr<ShaderLoader>& shad
 	shader->createExecutable();
 
 	shader->setUniform("u_objectColor", m_ObjectColor);
-	for (unsigned int i = 0, x = 0; i < 5; ++i, x += 3) {
-		std::string light = "u_lights[" + std::to_string(i) + "].Position";
-		m_PhongShader->setUniform(light, glm::vec4(x, 20.f, 0.f, 0.f));
-	}
-
-	m_PhongShader->setUniform("u_lights[0].Intensity", glm::vec3(0.0f, 0.8f, 0.8f));
-	m_PhongShader->setUniform("u_lights[1].Intensity", glm::vec3(0.0f, 0.0f, 0.8f));
-	m_PhongShader->setUniform("u_lights[2].Intensity", glm::vec3(0.8f, 0.0f, 0.0f));
-	m_PhongShader->setUniform("u_lights[3].Intensity", glm::vec3(0.0f, 0.8f, 0.0f));
-	m_PhongShader->setUniform("u_lights[4].Intensity", glm::vec3(0.8f, 0.8f, 0.8f));
+	shader->setUniform("u_lightPos", m_LightPos);
+	shader->setUniform("u_ambiantLightColor", m_AmbiantLightColor);
 }
