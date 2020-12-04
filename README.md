@@ -37,8 +37,11 @@ You will be able to load the test using an ImGui interface when launching the so
 > basic cube
 ![Test framework](placeholder.png)
 
-> phong illumination model
+> simple phong illumination model
 ![Phong](phong-shader.png)
+
+> Multiple lights with phong illumination model
+![Lights](donut.gif)
 
 > Model loading (Happy buddha)
 ![Model](model-loader.png)
