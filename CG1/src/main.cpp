@@ -6,6 +6,7 @@
 #include "Callbacks.hpp"
 #include "Profiling/Breakpoint.hpp"
 #include "Tests/Framework/TestMenu.hpp"
+#include "Tests/TestMultipleLights.hpp"
 #include "Tests/TestShaderEditor.hpp"
 #include "Tests/TestDrawMesh.hpp"
 
@@ -21,7 +22,8 @@ int main(void)
 	renderer->registerKeyBindingCallback(GLFW_KEY_SPACE, spacebar_callback);
 
 	menu.registerTest<CG::Test::TestShaderEditor>("Shader Editor");
-	menu.registerTest<CG::Test::TestDrawMesh>("Draw mesh");
+	menu.registerTest<CG::Test::TestDrawMesh>("Draw meshes");
+	menu.registerTest<CG::Test::TestMultipleLights>("Display multiple lights");
 
 	while (!renderer->windowShouldClose())
 		menu.onRender();
