@@ -148,6 +148,27 @@ int CG::ShaderLoader::findUniform(const std::string& uniformName)
 	return location = !location ? _uniforms[uniformName] : location;
 }
 
+void CG::ShaderLoader::setUniform(const std::string& uniformName, int value)
+{
+	use();
+	int location = findUniform(uniformName);
+
+	if (location == -1)
+		return;
+	glUniform1i(location, value);
+}
+
+
+void CG::ShaderLoader::setUniform(const std::string& uniformName, float value)
+{
+	use();
+	int location = findUniform(uniformName);
+
+	if (location == -1)
+		return;
+	glUniform1f(location, value);
+}
+
 void CG::ShaderLoader::setUniform(const std::string& uniformName, const glm::mat4& matrix)
 {
 	use();
