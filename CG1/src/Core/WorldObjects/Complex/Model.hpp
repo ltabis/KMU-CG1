@@ -10,8 +10,9 @@ namespace CG {
 	class Model
 	{
 	private:
-		std::vector<std::unique_ptr<AShape>> m_Meshes;
+		std::vector<std::unique_ptr<Mesh>> m_Meshes;
 		std::string m_ModelPath;
+		std::string m_DirectoryPath;
 
 		void loadModel(const aiScene* scene, aiNode* node);
 		void createMesh(const aiScene* scene, unsigned int meshIndex);
@@ -19,7 +20,8 @@ namespace CG {
 		Model(const std::string& modelPath, const glm::vec3& position = glm::vec3(0.f), const glm::vec3& rotation = glm::vec3(0.f), const glm::vec3& scale = glm::vec3(1.f));
 		~Model();
 
-		inline const std::vector<std::unique_ptr<AShape>>& meshes() const { return m_Meshes; };
+		inline const std::vector<std::unique_ptr<Mesh>>& meshes() const { return m_Meshes; };
+		std::vector<Texture> loadMaterial(aiMaterial* material, aiTextureType type, const std::string& typeName) const;
 
 		Transform transform;
 	};
