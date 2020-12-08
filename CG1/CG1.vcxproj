@@ -100,7 +100,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Graphics\Tools\Assimp\include;$(ProjectDir)\src\Dependencies\spdlog\include;$(ProjectDir)\src\Dependencies\imgui;C:\Graphics\Tools\glm;$(ProjectDir)\src\Miscellaneous;$(ProjectDir)\src\Loging;$(ProjectDir)\src\Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Graphics\Tools\Assimp\include;C:\dev\Computer Graphics 1\CG1\CG1\src\Dependencies\stb;$(ProjectDir)\src\Dependencies\spdlog\include;$(ProjectDir)\src\Dependencies\imgui;C:\Graphics\Tools\glm;$(ProjectDir)\src\Miscellaneous;$(ProjectDir)\src\Loging;$(ProjectDir)\src\Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
@@ -119,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Graphics\Tools\Assimp\include;$(ProjectDir)\src\Dependencies\spdlog\include;$(ProjectDir)\src\Dependencies\imgui;C:\Graphics\Tools\glm;$(ProjectDir)\src\Miscellaneous;$(ProjectDir)\src\Loging;$(ProjectDir)\src\Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Graphics\Tools\Assimp\include;C:\dev\Computer Graphics 1\CG1\CG1\src\Dependencies\stb;$(ProjectDir)\src\Dependencies\spdlog\include;$(ProjectDir)\src\Dependencies\imgui;C:\Graphics\Tools\glm;$(ProjectDir)\src\Miscellaneous;$(ProjectDir)\src\Loging;$(ProjectDir)\src\Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
@@ -138,7 +138,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Graphics\Tools\Assimp\include;$(ProjectDir)\src\Dependencies\spdlog\include;$(ProjectDir)\src\Dependencies\imgui;C:\Graphics\Tools\glm;$(ProjectDir)\src\Miscellaneous;$(ProjectDir)\src\Loging;$(ProjectDir)\src\Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Graphics\Tools\Assimp\include;C:\dev\Computer Graphics 1\CG1\CG1\src\Dependencies\stb;$(ProjectDir)\src\Dependencies\spdlog\include;$(ProjectDir)\src\Dependencies\imgui;C:\Graphics\Tools\glm;$(ProjectDir)\src\Miscellaneous;$(ProjectDir)\src\Loging;$(ProjectDir)\src\Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
@@ -157,7 +157,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Graphics\Tools\Assimp\include;$(ProjectDir)\src\Dependencies\spdlog\include;$(ProjectDir)\src\Dependencies\imgui;C:\Graphics\Tools\glm;$(ProjectDir)\src\Miscellaneous;$(ProjectDir)\src\Loging;$(ProjectDir)\src\Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Graphics\Tools\Assimp\include;C:\dev\Computer Graphics 1\CG1\CG1\src\Dependencies\stb;$(ProjectDir)\src\Dependencies\spdlog\include;$(ProjectDir)\src\Dependencies\imgui;C:\Graphics\Tools\glm;$(ProjectDir)\src\Miscellaneous;$(ProjectDir)\src\Loging;$(ProjectDir)\src\Core;C:\Graphics\Tools\glew\include;C:\Graphics\Tools\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
@@ -172,6 +172,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp" />
+    <ClCompile Include="src\Core\DataStructures\Material.cpp" />
+    <ClCompile Include="src\Core\DataStructures\Texture.cpp" />
     <ClCompile Include="src\Core\Renderer.cpp" />
     <ClCompile Include="src\Core\WorldObjects\Complex\Cube.cpp" />
     <ClCompile Include="src\Core\WorldObjects\Complex\Model.cpp" />
@@ -183,6 +185,7 @@
     <ClCompile Include="src\Dependencies\models\Sphere.cpp" />
     <ClCompile Include="src\Dependencies\models\vboteapot.cpp" />
     <ClCompile Include="src\Dependencies\models\vbotorus.cpp" />
+    <ClCompile Include="src\Dependencies\stb\stb_image.cpp" />
     <ClCompile Include="src\Loging\Logger.cpp" />
     <ClCompile Include="src\Core\Components\GUI.cpp" />
     <ClCompile Include="src\Core\Components\ShaderLoader.cpp" />
@@ -199,11 +202,15 @@
     <ClCompile Include="src\Miscellaneous\NoClipCameraController.cpp" />
     <ClCompile Include="src\Tests\TestDrawMesh.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
+    <ClCompile Include="src\Tests\TestDrawSimpleTexture.cpp" />
+    <ClCompile Include="src\Tests\TestDrawTexture.cpp" />
     <ClCompile Include="src\Tests\TestMultipleLights.cpp" />
     <ClCompile Include="src\Tests\TestShaderEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Camera.hpp" />
+    <ClInclude Include="src\Core\DataStructures\Material.hpp" />
+    <ClInclude Include="src\Core\DataStructures\Texture.hpp" />
     <ClInclude Include="src\Core\WorldObjects\Complex\Cube.hpp" />
     <ClInclude Include="src\Core\WorldObjects\Complex\Model.hpp" />
     <ClInclude Include="src\Core\WorldObjects\Primitives\Mesh.hpp" />
@@ -218,6 +225,7 @@
     <ClInclude Include="src\Dependencies\models\teapotdata.hpp" />
     <ClInclude Include="src\Dependencies\models\vboteapot.hpp" />
     <ClInclude Include="src\Dependencies\models\vbotorus.hpp" />
+    <ClInclude Include="src\Dependencies\stb\stb_image.hpp" />
     <ClInclude Include="src\Loging\Logger.hpp" />
     <ClInclude Include="src\Core\Components\GUI.hpp" />
     <ClInclude Include="src\dependencies\imgui\imgui\imconfig.h" />
@@ -238,6 +246,8 @@
     <ClInclude Include="src\Tests\Framework\ATest.hpp" />
     <ClInclude Include="src\Tests\TestDrawMesh.hpp" />
     <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />
+    <ClInclude Include="src\Tests\TestDrawSimpleTexture.hpp" />
+    <ClInclude Include="src\Tests\TestDrawTexture.hpp" />
     <ClInclude Include="src\Tests\TestMultipleLights.hpp" />
     <ClInclude Include="src\Tests\TestShaderEditor.hpp" />
     <ClInclude Include="src\Core\DataStructures\Vertex.hpp" />
@@ -248,6 +258,7 @@
     <None Include="res\shaders\blinn-phong.shader" />
     <None Include="res\shaders\color.shader" />
     <None Include="res\shaders\empty.shader" />
+    <None Include="res\shaders\phong-frag-texture.shader" />
     <None Include="res\shaders\phong-frag.shader" />
     <None Include="res\shaders\phong-sphere.shader" />
     <None Include="res\shaders\phong.shader" />
