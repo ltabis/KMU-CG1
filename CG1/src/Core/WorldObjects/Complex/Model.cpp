@@ -6,7 +6,7 @@ CG::Model::Model(const std::string &modelPath, const glm::vec3& position, const 
 {
     Assimp::Importer importer;
 
-    const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs);
+    const aiScene* scene = importer.ReadFile(modelPath, aiProcessPreset_TargetRealtime_Quality);
 
     // TODO: add more details to the error.
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
@@ -17,14 +17,21 @@ CG::Model::Model(const std::string &modelPath, const glm::vec3& position, const 
     // saving the directory to load additional resources.
     m_DirectoryPath = modelPath.substr(0, modelPath.find_last_of('\\')) + '\\';
 
+    // TODO: use reserve to prevent vector from doubling in size.
+    m_Meshes.reserve(scene->mNumMeshes);
     loadModel(scene, scene->mRootNode);
 }
 
-CG::Model::~Model()
+void CG::Model::loadModel(const aiScene* scene, const aiNode* node)
 {
+    for (unsigned int i = 0; i < node->mNumMeshes; ++i)
+        createMesh(scene, node, i);
+
+    for (unsigned int i = 0; i < node->mNumChildren; ++i)
+        loadModel(scene, node->mChildren[i]);
 }
 
-std::vector<CG::Texture> CG::Model::loadMaterial(aiMaterial* material, aiTextureType type, const std::string& typeName) const
+std::vector<CG::Texture> CG::Model::loadMaterial(const aiMaterial* material, aiTextureType type, const std::string& typeName) const
 {
     std::vector<Texture> textures;
 
@@ -39,21 +46,16 @@ std::vector<CG::Texture> CG::Model::loadMaterial(aiMaterial* material, aiTexture
     return textures;
 }
 
-void CG::Model::loadModel(const aiScene* scene, aiNode* node)
+void CG::Model::createMesh(const aiScene* scene, const aiNode* node, unsigned int meshIndex)
 {
-    for (unsigned int i = 0; i < node->mNumMeshes; ++i)
-        createMesh(scene, i);
-
-    for (unsigned int i = 0; i < node->mNumChildren; ++i)
-        loadModel(scene, node->mChildren[i]);
-}
-
-void CG::Model::createMesh(const aiScene* scene, unsigned int meshIndex)
-{
-    const aiMesh* mesh = scene->mMeshes[meshIndex];
+    const aiMesh* mesh = scene->mMeshes[node->mMeshes[meshIndex]];
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     std::vector<Texture> textures;
+
+    // reserving vectors allows us to prevent vectors doubling in size.
+    vertices.reserve(mesh->mNumVertices);
+    indices.reserve(mesh->mNumFaces * 3);
 
     // loading vertices.
     for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
