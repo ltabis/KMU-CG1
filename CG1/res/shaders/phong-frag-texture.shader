@@ -54,8 +54,8 @@ void main()
 	vec3 specularColor = 0.5 * specularLightColor * pow(max(dot(V, R), 0.0), p);
 
 	vec4 textureColor = texture2D(u_texture_diffuse1, TxtCoords);
-	// FragColor = vec4((u_ambiantLightColor + diffuseColor + specularColor) * u_objectColor, 1.0) * textureColor;
+	FragColor = vec4((u_ambiantLightColor + diffuseColor + specularColor) * u_objectColor, 1.0) * textureColor;
 	// FragColor = vec4(u_ambiantLightColor, 1.0) * textureColor + vec4(specularColor, 1.0);
 	// FragColor = vec4((u_ambiantLightColor + diffuseColor + specularColor) * u_objectColor, 1.0);
-	FragColor = textureColor;
+	// FragColor = textureColor;
 }

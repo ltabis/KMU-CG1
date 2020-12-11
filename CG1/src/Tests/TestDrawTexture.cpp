@@ -113,13 +113,15 @@ void CG::Test::TestDrawTexture::onRender()
 	// draw eventual models.
 	for (auto& model : m_Models) {
 
-		for (auto& texture : model->meshes()[0]->textures()) {
-			texture->bind(0);
-			std::string textureUniform = "u_" + texture->type() + "1";
-			m_PhongShader->setUniform(textureUniform, 0);
-		}
-
 		for (auto& mesh : model->meshes()) {
+
+			// binding textures to render.
+			for (auto& texture : mesh->textures()) {
+				unsigned int slot = texture->slot();
+				texture->bind();
+				std::string textureUniform = "u_" + texture->type() + std::to_string(slot + 1);
+				m_PhongShader->setUniform(textureUniform, static_cast<int>(slot));
+			}
 
 			glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * mesh->transform.model())));
 

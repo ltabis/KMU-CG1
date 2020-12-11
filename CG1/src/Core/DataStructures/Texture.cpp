@@ -2,9 +2,10 @@
 
 CG::Texture::Texture(const std::string& filePath, const std::string& type)
 	: m_Id			 { 0		}
-	, m_Buffer		 { nullptr  }
-	, m_FilePath	 { filePath }
-	, m_Type		 { type     }
+	, m_Slot         { 0		}
+	, m_Buffer		 { nullptr	}
+	, m_FilePath	 { filePath	}
+	, m_Type		 { type		}
 	, m_Width		 { 0		}
 	, m_Height		 { 0		}
 	, m_BytePerPixel { 0		}
@@ -20,8 +21,9 @@ CG::Texture::Texture(const std::string& filePath, const std::string& type)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 	// loading the texture.
-	// TODO: should take a slot parameter.
 	loadTexture(filePath);
+
+	++m_CurrentTextureImageUnit;
 }
 
 CG::Texture::~Texture()
@@ -29,7 +31,7 @@ CG::Texture::~Texture()
 	glDeleteTextures(1, &m_Id);
 }
 
-bool CG::Texture::loadTexture(const std::string &filePath, unsigned int slot)
+bool CG::Texture::loadTexture(const std::string &filePath)
 {
 	// assigning a new file path.
 	m_FilePath = filePath;
@@ -53,9 +55,9 @@ bool CG::Texture::loadTexture(const std::string &filePath, unsigned int slot)
 	return true;
 }
 
-void CG::Texture::bind(unsigned int slot) const
+void CG::Texture::bind() const
 {
-	glActiveTexture(GL_TEXTURE0 + slot);
+	glActiveTexture(GL_TEXTURE0 + m_Slot);
 	glBindTexture(GL_TEXTURE_2D, m_Id);
 }
 
