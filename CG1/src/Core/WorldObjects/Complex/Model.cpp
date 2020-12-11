@@ -22,6 +22,54 @@ CG::Model::Model(const std::string &modelPath, const glm::vec3& position, const 
     loadModel(scene, scene->mRootNode);
 }
 
+void CG::Model::translate(float x, float y, float z)
+{
+    transform.translate(x, y, z);
+
+    for (auto& mesh : m_Meshes)
+        mesh->transform.translate(x, y, z);
+}
+
+void CG::Model::rotate(float degree, float x, float y, float z)
+{
+    transform.rotate(degree, x, y, z);
+
+    for (auto& mesh : m_Meshes)
+        mesh->transform.rotate(degree, x, y, z);
+}
+
+void CG::Model::scale(float x, float y, float z)
+{
+    transform.scale(x, y, z);
+
+    for (auto& mesh : m_Meshes)
+        mesh->transform.scale(x, y, z);
+}
+
+void CG::Model::setPosition(float x, float y, float z)
+{
+    transform.setPosition(x, y, z);
+
+    for (auto& mesh : m_Meshes)
+        mesh->transform.setPosition(x, y, z);
+}
+
+void CG::Model::setRotation(float anglex, float angley, float anglez, const glm::mat4& pivot)
+{
+    transform.setRotation(anglex, angley, anglez, pivot);
+
+    for (auto& mesh : m_Meshes)
+        mesh->transform.setRotation(anglex, angley, anglez, pivot);
+}
+
+void CG::Model::setScale(float x, float y, float z)
+{
+    transform.setScale(x, y, z);
+
+    for (auto& mesh : m_Meshes)
+        mesh->transform.setScale(x, y, z);
+}
+
 void CG::Model::loadModel(const aiScene* scene, const aiNode* node)
 {
     for (unsigned int i = 0; i < node->mNumMeshes; ++i)
@@ -93,7 +141,12 @@ void CG::Model::createMesh(const aiScene* scene, unsigned int meshIndex)
         textures.insert(textures.end(), specular.begin(), specular.end());
     }
 
-    std::unique_ptr<Mesh> meshObject = std::make_unique<Mesh>(vertices, indices, textures);
+    // creating the meshes using all data gathered for this iteration.
+    std::unique_ptr<Mesh> meshObject = std::make_unique<Mesh>(
+        vertices, indices, textures,
+        transform.position(), transform.rotation(), transform.scale()
+    );
 
+    // pushing the mesh into our data collection.
     m_Meshes.push_back(std::move(meshObject));
 }
