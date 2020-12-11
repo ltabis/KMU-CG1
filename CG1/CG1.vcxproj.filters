@@ -117,9 +117,6 @@
     <ClCompile Include="src\Tests\TestDrawTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tests\TestDrawSimpleTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Profiling\Breakpoint.hpp">
@@ -246,9 +243,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tests\TestDrawTexture.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tests\TestDrawSimpleTexture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

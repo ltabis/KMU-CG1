@@ -21,7 +21,7 @@ void CG::Test::TestDrawTexture::onStart()
 		);
 
 	// creating models.
-	m_Models.push_back(std::make_unique<Model>("C:\\dev\\Computer Graphics 1\\CG1\\meshes\\cube.obj", glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f)));
+	m_Models.push_back(std::make_unique<Model>("C:\\dev\\Computer Graphics 1\\CG1\\meshes\\sponza.obj", glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f)));
 
 	// creating a single light source.
 	m_LightCube = std::make_unique<Cube>(m_LightPos, glm::vec3(0.f), glm::vec3(1.f));

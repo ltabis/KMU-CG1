@@ -202,7 +202,6 @@
     <ClCompile Include="src\Miscellaneous\NoClipCameraController.cpp" />
     <ClCompile Include="src\Tests\TestDrawMesh.cpp" />
     <ClCompile Include="src\Tests\Framework\TestMenu.cpp" />
-    <ClCompile Include="src\Tests\TestDrawSimpleTexture.cpp" />
     <ClCompile Include="src\Tests\TestDrawTexture.cpp" />
     <ClCompile Include="src\Tests\TestMultipleLights.cpp" />
     <ClCompile Include="src\Tests\TestShaderEditor.cpp" />
@@ -246,7 +245,6 @@
     <ClInclude Include="src\Tests\Framework\ATest.hpp" />
     <ClInclude Include="src\Tests\TestDrawMesh.hpp" />
     <ClInclude Include="src\Tests\Framework\TestMenu.hpp" />
-    <ClInclude Include="src\Tests\TestDrawSimpleTexture.hpp" />
     <ClInclude Include="src\Tests\TestDrawTexture.hpp" />
     <ClInclude Include="src\Tests\TestMultipleLights.hpp" />
     <ClInclude Include="src\Tests\TestShaderEditor.hpp" />
