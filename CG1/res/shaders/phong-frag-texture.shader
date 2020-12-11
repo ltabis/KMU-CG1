@@ -32,6 +32,7 @@ uniform vec3 u_lightPos;
 uniform mat4 u_view;
 
 uniform sampler2D u_texture_diffuse1;
+uniform sampler2D u_texture_specular1;
 
 in vec3 Position;
 in vec3 Normal;
@@ -53,9 +54,8 @@ void main()
 	vec3 diffuseColor = diffuseLightColor * max(dot(L, Normal), 0.0);
 	vec3 specularColor = 0.5 * specularLightColor * pow(max(dot(V, R), 0.0), p);
 
-	vec4 textureColor = texture2D(u_texture_diffuse1, TxtCoords);
+	vec4 textureColorDiffuse = texture2D(u_texture_diffuse1, TxtCoords);
+	vec4 textureColorSpecular = texture2D(u_texture_specular1, TxtCoords);
+	vec4 textureColor = mix(textureColorDiffuse, textureColorSpecular, textureColorDiffuse.a);
 	FragColor = vec4((u_ambiantLightColor + diffuseColor + specularColor) * u_objectColor, 1.0) * textureColor;
-	// FragColor = vec4(u_ambiantLightColor, 1.0) * textureColor + vec4(specularColor, 1.0);
-	// FragColor = vec4((u_ambiantLightColor + diffuseColor + specularColor) * u_objectColor, 1.0);
-	// FragColor = textureColor;
 }
