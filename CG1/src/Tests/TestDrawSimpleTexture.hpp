@@ -3,6 +3,7 @@
 #include "Framework/ATest.hpp"
 #include "NoClipCameraController.hpp"
 #include "WorldObjects/Primitives/Plane.hpp"
+#include "WorldObjects/Primitives/Mesh.hpp"
 #include "DataStructures/Texture.hpp"
 
 namespace CG {
@@ -37,6 +38,9 @@ namespace CG {
 			};
 
 			std::vector<Vertex> m_VerticesVector;
+			std::vector<Texture> m_TextureVector;
+			std::vector<unsigned int> m_IndexVector;
+			std::unique_ptr<Mesh> m_Mesh;
 
 			std::unique_ptr<VertexBuffer> _vbo;
 			std::unique_ptr<VertexArray> _vao;

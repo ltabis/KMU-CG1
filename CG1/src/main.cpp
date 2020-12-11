@@ -9,6 +9,8 @@
 #include "Tests/TestMultipleLights.hpp"
 #include "Tests/TestShaderEditor.hpp"
 #include "Tests/TestDrawMesh.hpp"
+#include "Tests/TestDrawTexture.hpp"
+#include "Tests/TestDrawSimpleTexture.hpp"
 
 int main(void)
 {
@@ -24,6 +26,8 @@ int main(void)
 	menu.registerTest<CG::Test::TestShaderEditor>("Shader Editor");
 	menu.registerTest<CG::Test::TestDrawMesh>("Draw meshes");
 	menu.registerTest<CG::Test::TestMultipleLights>("Display multiple lights");
+	menu.registerTest<CG::Test::TestDrawTexture>("Draw textures on models");
+	menu.registerTest<CG::Test::TestDrawSimpleTexture>("Draw textures");
 
 	while (!renderer->windowShouldClose())
 		menu.onRender();

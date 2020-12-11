@@ -6,7 +6,7 @@ CG::Model::Model(const std::string &modelPath, const glm::vec3& position, const 
 {
     Assimp::Importer importer;
 
-    const aiScene* scene = importer.ReadFile(modelPath, aiProcessPreset_TargetRealtime_Quality);
+    const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_GenNormals);// aiProcessPreset_TargetRealtime_Quality);
 
     // TODO: add more details to the error.
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
@@ -25,43 +25,46 @@ CG::Model::Model(const std::string &modelPath, const glm::vec3& position, const 
 void CG::Model::loadModel(const aiScene* scene, const aiNode* node)
 {
     for (unsigned int i = 0; i < node->mNumMeshes; ++i)
-        createMesh(scene, node, i);
+        createMesh(scene, node->mMeshes[i]);
 
     for (unsigned int i = 0; i < node->mNumChildren; ++i)
         loadModel(scene, node->mChildren[i]);
 }
 
-std::vector<CG::Texture> CG::Model::loadMaterial(const aiMaterial* material, aiTextureType type, const std::string& typeName) const
+std::vector<std::shared_ptr<CG::Texture>> CG::Model::loadMaterial(const aiMaterial* material, aiTextureType type, const std::string& typeName) const
 {
-    std::vector<Texture> textures;
+    std::vector<std::shared_ptr<Texture>> textures;
 
     for (unsigned int i = 0; i < material->GetTextureCount(type); ++i) {
         aiString path;
         material->GetTexture(type, i, &path);
 
-        Texture texture(m_DirectoryPath + path.C_Str(), typeName);
+        std::shared_ptr<Texture> texture = std::make_shared<Texture>(m_DirectoryPath + path.C_Str(), typeName);
         textures.push_back(texture);
     }
 
     return textures;
 }
 
-void CG::Model::createMesh(const aiScene* scene, const aiNode* node, unsigned int meshIndex)
+void CG::Model::createMesh(const aiScene* scene, unsigned int meshIndex)
 {
-    const aiMesh* mesh = scene->mMeshes[node->mMeshes[meshIndex]];
+    const aiMesh* mesh = scene->mMeshes[meshIndex];
     std::vector<Vertex> vertices;
+    std::vector<std::shared_ptr<Texture>> textures;
     std::vector<unsigned int> indices;
-    std::vector<Texture> textures;
 
     // reserving vectors allows us to prevent vectors doubling in size.
     vertices.reserve(mesh->mNumVertices);
     indices.reserve(mesh->mNumFaces * 3);
 
+    CG_CONSOLE_CRITICAL("mesh->mNumVertices: {}", mesh->mNumVertices);
+    CG_CONSOLE_CRITICAL("mesh->mNumFaces: {}", mesh->mNumFaces);
+
     // loading vertices.
     for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
 
         glm::vec3 vertex = { mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
-        glm::vec3 normal = glm::vec3(0.f);  
+        glm::vec3 normal = glm::vec3(0.f);
         glm::vec2 textureCoords = glm::vec2(0.f);
 
         if (mesh->HasNormals())
@@ -86,8 +89,8 @@ void CG::Model::createMesh(const aiScene* scene, const aiNode* node, unsigned in
 
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-        std::vector<Texture> diffuse = loadMaterial(material, aiTextureType_DIFFUSE, "texture_diffuse");
-        std::vector<Texture> specular = loadMaterial(material, aiTextureType_SPECULAR, "texture_specular");
+        auto diffuse = loadMaterial(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        auto specular = loadMaterial(material, aiTextureType_SPECULAR, "texture_specular");
 
         textures.insert(textures.end(), diffuse.begin(), diffuse.end());
         textures.insert(textures.end(), specular.begin(), specular.end());

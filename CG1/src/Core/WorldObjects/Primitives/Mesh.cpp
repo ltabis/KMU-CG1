@@ -1,6 +1,6 @@
 #include "Mesh.hpp"
 
-CG::Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale)
+CG::Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<std::shared_ptr<Texture>> textures, const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale)
 	: AShape     {          }
 	, m_Vertices { vertices }
 	, m_Indices  { indices  }
@@ -35,7 +35,7 @@ const CG::IndexBuffer& CG::Mesh::ibo() const
 	return *_ibo;
 }
 
-const std::vector<CG::Texture>& CG::Mesh::textures() const
+const std::vector<std::shared_ptr<CG::Texture>>& CG::Mesh::textures() const
 {
 	return m_Textures;
 }

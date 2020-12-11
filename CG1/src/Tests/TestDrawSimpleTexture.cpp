@@ -21,11 +21,21 @@ void CG::Test::TestDrawSimpleTexture::onStart()
 		);
 
 	m_PlaneTexture = std::make_unique<Texture>("C:\\dev\\Computer Graphics 1\\CG1\\meshes\\default.png", "texture_diffuse");
+	Texture texture = Texture("C:\\dev\\Computer Graphics 1\\CG1\\meshes\\default.png", "texture_diffuse");
 
 	m_VerticesVector.push_back({ glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f), glm::vec3(0.0f,  0.0f, 1.0f),  glm::vec2(0.0f,  0.0f) });
 	m_VerticesVector.push_back({ glm::vec4(0.5f, -0.5f, 0.0f, 1.0f), glm::vec3(0.0f,  0.0f, 1.0f),  glm::vec2(1.0f,  0.0f) });
 	m_VerticesVector.push_back({ glm::vec4(0.5f,  0.5f, 0.0f, 1.0f), glm::vec3(0.0f,  0.0f, 1.0f),  glm::vec2(1.0f,  1.0f) });
 	m_VerticesVector.push_back({ glm::vec4(-0.5f,  0.5f, 0.0f, 1.0f), glm::vec3(0.0f,  0.0f, 1.0f),  glm::vec2(0.0f,  1.0f) });
+
+	m_TextureVector.push_back(texture);
+
+	m_IndexVector.push_back(0);
+	m_IndexVector.push_back(1);
+	m_IndexVector.push_back(2);
+	m_IndexVector.push_back(2);
+	m_IndexVector.push_back(3);
+	m_IndexVector.push_back(0);
 
 	// creating a vertex buffer.
 	_vbo = std::make_unique<VertexBuffer>(m_VerticesVector);
@@ -41,7 +51,9 @@ void CG::Test::TestDrawSimpleTexture::onStart()
 	_vao->addBuffer(*_vbo, *_valo);
 
 	// creating the index buffer.
-	_ibo = std::make_unique<IndexBuffer>(m_Indices, sizeof(m_Indices));
+	_ibo = std::make_unique<IndexBuffer>(m_Indices, sizeof(m_Indices)); // m_IndexVector);
+
+	// m_Mesh = std::make_unique<Mesh>(m_VerticesVector, m_IndexVector, m_TextureVector);
 
 	m_PhongShader = std::make_unique<ShaderLoader>();
 	
@@ -116,7 +128,7 @@ void CG::Test::TestDrawSimpleTexture::onRender()
 			glfwSetInputMode(_renderer->window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 
-	m_PlaneTexture->bind(0);
+	m_PlaneTexture->bind();
 
 	std::string textureUniform = "u_" + m_PlaneTexture->type() + "1";
 
@@ -129,6 +141,20 @@ void CG::Test::TestDrawSimpleTexture::onRender()
 	m_PhongShader->setUniform("u_modelView", m_Controller->view() * glm::mat4(1.f));
 	m_PhongShader->setUniform("u_normalMat", normalMat);
 	_renderer->draw(*_vao, *_ibo, *m_PhongShader);
+
+	//m_PlaneTexture->bind(0);
+
+	//std::string textureUniform = "u_" + m_PlaneTexture->type() + "1";
+
+	//m_PhongShader->setUniform(textureUniform, 0);
+
+	//glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * glm::mat4(1.f))));
+
+	//m_PhongShader->setUniform("u_mvp", m_Controller->projectionView() * glm::mat4(1.f));
+	//m_PhongShader->setUniform("u_view", m_Controller->view());
+	//m_PhongShader->setUniform("u_modelView", m_Controller->view() * glm::mat4(1.f));
+	//m_PhongShader->setUniform("u_normalMat", normalMat);
+	//_renderer->draw(*_vao, *_ibo, *m_PhongShader);
 }
 
 void CG::Test::TestDrawSimpleTexture::onStop()

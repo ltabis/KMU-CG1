@@ -112,13 +112,14 @@ void CG::Test::TestDrawTexture::onRender()
 
 	// draw eventual models.
 	for (auto& model : m_Models) {
-		for (auto& mesh : model->meshes()) {
 
-			for (auto& texture : mesh->textures()) {
-				texture.bind(0);
-				std::string textureUniform = "u_" + texture.type() + "1";
-				m_PhongShader->setUniform(textureUniform, 0);
-			}
+		for (auto& texture : model->meshes()[0]->textures()) {
+			texture->bind(0);
+			std::string textureUniform = "u_" + texture->type() + "1";
+			m_PhongShader->setUniform(textureUniform, 0);
+		}
+
+		for (auto& mesh : model->meshes()) {
 
 			glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(m_Controller->view() * mesh->transform.model())));
 
