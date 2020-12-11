@@ -79,16 +79,30 @@ void CG::Model::loadModel(const aiScene* scene, const aiNode* node)
         loadModel(scene, node->mChildren[i]);
 }
 
-std::vector<std::shared_ptr<CG::Texture>> CG::Model::loadMaterial(const aiMaterial* material, aiTextureType type, const std::string& typeName) const
+std::vector<std::shared_ptr<CG::Texture>> CG::Model::loadMaterial(const aiMaterial* material, aiTextureType type, const std::string& typeName)
 {
+    aiString path;
+    bool skipTextureLoading;
     std::vector<std::shared_ptr<Texture>> textures;
 
     for (unsigned int i = 0; i < material->GetTextureCount(type); ++i) {
-        aiString path;
         material->GetTexture(type, i, &path);
+        skipTextureLoading = false;
 
-        std::shared_ptr<Texture> texture = std::make_shared<Texture>(m_DirectoryPath + path.C_Str(), typeName);
-        textures.push_back(texture);
+        // checking if the texture haven't been already loaded beforehand.
+        for (auto &cachedTexture : m_CachedTextures)
+            if (!std::strcmp(path.C_Str(), cachedTexture->path().c_str())) {
+                textures.push_back(cachedTexture);
+                skipTextureLoading = true;
+                break;
+            }
+
+        // loading and caching a new texture.
+        if (!skipTextureLoading) {
+            std::shared_ptr<Texture> newTexture = std::make_shared<Texture>(m_DirectoryPath + path.C_Str(), typeName);
+            textures.push_back(newTexture);
+            m_CachedTextures.push_back(newTexture);
+        }
     }
 
     return textures;
