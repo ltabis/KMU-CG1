@@ -6,7 +6,7 @@ CG::Model::Model(const std::string &modelPath, const glm::vec3& position, const 
 {
     Assimp::Importer importer;
 
-    const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_GenNormals);// aiProcessPreset_TargetRealtime_Quality);
+    const aiScene* scene = importer.ReadFile(modelPath, aiProcessPreset_TargetRealtime_Quality);
 
     // TODO: add more details to the error.
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
@@ -56,9 +56,6 @@ void CG::Model::createMesh(const aiScene* scene, unsigned int meshIndex)
     // reserving vectors allows us to prevent vectors doubling in size.
     vertices.reserve(mesh->mNumVertices);
     indices.reserve(mesh->mNumFaces * 3);
-
-    CG_CONSOLE_CRITICAL("mesh->mNumVertices: {}", mesh->mNumVertices);
-    CG_CONSOLE_CRITICAL("mesh->mNumFaces: {}", mesh->mNumFaces);
 
     // loading vertices.
     for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
